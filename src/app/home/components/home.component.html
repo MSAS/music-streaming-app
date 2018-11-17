@@ -1,0 +1,89 @@
+<ActionBar class="action-bar-label">
+    <StackLayout class="action-bar" orientation="horizontal">
+    <Image class="action-bar-icon" src="res://logo"></Image>
+        <StackLayout class="title-text">
+            <Label class="header-name" text='Guru Kashi University'></Label>
+            <Label class="header-detail" text='Talwandi Sabo'></Label>
+        </StackLayout>
+    </StackLayout>
+</ActionBar>
+<FlexboxLayout androidStatusBarBackground="black" class="page" backgroundImage="res://background">
+    <ScrollView class="scrollForm" sdkExampleTitle sdkToggleNavButton>
+        <StackLayout orientation="vertical">
+            <StackLayout class="stack-logo" orientation="horizontal" backgroundImage="res://rectangle"
+                horizontalAlignment="center">
+                <Image class="stack-logo-image" horizontalAlignment="center" src="res://gku_logo"></Image>
+            </StackLayout>
+            <GridLayout columns="*,*,*" rows="100,100,100,100,100" marginTop="30">
+                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="0" (tap)="onHomeClick()">
+                    <Image class="option-image" src="res://home" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Home' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="1" (tap)="onDiscussionClick()">
+                    <Image class="option-image" src="res://discussion" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Discussion' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="2" (tap)="onAttendanceClick()">
+                    <Image class="option-image" src="res://attendance" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Attendance' horizontalAlignment="center"></Label>
+                </StackLayout>
+
+                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="0" (tap)="onLeaveClick()">
+                    <Image class="option-image" src="res://leave" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Leave' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="1" (tap)="onFeesClick()">
+                    <Image class="option-image" src="res://fees_icon" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Fees' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="2" (tap)="onAboutClick()">
+                    <Image class="option-image" src="res://about" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='About' horizontalAlignment="center"></Label>
+                </StackLayout>
+
+                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="0" (tap)="onNoticesClick()">
+                    <Image class="option-image" src="res://notice" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Notices' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="1" (tap)="onDateSheetClick()">
+                    <Image class="option-image" src="res://datesheet" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Date Sheet' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="2" (tap)="onNewsClick()">
+                    <Image class="option-image" src="res://news" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='News' horizontalAlignment="center"></Label>
+                </StackLayout>
+
+                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="0" (tap)="onSICClick()">
+                    <Image class="option-image" src="res://sic_icon" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='SIC' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="1" (tap)="onCoursesClick()">
+                    <Image class="option-image" src="res://course" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Courses' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="2" (tap)="onSyllabusClick()">
+                    <Image class="option-image" src="res://syllabus" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Syllabus' horizontalAlignment="center"></Label>
+                </StackLayout>
+
+                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="0" (tap)="onResultClick()">
+                    <Image class="option-image" src="res://result" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Result' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="1" (tap)="onCalenderClick()">
+                    <Image class="option-image" src="res://calender" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Calender' horizontalAlignment="center"></Label>
+                </StackLayout>
+                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="2" (tap)="onPlacementsClick()">
+                    <Image class="option-image" src="res://placement" horizontalAlignment="center"></Image>
+                    <Label class="option-label" text='Placements' horizontalAlignment="center"></Label>
+                </StackLayout>
+            </GridLayout>
+        </StackLayout>
+    </ScrollView>
+    <StackLayout class="login-container">
+        <StackLayout class="border-line"></StackLayout>
+        <Button text="{{name}}" class="btn btn-login m-t-20" (tap)="onLoginClick()"></Button>
+    </StackLayout>
+</FlexboxLayout>
