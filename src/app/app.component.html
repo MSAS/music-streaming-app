@@ -1,1 +1,117 @@
-<page-router-outlet></page-router-outlet>
+<RadSideDrawer id="rad" [drawerTransition]="sideDrawerTransition">
+
+	<GridLayout tkDrawerContent rows="auto, auto">
+
+		<GridLayout #gridNon *ngIf="!isLogged" height="11%" row="0" orientation="horizontal" columns="*,auto,*" backgroundColor="#181d22">
+			<Label col="0" class="sideHeader" (tap)="onSignIn()" text="SIGN IN"></Label>
+			<StackLayout col="1" height="40%" width="1" backgroundColor="#303942"></StackLayout>
+			<Label col="2" class="sideHeader" (tap)="onRegister()" text="REGISTER"></Label>
+		</GridLayout>
+
+		<GridLayout #gridLo *ngIf="isLogged" row="0" height="20%" class="drawer-header" rows="auto, auto" columns="auto">
+			<StackLayout marginTop="5%" row="0" col="0" height="80%" width="100%" orientation="horizontal">
+				<Button class="drawer-setting-button" (tap)="onMyAccount()"></Button>
+				<Image class="drawer-display-pic" (tap)="onDisplayPic()"></Image>
+				<Button class="drawer-logout-button" (tap)="onLogout()"></Button>
+			</StackLayout>
+
+			<StackLayout row="1" col="0" height="20%" verticalAlignment="top" horizontalAlignment="center">
+				<Label [text]="name" color="white"></Label>
+
+			</StackLayout>
+
+		</GridLayout>
+
+		<ScrollView row="1" height="100%">
+			<StackLayout class="sideStackLayout">
+				<GridLayout rows="auto, auto" [backgroundColor]="homeBackgroundColor" (tap)="onHomeClicked()">
+
+					<StackLayout row="0" backgroundColor="black" height=".5" width="100%" verticalAlignment="top">
+					</StackLayout>
+					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onHomeClicked()">
+						<StackLayout *ngIf="homeRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4" backgroundColor="red"
+						 (tap)="onHomeClicked()"></StackLayout>
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="45" height="45" src="res://icon_menu_home_page"
+						 (tap)="onHomeClicked()"></Image>
+						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
+							<Label class="drawer-option-label" text="Home" (tap)="onHomeClicked()"></Label>
+						</StackLayout>
+					</GridLayout>
+				</GridLayout>
+
+				<GridLayout rows="auto, auto" [backgroundColor]="categoriesBackgroundColor" (tap)="onCategoriesClicked()">
+
+					<StackLayout row="0" backgroundColor="black" height=".5" width="100%" verticalAlignment="bottom">
+					</StackLayout>
+					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onCategoriesClicked()">
+						<StackLayout *ngIf="categoriesRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4"
+						 backgroundColor="red" (tap)="onCategoriesClicked()"></StackLayout>
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="45" height="45" src="res://icon_menu_categories"
+						 (tap)="onCategoriesClicked()"></Image>
+						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
+							<Label class="drawer-option-label" text="Categories" (tap)="onCategoriesClicked()"></Label>
+						</StackLayout>
+					</GridLayout>
+				</GridLayout>
+
+				<GridLayout rows="auto, auto" [backgroundColor]="favouritesBackgroundColor" (tap)="onFavouritesClicked()">
+
+					<StackLayout row="0" backgroundColor="black" height=".5" width="100%" verticalAlignment="bottom">
+					</StackLayout>
+					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onFavouritesClicked()">
+						<StackLayout *ngIf="favouritesRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4"
+						 backgroundColor="red" (tap)="onFavouritesClicked()"></StackLayout>
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="45" height="45" src="res://icon_menu_wishlist"
+						 (tap)="onFavouritesClicked()"></Image>
+						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
+							<Label class="drawer-option-label" text="Favourites" (tap)="onFavouritesClicked()"></Label>
+						</StackLayout>
+					</GridLayout>
+				</GridLayout>
+
+				<GridLayout rows="auto, auto" [backgroundColor]="recentMixesBackgroundColor" (tap)="onRecentMixesClicked()">
+
+					<StackLayout row="0" backgroundColor="black" height=".5" width="100%" verticalAlignment="top">
+					</StackLayout>
+					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onRecentMixesClicked()">
+						<StackLayout *ngIf="recentMixesRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4"
+						 backgroundColor="red" (tap)="onRecentMixesClicked()"></StackLayout>
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="45" height="45" src="res://menu_icon_recent_mixes"
+						 (tap)="onRecentMixesClicked()"></Image>
+						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
+							<Label class="drawer-option-label" text="Recent Mixes" (tap)="onRecentMixesClicked()"></Label>
+						</StackLayout>
+					</GridLayout>
+				</GridLayout>
+
+				<GridLayout rows="auto, auto" [backgroundColor]="aboutUsBackgroundColor" (tap)="onAboutUsClicked()">
+
+					<StackLayout row="0" backgroundColor="black" height=".5" width="100%" verticalAlignment="bottom">
+					</StackLayout>
+					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onAboutUsClicked()">
+						<StackLayout *ngIf="aboutUsRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4"
+						 backgroundColor="red" (tap)="onAboutUsClicked()"></StackLayout>
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" padding="5" width="45" height="45" src="res://icon_menu_about_us"
+						 (tap)="onAboutUsClicked()"></Image>
+						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
+							<Label class="drawer-option-label" text="About Us" (tap)="onAboutUsClicked()"></Label>
+						</StackLayout>
+					</GridLayout>
+				</GridLayout>
+
+			</StackLayout>
+		</ScrollView>
+	</GridLayout>
+
+
+	<StackLayout tkMainContent height="100%" width="100%">
+		<router-outlet></router-outlet>
+	</StackLayout>
+
+	<!-- <page-router-outlet tkMainContent class="page"></page-router-outlet> -->
+</RadSideDrawer>
+
+<!-- 
+<StackLayout height="100%" width="100%" backgroundColor="blue">
+	<router-outlet></router-outlet>
+</StackLayout> -->

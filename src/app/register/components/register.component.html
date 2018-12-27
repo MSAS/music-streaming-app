@@ -1,0 +1,106 @@
+<FlexboxLayout class="page" bsckgroundColor="black" androidStatusBarBackground="transparent">
+    <StackLayout>
+
+        <GridLayout class="grid-container" rows="auto,auto, auto, auto, auto, auto, auto">
+
+            <Button row="0" class="navigate-back-button" (tap)="nativegateBack()" marginTop="1%" marginLeft="6%" width="5.5%"
+                height="5%"></Button>
+
+            <StackLayout row="1" class="register-logo" marginTop="3%" horizontalAlignment="center" width="20%" height="20%">
+                <Image src="res://img_logo_splash"></Image>
+            </StackLayout>
+
+            <GridLayout row="2" width="100%" height="auto" marginTop="2%" class="input-field" rows="auto, auto, auto, auto, auto, auto,auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
+                <StackLayout row="0" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                    <StackLayout height="25" width="12.5%">
+                        <Image class="iconTextField" [src]="userNameIcon"></Image>
+                    </StackLayout>
+                    <TextField hint="Username" style.placeholderColor="#646464" autocorrect="false" (textChange)="userNameTextField($event)" (blur)="onBlurUserName($event)"
+                        (focus)="onFocusUserName($event)" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+
+                <StackLayout width="80%" row="1" [backgroundColor]="underlineUserName" verticalAlignment="middle"
+                    height="2px">
+                    <!-- <Image height="100%" backgroundColor="white"></Image> -->
+                </StackLayout>
+
+                <StackLayout row="2" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                    <StackLayout height="25" width="12.5%">
+                        <Image class="iconTextField" [src]="emailIcon"></Image>
+                    </StackLayout>
+                    <TextField hint="Email" style.placeholderColor="#646464" autocorrect="false" (textChange)="emailTextField($event)" (blur)="onBlurEmail($event)"
+                        (focus)="onFocusEmail($event)" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+
+                <StackLayout width="80%" row="3" [backgroundColor]="underlineEmail" verticalAlignment="middle" height="2px">
+                    <!-- <Image height="100%" [src]="underlineEmail"></Image> -->
+                </StackLayout>
+
+                <StackLayout row="4" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                    <StackLayout height="25" width="12.5%">
+                        <Image class="iconTextField" [src]="passwordIcon"></Image>
+                    </StackLayout>
+                    <TextField hint="Password" style.placeholderColor="#646464" autocorrect="false" (textChange)="passwordTextField($event)" (blur)="onBlurPassword($event)"
+                        (focus)="onFocusPassword($event)" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+
+                <StackLayout width="80%" row="5" [backgroundColor]="underlinePassword" verticalAlignment="middle"
+                    height="2px">
+                    <!-- <Image height="100%" [src]="underlinePassword"></Image> -->
+                </StackLayout>
+
+                <StackLayout row="6" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                    <StackLayout height="25" width="12.5%">
+                        <Image class="iconTextField" [src]="confirmPasswordIcon"></Image>
+                    </StackLayout>
+                    <TextField hint="Confirm Password" style.placeholderColor="#646464" (textChange)="confirmPasswordTextField($event)" autocorrect="false" (blur)="onBlurConfirmPassword($event)"
+                        (focus)="onFocusConfirmPassword($event)" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+
+                <StackLayout width="80%" row="7" [backgroundColor]="underlineConfirmPassword" verticalAlignment="middle"
+                    height="2px">
+                    <!-- <Image height="100%" [src]="underlineConfirmPassword"></Image> -->
+                </StackLayout>
+
+            </GridLayout>
+
+            <!-- <StackLayout row="2" width="80%" orientation="vertical">
+                <StackLayout width="100%" orientation="horizontal">
+                    <Image width="50" height="50" [src]="username"></Image>
+                    <TextField width="50%" marginTop="1%" hint="Username" (focus)="onFocus()" (blur)="onBlur()" color="white" style.placeholderColor="#ffffff"  autocorrect="false"
+                        (returnPress)="onReturn($event)"></TextField>
+                    <TextField hint="First Name" style.placeholderColor="#646464" autocorrect="false" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+                <TextField marginTop="1%" #inputEmail hint="Email" keyboardType="email" autocorrect="false"
+                    autocapitalizationType="none"></TextField>
+                <TextField marginTop="1%" #inputPassword hint="Password" keyboardType="url" autocorrect="false"
+                    autocapitalizationType="none"></TextField>
+                <TextField marginTop="1%" #inputConfirmPassword hint="Confirm Password" keyboardType="url" autocorrect="false"
+                    autocapitalizationType="none" secure="true"></TextField>
+            </StackLayout> -->
+
+            <StackLayout row="3" horizontalAlignment="center" orientation="horizontal" backgroundColor="transparent">
+                <Label class="text-label" text="Choose Submit if you agree with our T&C"></Label>
+            </StackLayout>
+
+            <StackLayout row="4" class="login-button-container" (tap)="onSubmit()">
+                <Button text="SUBMIT" textTransform="none" class="login-button" (tap)="onSubmit()"></Button>
+            </StackLayout>
+            <AbsoluteLayout row="4" class="activity-indicator-container">
+                <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+            </AbsoluteLayout>
+
+            <StackLayout row="5" orientation="horizontal" backgroundColor="black" (tap)="go(1);" marginTop="44%"
+                opacity=".5" width="100%" height="10%">
+                <Label marginLeft="6%" [class]="labelClass" text="Signin with Facebook"></Label>
+                <Button class="redirect-button" width="5.5%" height="5%"></Button>
+            </StackLayout>
+            <StackLayout row="6" orientation="vertical" marginTop="5" backgroundColor="black" opacity=".5" width="100%"
+                height="15%">
+                <Label marginLeft="6%" [class]="labelClass" text="Notice"></Label>
+                <Label marginLeft="6%" [class]="labelClass" text="Your Personal Information will be kept secure with us"></Label>
+            </StackLayout>
+        </GridLayout>
+
+    </StackLayout>
+</FlexboxLayout>

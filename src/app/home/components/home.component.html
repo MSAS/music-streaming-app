@@ -1,89 +1,225 @@
-<ActionBar class="action-bar-label">
+<StackLayout height="100%" width="100%">
+<StackLayout class="action-bar-label" height="8%" width="100%">
     <StackLayout class="action-bar" orientation="horizontal">
-    <Image class="action-bar-icon" src="res://logo"></Image>
+        <Image class="action-bar-icon" (tap)="onDrawerButtonTap()" src="res://ic_menu"></Image>
         <StackLayout class="title-text">
-            <Label class="header-name" text='Guru Kashi University'></Label>
-            <Label class="header-detail" text='Talwandi Sabo'></Label>
+            <Label class="header-name" text='DJ RICK GEEZ'></Label>
         </StackLayout>
     </StackLayout>
-</ActionBar>
-<FlexboxLayout androidStatusBarBackground="black" class="page" backgroundImage="res://background">
-    <ScrollView class="scrollForm" sdkExampleTitle sdkToggleNavButton>
-        <StackLayout orientation="vertical">
-            <StackLayout class="stack-logo" orientation="horizontal" backgroundImage="res://rectangle"
-                horizontalAlignment="center">
-                <Image class="stack-logo-image" horizontalAlignment="center" src="res://gku_logo"></Image>
+</StackLayout>
+
+
+<TabView [(ngModel)]="tabSelectedIndex" width="100%" height="100%" backgroundColor="#dcdcdc" selectedTabTextColor="red"
+    androidSelectedTabHighlightColor="red" androidOffscreenTabLimit='2' (selectedIndexChanged)="onSelectedIndexChanged($event)">
+    <StackLayout *tabItem="{title: 'Latest'}">
+        <ScrollView class="page">
+            <StackLayout marginTop="8" *ngIf="loggedIn">
+                <CardView *ngFor="let item of rows" class="card" marginLeft="8" marginRight="8" marginBottom="8">
+                    <StackLayout class="card-layout" orientation="vertical">
+                        <GridLayout verticalAlignment="top" rows="auto" columns="*, *" backgroundColor="#dcdcdc"
+                            marginBottom="10%" height="29%" width="100%">
+                            <StackLayout row="0" col="0" marginRight="1%" width="49%" backgroundColor="white" class="card-layout"
+                                orientation="vertical">
+                                <GridLayout rows="*" columns="*">
+                                    <Image src="res://category_default" (tap)="cardClicked(item.item1,0)"></Image>
+
+                                    <AbsoluteLayout height="auto" width="auto" backgroundColor="transparent">
+                                        <Button class="videoPlayButton" left="78%" top="55%" (tap)="cardClicked(item.item1,0)"></Button>
+                                    </AbsoluteLayout>
+
+
+                                </GridLayout>
+
+                                <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.item1.heading"></Label>
+                                <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+                                <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+                                <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+                                    <Image src="res://icon_view" width="5%" height="5%"></Image>
+                                    <StackLayout width="20%">
+                                        <Label class="body" text="250 views"></Label>
+                                    </StackLayout>
+                                    <StackLayout marginLeft="55%" class="gerne" width="20%">
+                                        <Label class="body" text="fgdszghdszhdfhdh"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout *ngIf="!item.odd" row="0" col="1" marginLeft="1%" width="49%" backgroundColor="#dcdcdc"
+                                (tap)="clicked(item.item2,1)" backgroundColor="white" class="card-layout" orientation="vertical">
+                                <GridLayout rows="*" columns="*">
+                                    <Image src="res://category_default" (tap)="cardClicked(item.item2,1)"></Image>
+                                    <AbsoluteLayout height="auto" width="auto" backgroundColor="transparent">
+                                        <Button class="videoPlayButton" left="78%" top="55%" (tap)="cardClicked(item.item2,1)"></Button>
+                                    </AbsoluteLayout>
+                                </GridLayout>
+
+                                <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.item2.heading"></Label>
+                                <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+                                <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+                                <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+                                    <Image src="res://icon_view" width="5%" height="5%"></Image>
+                                    <StackLayout width="20%">
+                                        <Label class="body" text="250 views"></Label>
+                                    </StackLayout>
+                                    <StackLayout marginLeft="55%" class="gerne" width="20%">
+                                        <Label class="body" text="fgdszghdszhdfhdh"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </CardView>
+
             </StackLayout>
-            <GridLayout columns="*,*,*" rows="100,100,100,100,100" marginTop="30">
-                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="0" (tap)="onHomeClick()">
-                    <Image class="option-image" src="res://home" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Home' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="1" (tap)="onDiscussionClick()">
-                    <Image class="option-image" src="res://discussion" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Discussion' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="0" col="2" (tap)="onAttendanceClick()">
-                    <Image class="option-image" src="res://attendance" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Attendance' horizontalAlignment="center"></Label>
-                </StackLayout>
 
-                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="0" (tap)="onLeaveClick()">
-                    <Image class="option-image" src="res://leave" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Leave' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="1" (tap)="onFeesClick()">
-                    <Image class="option-image" src="res://fees_icon" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Fees' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="1" col="2" (tap)="onAboutClick()">
-                    <Image class="option-image" src="res://about" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='About' horizontalAlignment="center"></Label>
-                </StackLayout>
-
-                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="0" (tap)="onNoticesClick()">
-                    <Image class="option-image" src="res://notice" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Notices' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="1" (tap)="onDateSheetClick()">
-                    <Image class="option-image" src="res://datesheet" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Date Sheet' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="2" col="2" (tap)="onNewsClick()">
-                    <Image class="option-image" src="res://news" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='News' horizontalAlignment="center"></Label>
-                </StackLayout>
-
-                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="0" (tap)="onSICClick()">
-                    <Image class="option-image" src="res://sic_icon" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='SIC' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="1" (tap)="onCoursesClick()">
-                    <Image class="option-image" src="res://course" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Courses' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="3" col="2" (tap)="onSyllabusClick()">
-                    <Image class="option-image" src="res://syllabus" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Syllabus' horizontalAlignment="center"></Label>
-                </StackLayout>
-
-                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="0" (tap)="onResultClick()">
-                    <Image class="option-image" src="res://result" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Result' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="1" (tap)="onCalenderClick()">
-                    <Image class="option-image" src="res://calender" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Calender' horizontalAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout class="stack-logo-image" orientation="vertical" row="4" col="2" (tap)="onPlacementsClick()">
-                    <Image class="option-image" src="res://placement" horizontalAlignment="center"></Image>
-                    <Label class="option-label" text='Placements' horizontalAlignment="center"></Label>
+            <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
+                <StackLayout horizontalAlignment="center" verticalAlignment="middle">
+                    <Label text="You need to login to continue"></Label>
                 </StackLayout>
             </GridLayout>
-        </StackLayout>
-    </ScrollView>
-    <StackLayout class="login-container">
-        <StackLayout class="border-line"></StackLayout>
-        <Button text="{{name}}" class="btn btn-login m-t-20" (tap)="onLoginClick()"></Button>
+        </ScrollView>
+
     </StackLayout>
-</FlexboxLayout>
+    <StackLayout *tabItem="{title: 'Most Viewed'}">
+        <GridLayout>
+            <ScrollView class="page">
+                <StackLayout *ngIf="loggedIn">
+                    <CardView *ngFor="let item of data" class="card" elevation="40" radius="10" ios:shadowRadius="3">
+                        <StackLayout class="card-layout">
+                            <Label class="h2" [text]="item.heading"></Label>
+                            <Label class="body" textWrap="true" [text]="item.content"></Label>
+                        </StackLayout>
+                    </CardView>
+                </StackLayout>
+                <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
+                    <StackLayout horizontalAlignment="center" verticalAlignment="middle">
+                        <Label text="You need to login to continue"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </ScrollView>
+        </GridLayout>
+    </StackLayout>
+</TabView>
+
+</StackLayout>
+
+<!-- <StackLayout height="30%" width="30%" backgroundColor="green"></StackLayout> -->
+
+
+
+
+
+
+
+<!-- <GridLayout verticalAlignment="top" rows="auto" columns="auto, auto" backgroundColor="#dcdcdc" marginBottom="10%" height="29%" width="100%">
+    <StackLayout row="0" col="0" width="45%" marginRight="1.66%" marginLeft="3.33%" backgroundColor="white" class="card-layout"
+        orientation="vertical">
+        <Image src="res://category_default"></Image>
+        <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.heading"></Label>
+        <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+        <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+        <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+            <Image src="res://icon_view" width="5%" height="5%"></Image>
+            <StackLayout width="20%">
+                <Label class="body" text="250 views"></Label>
+            </StackLayout>
+            <StackLayout marginLeft="55%" class="gerne" width="20%">
+                <Label class="body" text="fgdszghdszhdfhdh"></Label>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+
+    <StackLayout row="0" col="1" width="45%" marginRight="3.33%" marginLeft="1.66%" class="card-layout" backgroundColor="white"
+        orientation="vertical">
+        <Image src="res://category_default"></Image>
+        <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.heading"></Label>
+        <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+        <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+        <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+            <Image src="res://icon_view" width="5%" height="5%"></Image>
+            <StackLayout width="20%">
+                <Label class="body" text="250 views"></Label>
+            </StackLayout>
+            <StackLayout marginLeft="55%" class="gerne" width="20%">
+                <Label class="body" text="fgdszghdszhdfhdh"></Label>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</GridLayout> -->
+
+
+
+
+
+
+
+
+<!-- <StackLayout *ngIf="!item.odd" row="1">
+                        <CardView *ngFor="let item of dataOdd" class="card" elevation="40" radius="10"
+                            ios:shadowRadius="3">
+                            <StackLayout class="card-layout" orientation="vertical">
+                                <GridLayout verticalAlignment="top" rows="auto" columns="auto, auto" backgroundColor="#dcdcdc"
+                                    marginBottom="10%" height="29%" width="100%">
+                                    <StackLayout row="0" col="0" width="45%" (tap)="clicked(item.heading,0)"
+                                        marginRight="1.66%" marginLeft="3.33%" backgroundColor="white" class="card-layout"
+                                        orientation="vertical">
+                                        <GridLayout rows="*" columns="*">
+                                            <Image src="res://category_default"></Image>
+                                            <AbsoluteLayout backgroundColor="transparent">
+                                                <Button backgroundColor="black" top="50%" left="50%"></Button>
+                                            </AbsoluteLayout>
+                                        </GridLayout>
+
+                                        <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.heading"></Label>
+                                        <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+                                        <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+                                        <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+                                            <Image src="res://icon_view" width="5%" height="5%"></Image>
+                                            <StackLayout width="20%">
+                                                <Label class="body" text="250 views"></Label>
+                                            </StackLayout>
+                                            <StackLayout marginLeft="55%" class="gerne" width="20%">
+                                                <Label class="body" text="fgdszghdszhdfhdh"></Label>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </GridLayout>
+                            </StackLayout>
+                        </CardView>
+                    </StackLayout> -->
+
+
+
+
+
+
+
+<!-- <GridLayout>
+            <ScrollView class="page">
+                <StackLayout>
+                    <CardView *ngFor="let item of data" class="card" elevation="40" radius="10" ios:shadowRadius="3">
+                        <StackLayout class="card-layout" orientation="vertical">
+                             <Image src="res://category_default"></Image>
+                            <Label class="h2" marginTop="5" marginLeft="5%" [text]="item.heading"></Label>
+                            <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+                            <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+                            <StackLayout width="90%" marginLeft="5%" marginTop="5" orientation="horizontal">
+                                <Image src="res://icon_view" width="5%" height="5%"></Image>
+                                <StackLayout width="20%">
+                                    <Label class="body" text="250 views"></Label>
+                                </StackLayout>
+                                <StackLayout marginLeft="55%" class="gerne" width="20%">
+                                    <Label class="body" text="fgdszghdszhdfhdh"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </CardView>
+                </StackLayout>
+            </ScrollView>
+        </GridLayout> -->

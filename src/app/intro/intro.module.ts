@@ -1,5 +1,5 @@
 import { NgModule, NgModuleFactoryLoader, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+// import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
 import { HttpModule } from "@angular/http";
@@ -7,6 +7,7 @@ import { HttpModule } from "@angular/http";
 import { IntroComponent } from "./components/intro.component";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { IntroRoutingModule } from "~/app/intro/intro-routing.module";
 // import { MyHttpGetService } from "./getService";
 
 
@@ -17,10 +18,11 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     imports: [
         NativeScriptCommonModule,
         NativeScriptFormsModule,
-        NativeScriptModule,
+        // NativeScriptModule,
         NativeScriptHttpClientModule,
         HttpModule,
-        NativeScriptHttpModule
+        NativeScriptHttpModule,
+        IntroRoutingModule
     ],
     providers: [],
     declarations: [

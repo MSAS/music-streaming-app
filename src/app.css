@@ -18,3 +18,155 @@ components that have the btn class name.
 .btn {
     font-size: 18;
 }
+
+.fa {
+    font-family: "FontAwesome";
+}
+
+.page-content .page-placeholder {
+    color: #D7D7D7;
+    font-size: 20;
+    vertical-align: center;
+    horizontal-align: center;
+}
+.page-content .page-icon {
+    font-size: 72;
+    vertical-align: top;
+    horizontal-align: center;
+    color: #D7D7D7;
+    margin-top: 20%;
+}
+
+.sidedrawer {
+    margin-bottom: -100;
+}
+
+button {
+    font-size: 15;
+    horizontal-align: center;
+}
+
+.drawerContentText {
+    font-size: 13;
+    padding: 10;
+}
+
+.drawerContentButton {
+    margin: 10;
+    horizontal-align: left;
+}
+
+.sideStackLayout {
+    background-image: url("res://img_background_slide_menu");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.sideTitleStackLayout {
+    height: 56;
+    text-align: center;
+    vertical-align: center;
+}
+
+.sideLabel {
+    padding: 10;
+}
+
+.sideLightGrayLabel {
+    background-color: lightgray;
+}
+
+.sideHeader{
+    font-size: 18;
+    color: white;
+    vertical-align: middle;
+    horizontal-align:center;
+}
+ 
+.drawer-option-label{
+    color:white;
+  }
+
+  .drawer-header{
+      background-image: url("res://img_header_slide_menu");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+  }
+
+  .drawer-setting-button{
+      background-image: url("res://icon_setting");
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 20%;
+      width: 20%;
+      margin-top: 30%;
+      margin-left:4%;
+      vertical-align: top;
+      background-color: transparent;
+
+  }
+
+  .drawer-logout-button{
+    background-image: url("res://icon_account_logout");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 20%;
+      width: 20%;
+      margin-top: 30%;
+      vertical-align: top;
+      horizontal-align:right;
+      margin-left: 10%;
+      background-color: transparent;
+}
+
+.drawer-display-pic{
+    background-image: url("res://inspius_logo");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 100%;
+    width: 90;
+    height:90;
+    margin-top: 8%;
+    margin-left: 10%;
+    border-width: 1;
+    border-color: #42a1ff;
+}
+
+
+
+
+  .action-bar-icon{
+    height: 35;
+    width: 35;
+}
+
+.action-bar-label {
+    background-color: black;
+}
+
+.action-bar{
+    width:100%;
+    height: 100%;
+    align-items: center;
+    background: transparent;
+}
+
+.header-name{
+    height:50%;
+    width:100%;
+    /* horizontal-align: center; */
+    font-size: 25;
+    text-align: center;
+    color: white;
+}
+
+.navigate-back-button{
+    horizontal-align:left;
+    background-image: url("res://ic_back");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

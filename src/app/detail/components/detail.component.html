@@ -1,0 +1,72 @@
+<GridLayout height="100%" width="100%">
+    <StackLayout height="6%" width="100%" class="action-bar-label">
+        <StackLayout verticalAlignment="middle" horizontalAlignment="left">
+            <Button class="navigation_button" width="8%"></Button>
+        </StackLayout>
+    </StackLayout>
+
+    <!-- <StackLayout orientation="vertical" backgroundColor="red">
+    <Button text="456" backgroundColor="green" verticalAlignment="top" horizontalAlignment="left"></Button>
+    <Image class="track-thumb" src="res://category_default" width="100%" height="50%"></Image>
+</StackLayout> -->
+
+    <GridLayout height="100%" width="100%" backgroundColor="red" verticalAlignment="top" rows="auto,auto,auto,auto"
+        columns="*">
+        <StackLayout row="0" col="0" width="100%" height="35%" (tap)="onTitleClick()">
+            <GridLayout width="100%" height="100%" rows="*" columns="*">
+                <Image row="0" col="0" stretch="aspectFill" src="res://category_default"></Image>
+                <StackLayout height="100%" width="100%" backgroundColor="transparent">
+                    <Button class="videoPlayButton" width="10%" marginTop="45%" (tap)="onTitleClick()"></Button>
+                </StackLayout>
+            </GridLayout>
+        </StackLayout>
+
+        <StackLayout verticalAlignment="middle" horizontalAlignment="left" row="1" col="0" backgroundColor="#ffffff"
+            width="100%" height="7.5%">
+            <Label margin="10" textWrap="true" text="Traffic Jams Mix"></Label>
+        </StackLayout>
+
+        <GridLayout columns="*,*" row="2" col="0" backgroundColor="#f1f1f1" height="12.5%">
+            <StackLayout margin="10" col="0" verticalAlignment="middle" horizontalAlignment="left">
+                <Label textWrap="true" text="Traffic Jams Mix"></Label>
+            </StackLayout>
+            <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="right">
+                <Label text="Author Rick Geez"></Label>
+            </StackLayout>
+        </GridLayout>
+        <StackLayout backgroundColor="#f1f1f1" row="3" col="0" height="50%">
+            <ScrollView>
+                <ListView [items]="items" (itemTap)="onCommentItemTap($event)" height="100%" separatorColor="gray">
+                    <ng-template let-item="item">
+                        <GridLayout rows="auto, auto" columns="auto, auto, auto">
+                            <Image margin="10" col="0" row="0" width="45" height="45" src="res://img_avatar"></Image>
+                            <StackLayout row="0" col="1" verticalAlignment="center">
+                                <Label class="site-template-title" text="Username"></Label>
+                                <Label class="site-template-description" text="Nice Pic"></Label>
+                            </StackLayout>
+                            <!-- <StackLayout margin="0,16,0,42" row="1" colSpan="2" backgroundColor="lightGray" height="1"></StackLayout> -->
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+            </ScrollView>
+        </StackLayout>
+    </GridLayout>
+</GridLayout>
+
+
+
+
+
+
+
+<!-- <GridLayout>
+    <ScrollView class="page">
+        <StackLayout class="home-panel">
+            <StackLayout class="home-panel" orientation="vertical">
+            <circularProgressBar size="50" progress="60"></circularProgressBar>
+                <Progress [value]="progress"></Progress>
+                <Button class="btn btn-primary" [text]="isPlaying ? 'Pause' : 'Play'" (tap)="playPause()"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</GridLayout> -->

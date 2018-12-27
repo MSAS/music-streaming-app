@@ -50,8 +50,9 @@ exports.myChangeEvent = function(args) {
 })
 export class IntroComponent implements OnInit, AfterViewInit {
 
+  done:boolean = false;
   constructor(private page: Page, private routerExtensions: RouterExtensions) {
-    this.page.actionBarHidden = true;
+    // this.page.actionBarHidden = true;
   }
 
   @ViewChild('myCarousel') carouselRef: ElementRef;

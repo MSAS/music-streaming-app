@@ -1,10 +1,42 @@
-import { Page } from "tns-core-modules/ui/page/page";
-import { Component, OnInit } from "@angular/core";
-import { Router, NavigationExtras, ActivatedRoute } from "@angular/router"
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, OnChanges, Input, OnDestroy } from "@angular/core";
+import { Router, ActivatedRoute, Params } from "@angular/router"
 import { RouterExtensions } from "nativescript-angular/router";
-import { alert, confirm, prompt, login, action, inputType } from "tns-core-modules/ui/dialogs/dialogs";
 import { Constants } from "../../models/constants";
-var Toast = require("nativescript-toast");
+import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
+import * as app from "application";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { registerElement } from "nativescript-angular/element-registry";
+import { CardView } from 'nativescript-cardview';
+import { User } from "~/app/models/user";
+import { Values } from "~/app/values/values";
+import * as Home from "~/app/app.component"
+import { fromObject, fromObjectRecursive, Observable, PropertyChangeData } from "tns-core-modules/data/observable";
+import { UserService } from "~/app/services/user.service";
+import { ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+class Item {
+    heading: string;
+    content: string;
+
+    constructor(heading: string, content: string) {
+        this.heading = heading;
+        this.content = content;
+    }
+}
+
+class RowItem {
+    item1: Item;
+    item2: Item;
+    odd: boolean = false;
+    constructor(item1: Item, item2: Item, odd: boolean) {
+        this.item1 = item1;
+        this.item2 = item2;
+        this.odd = odd;
+    }
+}
+
+registerElement("CardView", () => CardView);
 
 @Component({
     selector: "Home",
@@ -13,225 +45,272 @@ var Toast = require("nativescript-toast");
     styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-    list: string[] = ["res://fees_icon", "res://about", "res://notice",
-        "res://datesheet", "res://news", "res://sic_icon", "res://course_icon",
-        "res://syllabus", "res://result", "res://calender", "res://placement"];
+
+
 
     path: string;
     name: string = "Login";
-    public status: boolean = false;
+    size: number;
+    data = [];
+    source: Observable;
+
+    user;
+
+    imagePlayer: string;
+    imagePlayerFocussed: string;
+
+    rows: RowItem[];
+    public tabSelectedIndex: number;
+    public tabSelectedIndexResult: string;
+
+    loggedIn: boolean;
 
     public constant = new Constants();
 
-    constructor(private activityRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions) {
+    constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
+        // alert("con")
+        this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        this.data.push(new Item("Ivysaur", "soon."));
+        this.data.push(new Item("Venusaur", "people."));
+        this.data.push(new Item("Charmander", "fiercely."));
+        this.data.push(new Item("Charmeleon", "Charmeleon"));
+        this.data.push(new Item("Charizard", "Charizard"));
+        this.data.push(new Item("Squirtle", "Squirtle"));
+        this.data.push(new Item("Wartortle", "Wartortle"));
+        this.data.push(new Item("Blastoise", "Blastoise"));
+        if (this.userService.currentUser != null) {
+            this.loggedIn = true;
 
+        }
+        else {
+            this.loggedIn = false;
+        }
+
+
+        // if (Values.readString(Values.X_ROLE_KEY, "") != "" && Values.readString(Values.X_ROLE_KEY, "") != null && Values.readString(Values.X_ROLE_KEY, "") != undefined) {
+        //     this.user = this.userCheck();
+
+        //     if (this.user != null) {
+        //         this.userService.setUser(this.user, Values.readString(Values.X_ROLE_KEY, ""));
+        //         this.loggedIn = true;
+
+        //         // this.name = this.user.name;
+        //     }
+        // }
+        // else {
+        //     this.loggedIn = false;
+        // }
+
+        // this.userService.userChanges.subscribe(user => {
+        //     if (user != null) {
+        //         this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        //         this.data.push(new Item("Ivysaur", "soon."));
+        //         this.data.push(new Item("Venusaur", "people."));
+        //         this.data.push(new Item("Charmander", "fiercely."));
+        //         this.data.push(new Item("Charmeleon", "Charmeleon"));
+        //         this.data.push(new Item("Charizard", "Charizard"));
+        //         this.data.push(new Item("Squirtle", "Squirtle"));
+        //         this.data.push(new Item("Wartortle", "Wartortle"));
+        //         this.data.push(new Item("Blastoise", "Blastoise"));
+        //     }
+        //     else {
+        //         this.loggedIn = false;
+        //     }
+        // });
+
+        // this.userService.userChanges.subscribe(user => {
+        //     if (user != null) {
+        //         this.loggedIn = true;
+
+        //         this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        //         this.data.push(new Item("Ivysaur", "soon."));
+        //         this.data.push(new Item("Venusaur", "people."));
+        //         this.data.push(new Item("Charmander", "fiercely."));
+        //         this.data.push(new Item("Charmeleon", "Charmeleon"));
+        //         this.data.push(new Item("Charizard", "Charizard"));
+        //         this.data.push(new Item("Squirtle", "Squirtle"));
+        //         this.data.push(new Item("Wartortle", "Wartortle"));
+        //         this.data.push(new Item("Blastoise", "Blastoise"));
+        //     }
+        //     else {
+        //         this.loggedIn = false;
+        //     }
+        // });
+
+
+        this.imagePlayer = 'res://icon_video_play';
+        this.imagePlayerFocussed = 'res://icon_video_play_hover';
+        this.rows = this.converter(this.data)
+
+        // this.user = new User();
+
+    }
+
+    converter(items: Item[]): RowItem[] {
+        // var items:Item[];
+        var length: number = Math.trunc(items.length / 2);
+        var odd = false;
+        var item1: Item;
+        var item2: Item;
+        // var counter = 0;
+        if (items.length % 2 == 0) {
+            odd = false;
+        }
+        else {
+            odd = true;
+            length = length + 1;
+        }
+        var rows = [];
+        for (var i = 0; i < items.length; i++) {
+
+            if (i % 2 == 0 && items[i] != undefined) {
+                item1 = items[i];
+                if (i == items.length - 1) {
+                    rows.push(new RowItem(item1, undefined, true))
+                }
+            }
+            else if (i % 2 != 0 && items[i] != undefined) {
+                item2 = items[i];
+                rows.push(new RowItem(item1, item2, false));
+                // counter++;
+            }
+        }
+        return rows;
     }
 
     ngOnInit(): void {
-        this.activityRoute.queryParams.subscribe(params => {
-            this.status = JSON.parse(params["status"]);
-            if (this.status == true) {
-                this.name = "Profile";
-            }
-            else {
-                this.name = "Login";
-            }
-        });
+        // alert("init")
+        // if (Values.readString(Values.X_ROLE_KEY, "") != "" && Values.readString(Values.X_ROLE_KEY, "") != null && Values.readString(Values.X_ROLE_KEY, "") != undefined) {
+        //     // this.userService.setUser( Values.readString(Values.X_ROLE_KEY, ""))
+        //     this.getUser(Values.readString(Values.X_ROLE_KEY, ""));
+        // }
+
+
+        // if (this.userService.currentUser != null) {
+        //     this.loggedIn = true;
+        //     this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        //     this.data.push(new Item("Ivysaur", "soon."));
+        //     this.data.push(new Item("Venusaur", "people."));
+        //     this.data.push(new Item("Charmander", "fiercely."));
+        //     this.data.push(new Item("Charmeleon", "Charmeleon"));
+        //     this.data.push(new Item("Charizard", "Charizard"));
+        //     this.data.push(new Item("Squirtle", "Squirtle"));
+        //     this.data.push(new Item("Wartortle", "Wartortle"));
+        //     this.data.push(new Item("Blastoise", "Blastoise"));
+        //     this.rows = this.converter(this.data);
+        // }
+        // else {
+        //     this.loggedIn = false;
+        // }
+
+        this.rows = this.converter(this.data)
+
+
+
     }
 
-    // onHomeClick() {
-    //     if (this.status == false) {
-    //         this.routerExtensions.navigate(["/login"]);
-    //     }
-    //     else {
-    //         var toast = Toast.makeText("Clicked on home button");
-    //         toast.show();
-    //     }
-    // }
+    ngAfterViewInit(): void {
+        throw new Error("Method not implemented.");
+    }
 
-    // onDiscussionClick() {
-    //     if (this.status == false) {
-    //         this.routerExtensions.navigate(["/login"]);
-    //     }
-    //     else {
-    //         var toast = Toast.makeText("Clicked on discussion button");
-    //         toast.show();
-    //     }
-    // }
+    ngOnChanges(): void {
+        alert("changes");
+    }
 
-    // onAttendanceClick() {
-    //     if (this.status == false) {
-    //         this.routerExtensions.navigate(["/login"]);
-    //     }
-    //     else {
-    //         var toast = Toast.makeText("Clicked on attendance button");
-    //         toast.show();
-    //     }
-    // }
 
-    // onLeaveClick() {
-    //     if (this.status == false) {
-    //         this.routerExtensions.navigate(["/login"]);
-    //     }
-    //     else {
-    //         var toast = Toast.makeText("Clicked on leave button");
-    //         toast.show();
-    //     }
-    // }
+    onSelectedIndexChanged(args: SelectedIndexChangedEventData) {
+        if (args.oldIndex !== -1) {
+            const newIndex = args.newIndex;
+            if (newIndex === 0) {
+                this.tabSelectedIndexResult = "Profile Tab (tabSelectedIndex = 0 )";
+            } else if (newIndex === 1) {
+                this.tabSelectedIndexResult = "Stats Tab (tabSelectedIndex = 1 )";
+            } else if (newIndex === 2) {
+                this.tabSelectedIndexResult = "Settings Tab (tabSelectedIndex = 2 )";
+            }
+        }
+    }
 
-    // onFeesClick() {
-    //     this.path = this.list[0];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.FeesUrl),
-    //             "actionName": JSON.stringify(this.constant.FEES.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
+    getUser(xRoleKey: string) {
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            "x-tenant-code": "music",
+            "x-role-key": xRoleKey
+        });
+
+        this.http.get("http://ems-api-dev.m-sas.com/api/users/my", { headers: headers }).subscribe((res: any) => {
+
+            if (res.isSuccess) {
+                let result: any
+                result = res.data
+
+                this.userService.setUser(result, xRoleKey);
+                // this.routerExtensions.navigate(["/home"]);
+            }
+            else {
+                alert(res.error)
+                return null;
+            }
+        },
+            error => {
+                alert(error)
+                return null;
+            })
+    }
+
+    // userCheck() {
+
+    //     let headers = new HttpHeaders({
+    //         "Content-Type": "application/json",
+    //         "x-tenant-code": "music",
+    //         "x-role-key": Values.readString(Values.X_ROLE_KEY, "")
+    //     });
+
+
+    //     this.http.get("http://ems-api-dev.m-sas.com/api/users/my", { headers: headers }).subscribe((res: any) => {
+
+    //         if (res.isSuccess) {
+    //             let result: any
+    //             result = res.data
+    //             this.user = result;
+    //             // this.res = result;
+    //             this.userService.setUser(result, Values.readString(Values.X_ROLE_KEY, ""));
+    //             return result;
     //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onAboutClick() {
-    //     this.path = this.list[1];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.AboutUrl),
-    //             "actionName": JSON.stringify(this.constant.ABOUT.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
+    //         else {
+    //             alert(res.error)
+    //             this.user = null
+    //             return null;
     //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
+    //     },
+    //         error => {
+    //             alert(error)
+    //             this.user = null
+    //             return null;
+    //         })
     // }
 
-    // onNoticesClick() {
-    //     this.path = this.list[2];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.NoticesUrl),
-    //             "actionName": JSON.stringify(this.constant.NOTICE.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
+    changeTab() {
+        this.routerExtensions.navigate(["/login"]);
+    }
 
-    // onDateSheetClick() {
-    //     this.path = this.list[3];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.DateSheetUrl),
-    //             "actionName": JSON.stringify(this.constant.DATESHEET.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
+    onDrawerButtonTap(): void {
+        const sideDrawer = <RadSideDrawer>app.getRootView();
+        sideDrawer.showDrawer();
+    }
 
-    // onNewsClick() {
-    //     this.path = this.list[4];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.NewsUrl),
-    //             "actionName": JSON.stringify(this.constant.NEWS.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
+    cardClicked(item: Item, index: number) {
+        // alert(item.heading+item.content+index);
+        this.routerExtensions.navigate(["/detail"]);
+    }
 
-    // onSICClick() {
-    //     this.path = this.list[5];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.SicUrl),
-    //             "actionName": JSON.stringify(this.constant.SIC.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onCoursesClick() {
-    //     this.path = this.list[6];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.CourseUrl),
-    //             "actionName": JSON.stringify(this.constant.COURSE.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onSyllabusClick() {
-    //     this.path = this.list[7];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.SyllabusUrl),
-    //             "actionName": JSON.stringify(this.constant.SYLLABUS.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onResultClick() {
-    //     this.path = this.list[8];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.ResultUrl),
-    //             "actionName": JSON.stringify(this.constant.RESULT.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onCalenderClick() {
-    //     this.path = this.list[9];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.CalendarUrl),
-    //             "actionName": JSON.stringify(this.constant.CALENDAR.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onPlacementsClick() {
-    //     this.path = this.list[10];
-    //     let navigationExtras: NavigationExtras = {
-    //         queryParams: {
-    //             "url": JSON.stringify(this.constant.PlacementsUrl),
-    //             "actionName": JSON.stringify(this.constant.PLACEMENT.toUpperCase()),
-    //             "actionLogo": JSON.stringify(this.path)
-    //         }
-    //     };
-    //     this.routerExtensions.navigate(["/web"], navigationExtras
-    //     );
-    // }
-
-    // onLoginClick() {
-    //     if (this.status == false) {
-    //         this.routerExtensions.navigate(["/login"]);
-    //     }
-    //     else {
-    //         this.routerExtensions.navigate(["/profile"]);
-    //     }
-    // }
-
+    ngOnDestroy(): void {
+        alert("dead")
+    }
 }
+
+
 

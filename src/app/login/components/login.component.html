@@ -1,0 +1,176 @@
+<!-- <FlexboxLayout class="page" androidStatusBarBackground="transparent">
+
+    <GridLayout columns="*,*,*" backgroundColor="transparent" width="100%" height="10%">
+        <StackLayout marginTop="1%" marginLeft="6%" width="5.5%" height="100%" col="0" verticalAlignment="middle" horizontalAlignment="left">
+            <Button class="navigation_button" (tap)="nativegateBack()" width="100%" padding="10%" height="100%"></Button>
+        </StackLayout>
+        <StackLayout margin="10" col="1" verticalAlignment="middle" horizontalAlignment="center">
+            <Label class="forgot-password-label" text="Forgot Password"></Label>
+        </StackLayout>
+        <StackLayout margin="10" col="1" verticalAlignment="middle" horizontalAlignment="center">
+            </StackLayout>
+    </GridLayout>
+
+
+
+    <GridLayout class="grid-container" rows="auto, auto, auto, auto, auto">
+   
+        <StackLayout row="1" class="input-field" orientation="vertical">
+            <TextField [ngClass]="inputStyle" #inputPhoneNumber hint="Enter Phone Number" [ngModel]="[textPhoneNumber]"
+                [isEnabled]="!processing" keyboardType="number" autocorrect="false" autocapitalizationType="none"
+                (textChange)="onTextChange($event)"></TextField>
+            <TextField [ngClass]="inputStyle" #inputPhoneNumber hint="Enter Phone Number" [ngModel]="[textPhoneNumber]"
+                [isEnabled]="!processing" keyboardType="number" autocorrect="false" autocapitalizationType="none"
+                (textChange)="onTextChange($event)"></TextField>
+        </StackLayout>
+
+        <StackLayout row="2" class="login-button-container">
+            <Button text="Login" class="login-button" ng-click="showme=true" (tap)="onLoginClick()"></Button>
+        </StackLayout>
+        <AbsoluteLayout row="1" class="activity-indicator-container">
+            <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        </AbsoluteLayout>
+
+        <StackLayout row="3" orientation="horizontal" backgroundColor="black" (tap)="go(1);" marginTop="44%" opacity=".5"
+            width="100%" height="10%">
+            <Label marginLeft="6%" [class]="labelClass" text="Signin with Facebook"></Label>
+            <Button class="redirect-button" width="5.5%" height="5%"></Button>
+        </StackLayout>
+        <StackLayout row="4" orientation="horizontal" marginTop="5" (tap)="navigateToRegister()" backgroundColor="black"
+            opacity=".5" width="100%" height="10%">
+            <Label marginLeft="6%" [class]="labelClass" text="New to Rick Geez? Sign up now"></Label>
+            <Button backgroundColor="red" width="5.5%" height="5%"></Button>
+        </StackLayout>
+    </GridLayout>
+</FlexboxLayout> -->
+
+
+
+<GridLayout class="page">
+
+    <FlexboxLayout *ngIf="!forgot_password" width="100%" height="100%" androidStatusBarBackground="transparent">
+        <StackLayout>
+            <GridLayout class="grid-container" rows="auto,auto,auto, auto, auto, auto,auto">
+
+                <GridLayout row="0" columns="*,*,*" marginTop="1%" backgroundColor="transparent" width="100%" height="10%">
+                    <StackLayout marginLeft="6%" width="5.5%" height="50%" col="0" verticalAlignment="top"
+                        horizontalAlignment="left">
+                        <Button class="navigate-back-button" (tap)="nativegateBack()"></Button>
+                    </StackLayout>
+                    <StackLayout *ngIf="false" margin="10" col="1" verticalAlignment="top" horizontalAlignment="center">
+                        <Label class="forgot-password-label" text="Forgot Password"></Label>
+                    </StackLayout>
+                    <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="center">
+                    </StackLayout>
+                </GridLayout>
+
+                <GridLayout row="1" width="100%" height="auto" marginTop="10%" class="input-field" rows="auto, auto, auto, auto, auto, auto,auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
+                    <StackLayout row="0" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                        <StackLayout height="25" width="12.5%">
+                            <Image class="iconTextField" [src]="userNameIcon"></Image>
+                        </StackLayout>
+                        <TextField hint="Username" style.placeholderColor="#646464" (textChange)="userNameTextField($event)"
+                            autocorrect="false" (blur)="onBlurUserName($event)" (focus)="onFocusUserName($event)"
+                            (returnPress)="onReturn($event)"></TextField>
+                    </StackLayout>
+
+                    <StackLayout width="80%" row="1" [backgroundColor]="underlineUserName" verticalAlignment="middle"
+                        height="2px">
+                        <!-- <Image height="100%" backgroundColor="white"></Image> -->
+                    </StackLayout>
+
+                    <StackLayout row="2" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                        <StackLayout height="25" width="12.5%">
+                            <Image class="iconTextField" [src]="passwordIcon"></Image>
+                        </StackLayout>
+                        <TextField hint="Password" style.placeholderColor="#646464" (textChange)="passwordTextField($event)"
+                            autocorrect="false" (blur)="onBlurPassword($event)" (focus)="onFocusPassword($event)"
+                            (returnPress)="onReturn($event)"></TextField>
+                    </StackLayout>
+
+                    <StackLayout width="80%" row="3" [backgroundColor]="underlinePassword" verticalAlignment="middle"
+                        height="2px">
+                        <!-- <Image height="100%" [src]="underlineEmail"></Image> -->
+                    </StackLayout>
+                </GridLayout>
+
+                <StackLayout row="2" class="login-button-container" (tap)="onLoginClick()">
+                    <Button text="Login" class="login-button" ng-click="showme=true" (tap)="onLoginClick()"></Button>
+                </StackLayout>
+                <AbsoluteLayout row="2" class="activity-indicator-container">
+                    <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+                </AbsoluteLayout>
+
+                <StackLayout marginTop="2%" row="3" backgroundColor="transparent" verticalAlignment="top"
+                    horizontalAlignment="center">
+                    <Label class="forgot-password-label" marginLeft="6%" (tap)="nativateToForgotPassword()" text="Forgot Password"></Label>
+                </StackLayout>
+
+                <StackLayout row="4" orientation="horizontal" backgroundColor="black" (tap)="go(1);" marginTop="20%"
+                    opacity=".5" width="100%" height="10%">
+                    <Label marginLeft="6%" [class]="labelClass" text="Signin with Facebook"></Label>
+                    <Button class="redirect-button" width="5.5%" height="5%"></Button>
+                </StackLayout>
+                <StackLayout row="5" orientation="horizontal" marginTop="5" (tap)="navigateToRegister()"
+                    backgroundColor="black" opacity=".5" width="100%" height="10%">
+                    <Label marginLeft="6%" [class]="labelClass" text="New to Rick Geez? Sign up now"></Label>
+                    <Button backgroundColor="red" width="5.5%" height="5%"></Button>
+                </StackLayout>
+            </GridLayout>
+
+        </StackLayout>
+    </FlexboxLayout>
+
+
+
+
+    <FlexboxLayout *ngIf="forgot_password" width="100%" height="100%" androidStatusBarBackground="transparent">
+        <StackLayout>
+            <GridLayout class="grid-container" rows="auto,auto,auto, auto, auto">
+
+                <!-- <GridLayout marginTop="1%" marginLeft="6%" width="5.5%" height="5%">
+                        <Button row="0" class="navigate-back-button" (tap)="nativegateBack()"></Button>
+                    </GridLayout> -->
+
+                <GridLayout row="0" columns="*,*,*" marginTop="1%" backgroundColor="transparent" width="100%" height="10%">
+                    <StackLayout marginLeft="6%" width="5.5%" height="50%" col="0" verticalAlignment="top"
+                        horizontalAlignment="left">
+                        <Button class="navigate-back-button" (tap)="navigateFromForgotPassword()"></Button>
+                    </StackLayout>
+                    <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="center">
+                        <Label class="forgot-password-label" text="Forgot Password"></Label>
+                    </StackLayout>
+                    <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="center">
+                    </StackLayout>
+                </GridLayout>
+
+                <StackLayout row="1" orientation="vertical" width="100%" horizontalAlignment="center">
+                    <Label class="forgot-password-policy" marginLeft="6%" [text]="emailTerm"></Label>
+                    <Label class="forgot-password-policy" marginLeft="6%" [text]="emailTerm2"></Label>
+                </StackLayout>
+
+                <StackLayout row="2" width="80%" backgroundColor="transparent" height="auto" orientation="horizontal">
+                    <StackLayout height="25" width="12.5%">
+                        <Image class="iconTextField" [src]="emailIcon"></Image>
+                    </StackLayout>
+                    <TextField hint="Email" style.placeholderColor="#646464" (textChange)="emailTextField($event)"
+                        autocorrect="false" (blur)="onBlurEmail($event)" (focus)="onFocusEmail($event)" (returnPress)="onReturn($event)"></TextField>
+                </StackLayout>
+
+                <StackLayout width="80%" row="3" [backgroundColor]="underlineEmail" verticalAlignment="middle" height="2px">
+                    <!-- <Image height="100%" [src]="underlineEmail"></Image> -->
+                </StackLayout>
+
+
+                <StackLayout row="4" class="login-button-container">
+                    <Button text="Submit" class="login-button" ng-click="showme=true" (tap)="forgotPasswordSubmit()"></Button>
+                </StackLayout>
+                <AbsoluteLayout row="4" class="activity-indicator-container">
+                    <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+                </AbsoluteLayout>
+            </GridLayout>
+
+        </StackLayout>
+    </FlexboxLayout>
+
+</GridLayout>

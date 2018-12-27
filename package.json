@@ -1,16 +1,16 @@
 {
   "nativescript": {
-    "id": "org.nativescript.sampleFirebaseIntegration",
+    "id": "com.dj.rick.geez",
     "tns-ios": {
       "version": "4.2.0"
     },
     "tns-android": {
-      "version": "4.2.0"
+      "version": "5.0.0"
     }
   },
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
-  "repository": "<fill-your-repository-here>",
+  "repository": "http://gitlab.m-sas.com/at/music-streaming-app.git",
   "dependencies": {
     "@angular/animations": "~6.1.0",
     "@angular/cdk": "^6.4.7",
@@ -28,11 +28,17 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "nativescript-angular": "~6.1.0",
+    "nativescript-audio-ssi": "^4.0.6",
+    "nativescript-cardview": "^3.1.1",
     "nativescript-carousel": "^4.0.2",
-    "nativescript-loading-indicator": "^2.4.0",
-    "nativescript-localstorage": "^2.0.0",
-    "nativescript-theme-core": "~1.0.4",
-    "nativescript-toast": "^1.4.6",
+    "nativescript-progressbar": "^1.0.2",
+    "nativescript-ui-autocomplete": "^3.10.3",
+    "nativescript-ui-calendar": "^3.9.1",
+    "nativescript-ui-chart": "^3.10.0",
+    "nativescript-ui-dataform": "^3.9.0",
+    "nativescript-ui-gauge": "3.7.1",
+    "nativescript-ui-listview": "^5.0.0",
+    "nativescript-ui-sidedrawer": "^4.2.0",
     "ng2-file-upload": "^1.3.0",
     "ng2-jsoneditor": "^0.1.1",
     "ng2-toasty": "^4.0.3",
@@ -44,6 +50,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.1.10",
+    "@fortawesome/fontawesome-free": "^5.5.0",
     "@nativescript/schematics": "~0.3.0",
     "@ngtools/webpack": "~6.2.0",
     "@types/jasmine": "^2.8.9",

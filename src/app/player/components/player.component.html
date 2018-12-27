@@ -1,0 +1,79 @@
+<!-- <Page class="page" height="100%" width="100%" (tap)="onButtonTap()"> -->
+<StackLayout class="page" height="100%" width="100%">
+
+    <!-- 
+    <GridLayout height="200" width="200" rows="auto" columns="auto">
+        <StackLayout #stack class="stack" row="0" col="0" height="100%" width="100%" backgroundColor="red" (tap)="playAnimation()">
+            <AbsoluteLayout row="0" col="0" height="100%" width="100%" backgroundColor="blue">
+                <Button top="50%" left="50%"></Button>
+            </AbsoluteLayout>
+        </StackLayout>
+    </GridLayout> -->
+    <GridLayout height="100%" width="100%" backgroundColor="black" opacity=".7" rows="auto, auto" columns="auto">
+
+
+        <StackLayout verticalAlignment="middle" horizontalAlignment="center" width="250" height="250" row="0" col="0" opacity="1" (tap)="play()">
+            <GridLayout width="100%" height="100%" rows="auto,*" columns="*" (tap)="play()">
+                <StackLayout #stack margin="10" class="stack" height="200" width="200" row="0" col="0"></StackLayout>
+                <circularProgressBar size="250" [progress]="progress"></circularProgressBar>
+                <StackLayout height="50" width="50" horizontalAlignment="center" verticalAlignment="middle"
+                    borderRadius="100%" backgroundColor="red">
+                    <Button #button class="button" (tap)="playPause()"></Button>
+                </StackLayout>
+                <GridLayout columns="*,*" width="250" height="20" verticalAlignment="bottom" marginBottom="5">
+                    <StackLayout col="0" marginLeft="25">
+                        <Label #labelRem [text]="remainingTime" color="white"></Label>
+                    </StackLayout>
+
+                    <StackLayout col="1" horizontalAlignment="right" marginRight="25">
+                        <Label #labelPas [text]="passedTime" color="white"></Label>
+                    </StackLayout>
+
+                </GridLayout>
+            </GridLayout>
+
+        </StackLayout>
+
+
+
+
+
+        <!-- <Button (tap)="playPause()"></Button> -->
+        <!-- <Button (tap)="play()"></Button> -->
+        <!-- 
+        <GridLayout backgroundColor="pink" row="1" col="0" rows="auto" colums="*, *">
+            <StackLayout row="0" col="0"></StackLayout>
+            <StackLayout row="0" col="1"></StackLayout>
+
+        </GridLayout> -->
+
+
+        <!-- <circularProgressBar size="225" [progress]="progress[0]"></circularProgressBar> -->
+        <!-- <StackLayout class="m-y-15"></StackLayout> -->
+        <!-- <circularProgressBar [size]="size[1]" [progress]="progress[1]"></circularProgressBar> -->
+        <!-- <StackLayout class="m-y-15"></StackLayout> -->
+
+    </GridLayout>
+
+</StackLayout>
+
+
+
+
+
+
+
+
+
+
+<!-- <GridLayout>
+    <ScrollView class="page">
+        <StackLayout class="home-panel">
+            <StackLayout class="home-panel" orientation="vertical">
+            <circularProgressBar size="50" progress="60"></circularProgressBar>
+                <Progress [value]="progress"></Progress>
+                <Button class="btn btn-primary" [text]="isPlaying ? 'Pause' : 'Play'" (tap)="playPause()"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</GridLayout> -->

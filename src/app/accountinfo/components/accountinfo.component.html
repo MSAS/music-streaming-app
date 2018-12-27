@@ -1,0 +1,70 @@
+<FlexboxLayout width="100%" height="100%" androidStatusBarBackground="transparent">
+    <StackLayout>
+        <GridLayout width="100%" height="100%" rows="auto,auto,*" backgroundColor="#f1f1f1">
+
+            <GridLayout row="0" columns="*,auto,*" backgroundColor="black" width="100%" height="8%">
+                <StackLayout style="box-sizing:border-box;" paddingLeft="6%" paddingRight="1%" width="11.5%" height="60%"
+                    backgroundColor="transparent" col="0" verticalAlignment="middle" horizontalAlignment="left">
+                    <Button class="navigate-back-button" (tap)="nativegateBack()"></Button>
+                </StackLayout>
+
+                <StackLayout margin="10" col="1" verticalAlignment="middle" backgroundColor="transparent"
+                    horizontalAlignment="center">
+                    <Label text="EDIT MY ACCOUNT INFO" color="white"></Label>
+                </StackLayout>
+                <StackLayout margin="10" col="1" verticalAlignment="middle" horizontalAlignment="center">
+                </StackLayout>
+            </GridLayout>
+
+            <GridLayout width="100%" height="auto" marginTop="2%" row="1" class="input-field" rows="auto, auto, auto, auto, auto, auto,auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
+                <TextField row="0" [text]="firstName" marginLeft="5%" hint="First Name (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="firstNameTextField($event)"></TextField>
+                <StackLayout row="1" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="2" [text]="lastName" marginLeft="5%" hint="Last Name (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="lastNameTextField($event)"></TextField>
+                <StackLayout row="3" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="4" [text]="email" marginLeft="5%" hint="Email (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="emailTextField($event)"></TextField>
+                <StackLayout row="5" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="6" [text]="phone" marginLeft="5%" hint="Phone Number (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="phoneTextField($event)"></TextField>
+                <StackLayout row="7" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="8" [text]="address" marginLeft="5%" hint="Address Line (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="addressTextField($event)"></TextField>
+                <StackLayout row="9" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="10" [text]="city" marginLeft="5%" hint="City (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="cityTextField($event)"></TextField>
+                <StackLayout row="11" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="12" [text]="country" marginLeft="5%" hint="First Name" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="countryTextField($event)"></TextField>
+                <StackLayout row="13" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+
+                <TextField row="14" [text]="pinCode" marginLeft="5%" hint="Post/Zip code (*)" style.placeholderColor="#646464"
+                    autocorrect="false" (returnPress)="onReturn($event)" (textChange)="pinTextField($event)"></TextField>
+                <StackLayout row="15" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
+                </StackLayout>
+            </GridLayout>
+
+            <GridLayout row="2" height="100%" width="100%" backgroundColor="#f1f1f1">
+                <StackLayout verticalAlignment="bottom" height="20%" width="100%" backgroundColor="#cc3333">
+                    <Button text="Submit" style="color: white; z-index: 0;" (tap)="onSubmit()" backgroundColor="transparent"
+                        height="100%" width="100%"></Button>
+                </StackLayout>
+            </GridLayout>
+
+        </GridLayout>
+    </StackLayout>
+</FlexboxLayout>

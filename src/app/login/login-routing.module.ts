@@ -1,0 +1,19 @@
+import { NgModule } from "@angular/core";
+import { Routes } from "@angular/router";
+import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { LoginComponent } from "./components/login.component";
+
+// const routes: Routes = [
+//     { path: "", redirectTo: "/register", pathMatch: "full" },
+//     { path: "register", component: RegisterComponent },
+// ];
+
+const routes: Routes = [
+    { path: "", component: LoginComponent }
+];
+
+@NgModule({
+    imports: [NativeScriptRouterModule.forChild(routes)],
+    exports: [NativeScriptRouterModule]
+})
+export class LoginRoutingModule { }

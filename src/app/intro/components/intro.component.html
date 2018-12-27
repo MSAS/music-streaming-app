@@ -1,61 +1,46 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" androidStatusBarBackground="black" loaded="pageLoaded" xmlns:ns="nativescript-carousel">
-    <GridLayout class="background" left="0" top="0">
-        <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false" android:indicatorAlignment="top" showIndicator="true"
-            height="100%" width="100%" indicatorAnimation="DROP" pageChanged="myChangeEvent" indicatorColor="white" indicatorColorUnselected="#ee9a68">
+<!-- <Page xmlns="http://schemas.nativescript.org/tns.xsd" androidStatusBarBackground="black" loaded="pageLoaded" xmlns:ns="nativescript-carousel"> -->
+    <GridLayout height="100%" width="100%" class="background" left="0" top="0">
+        <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false" android:indicatorAlignment="bottom" showIndicator="true"
+            height="100%" width="100%" pageChanged="myChangeEvent" indicatorColor="#44e9f5" indicatorColorUnselected="gray">
             <CarouselItem>
                 <FlexboxLayout class="splash1_background" backgroundImage="res://splash1" flexDirection="column">
                     <StackLayout class="content-container">
-                        <Label class="splash_contentHeading" text="100+ Courses"></Label>
-                        <Label class="splash_contentHeading" text="Available"></Label>
-                        <Label class="splash_contentDetail" marginTop="20" text="Guru Kashi University provides many"></Label>
-                        <Label class="splash_contentDetail" text="programs ranging from undergraduate to"></Label>
-                        <Label class="splash_contentDetail" text="post graduate and Doctorate Degree in"></Label>
-                        <Label class="splash_contentDetail" text="both non-Technical and Technical Fields."></Label>
                     </StackLayout>
                 </FlexboxLayout>
             </CarouselItem>
             <CarouselItem>
                 <FlexboxLayout class="splash2_background" backgroundImage="res://splash2" flexDirection="column">
                     <StackLayout class="content-container">
-                        <Label class="splash_contentHeading" text="Excellent"></Label>
-                        <Label class="splash_contentHeading" text="Infrastructure"></Label>
-                        <Label class="splash_contentDetail" marginTop="20" text="Cooperative and friendly environment"></Label>
-                        <Label class="splash_contentDetail" text="for the students. Crime-free and safe in"></Label>
-                        <Label class="splash_contentDetail" text="comparison to other universities."></Label>
                     </StackLayout>
                 </FlexboxLayout>
             </CarouselItem>
             <CarouselItem>
                 <FlexboxLayout class="splash3_background" backgroundImage="res://splash3" flexDirection="column">
                     <StackLayout class="content-container">
-                        <Label class="splash_contentHeading" text="20000+ Students"></Label>
-                        <Label class="splash_contentHeading" text="& Faculty"></Label>
-                        <Label class="splash_contentDetail" marginTop="20" text="Fast and convenient bus facility is"></Label>
-                        <Label class="splash_contentDetail" text="available from most corners of the"></Label>
-                        <Label class="splash_contentDetail" text="Punjab till 100km areas."></Label>
                     </StackLayout>
                 </FlexboxLayout>
             </CarouselItem>
             <CarouselItem>
                 <FlexboxLayout class="splash4_background" backgroundImage="res://splash4" flexDirection="column">
                     <StackLayout class="content-container">
-                        <Label class="splash_contentHeading" text="100% Placement"></Label>
-                        <Label class="splash_contentHeading" text="Guarantee"></Label>
-                        <Label class="splash_contentDetail" marginTop="20" text="Top national as well as multinational"></Label>
-                        <Label class="splash_contentDetail" text="companies have shown interest in"></Label>
-                        <Label class="splash_contentDetail" text="Guru Kashi University and recruited our"></Label>
-                        <Label class="splash_contentDetail" text="students in different developed sectors."></Label>
                     </StackLayout>
                 </FlexboxLayout>
             </CarouselItem>
         </Carousel>
-        <AbsoluteLayout class="gkuLogo-container">
-            <StackLayout class="logo-background" orientation="horizontal" backgroundImage="res://rectangle" horizontalAlignment="center">
-                <Image class="gku_logo" horizontalAlignment="center" src="res://gku_logo"></Image>
-            </StackLayout>
-        </AbsoluteLayout>
+  
         <AbsoluteLayout class="fab-button-container">
-            <Button class="fab-button" text="CONTINUE" (tap)="onFabTap()"></Button>
+            <StackLayout height="100%" width="100%" orientation="horizontal" backgroundColor="transparent">
+                    <Button class="fab-button-skip" text="SKIP" (tap)="onFabTap()"></Button>
+                    <Button *ngIf="done" class="fab-button-done" text="DONE" (tap)="onFabTap()"></Button>
+                    <Button *ngIf="!done" class="fab-button-done" (tap)="onFabTap()"></Button>
+    
+        </StackLayout>
         </AbsoluteLayout>
     </GridLayout>
-</Page>
+<!-- </Page> -->
+
+
+
+
+
+<!-- <StackLayout height="50%" width="50%" backgroundColor="red" (tap)="onFabTap()"></StackLayout> -->

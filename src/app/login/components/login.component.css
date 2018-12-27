@@ -1,0 +1,190 @@
+TextField {
+  border-width: 0 0 .7 0;
+  border-bottom-color:transparent;
+}
+
+.iconTextField{
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.page { 
+     background-position: center;
+     background-image: url("res://splash");
+     background-repeat: no-repeat;
+     background-size: cover;
+     background-position: center;
+     width:100%;
+     height:100%;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    strech:fill;
+    filter: blur(5px);
+  }
+  .form {
+    flex-grow: 2;
+    margin-left: 15;
+    margin-right:15;
+    margin-top:20;
+  }
+
+  .forgot-password-label{
+    font-size: 15;
+    color: white;
+  }
+  
+  .grid-container{
+    background: transparent;
+    border-radius: 10;
+  }
+  
+  .logo {
+    height: 90;
+    font-weight: bold;
+  }
+  .header-name {
+    horizontal-align: center;
+    font-size: 25;
+    text-align: center;
+    color: white;
+  }
+  .header-detail{
+    horizontal-align: center;
+    font-size: 15;
+    text-align: center;
+    margin-bottom: 10;
+    color: #74bfff;
+  }
+  
+  .logo-container{
+    margin-top: 30%;
+    margin-bottom: 10;
+  }
+  
+  .input-field {
+    width: 90%;
+    margin-top:20;
+  }
+  
+  .inputActive {
+    font-size: 15;
+    placeholder-color: #A8A8A8;
+    border-bottom-color: #233f5a;
+    border-bottom-width:2;
+  }
+  
+  .inputInactive {
+    font-size: 15;
+    placeholder-color: #A8A8A8;
+    border-bottom-color: #A8A8A8;
+    border-bottom-width:1;
+  }
+  
+  .input:disabled {
+    background-color: white;
+    opacity: 0.5;
+  }
+  
+  .user-button{
+    width:50%;
+  }
+  
+  .btn-employee{
+    height: 40;
+    width:80%;
+    background-color: #233f5a;
+    border-radius: 10;
+    font-size: 15;
+    color: white;
+  }
+  
+  .btn-student{
+    height: 40;
+    width:80%;
+    /* background-color: #233f5a; */
+    border-radius: 10;
+    font-size: 15;
+    color:#233f5a;
+    border-color:#233f5a; 
+    border-width: 1;
+  }
+  
+  .login-button{
+    /* margin-top:15; */
+    /* border-radius: 20; */
+    background-color: transparent;
+    color: white;
+    z-index: 0;
+    /* margin-bottom:15; */
+  }
+
+  .login-button-container{
+    margin-top:15;
+    border-radius: 20;
+    background-color: #cc3333;
+    width: 75%;
+  }
+  
+  .profile-button{
+    margin-top:15;
+    margin-bottom:15;
+  }
+  
+  .btn-primary {
+    height: 40;
+    width:40%;
+    background-color: #ee9a68;
+    border-radius: 10;
+    font-size: 15;
+  }
+  
+  .btn-primary:disabled {
+    opacity: 0.5;
+  }
+  
+  .bold {
+    color: #000000; 
+  }
+  
+  .activity-indicator-container{
+    horizontal-align: center; 
+    vertical-align: center;
+  }
+  
+  .activity-indicator{
+    width:50;
+    height:50;
+    horizontal-align: center;
+  }
+
+  .labels{
+      color:white;
+      vertical-align: middle
+  }
+
+  .labelsActive{
+    color:red;
+    vertical-align: middle
+}
+
+  .redirect-button{
+    horizontal-align:right;
+    background-image: url("res://icon_arrow_right");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .redirect-button:active{
+    horizontal-align:right;
+    background-image: url("res://icon_arrow_right");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+
+  .forgot-password-policy{
+    color:white;
+  }
