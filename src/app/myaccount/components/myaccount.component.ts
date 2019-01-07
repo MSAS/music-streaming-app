@@ -4,6 +4,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "application";
 import { ActivatedRoute } from "@angular/router";
 import { ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
+import { UserService } from "~/app/services/user.service";
 
 @Component({
     selector: "MyAccount",
@@ -15,9 +16,26 @@ export class MyAccountComponent implements OnInit {
 
     user;
 
-    constructor(private routerExtensions: RouterExtensions, private activatedRoute: ActivatedRoute) {
+    constructor(private routerExtensions: RouterExtensions, private activatedRoute: ActivatedRoute,private userService:UserService) {
+
+        this.userService.actionBarState(true)
+        this.userService.actionBarText('My Account')
+       
         this.activatedRoute.queryParams.subscribe(params => {
             this.user = params["user"];
+        })
+
+        this.userService.userChanges.subscribe(user => {
+            if (user == null || user == undefined) {
+
+                let extendedNavigationExtras: ExtendedNavigationExtras = {
+                    queryParams: {
+                        "user": null
+                    },
+                };
+                this.routerExtensions.navigate(["/home"], extendedNavigationExtras)
+                // this.loggedIn = false;
+            }
         })
     }
 
@@ -31,6 +49,7 @@ export class MyAccountComponent implements OnInit {
                 "user": this.user
             }
         };
+        this.userService.homeSelector(false)
         this.routerExtensions.navigate(["/accountInfo"], extendedNavigationExtras);
     }
 

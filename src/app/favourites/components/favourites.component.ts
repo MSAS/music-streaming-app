@@ -1,16 +1,18 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router"
 import { RouterExtensions } from "nativescript-angular/router";
 import { Constants } from "../../models/constants";
-import * as app from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { registerElement } from "nativescript-angular/element-registry";
-import { CardView } from 'nativescript-cardview';
-import { User } from "~/app/models/user";
 import { Values } from "~/app/values/values";
-import { fromObject, fromObjectRecursive, Observable, PropertyChangeData } from "tns-core-modules/data/observable";
+import { Observable, EventData } from "tns-core-modules/data/observable";
 import { UserService } from "~/app/services/user.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import * as app from "application";
+import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
+import { Song } from "~/app/models/song";
+import { Page } from "tns-core-modules/ui/page/page";
+import { ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
+
 
 class Item {
     heading: string;
@@ -40,9 +42,9 @@ class RowItem {
     styleUrls: ['./favourites.component.css']
 })
 
-export class FavouritesComponent implements OnInit, OnDestroy {
+export class FavouritesComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
+    page: Page
 
     path: string;
     name: string = "Login";
@@ -50,7 +52,8 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     size: number;
     data = [];
     source: Observable;
-
+    songs = new ObservableArray();
+    viewModel;
     user;
 
     imagePlayer: string;
@@ -65,31 +68,46 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     public constant = new Constants();
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
+        this.data = [];
+
+        this.data.push(new Item("Squirtle", "Squirtle"));
+        this.data.push(new Item("Wartortle", "Wartortle"));
+        this.data.push(new Item("Blastoise", "Blastoise"));
+
+        this.userService.actionBarState(true)
+        this.userService.actionBarText('Favourites')
+
         this.activatedRoute.queryParams.subscribe(params => {
-            this.user = params["user"];
+            this.user = params["user"]
         })
 
-        if (Values.readString(Values.X_ROLE_KEY, "") != "" && Values.readString(Values.X_ROLE_KEY, "") != null && Values.readString(Values.X_ROLE_KEY, "") != undefined) {
-            this.getUser(Values.readString(Values.X_ROLE_KEY, ""));
+        if (this.user != null) {
+            this.loggedIn = true;
+            //getUserData
+        }
+        else {
+            if (Values.readString(Values.X_ROLE_KEY, "") != "") {
+                this.loggedIn = true;
+                //getUserData
+            }
+            else {
+                this.loggedIn = false;
+            }
         }
 
 
         this.userService.userChanges.subscribe(user => {
-            if (user != null) {
-                this.loggedIn = true;
-                this.data.push(new Item("Bulbasaur", "Bulbasaur"));
-                this.data.push(new Item("Ivysaur", "soon."));
-                this.data.push(new Item("Venusaur", "people."));
-                this.data.push(new Item("Charmander", "fiercely."));
-            }
-            else {
-                this.loggedIn = false;
-                this.name = "";
-            }
-        });
+            if (user == null || user == undefined) {
 
-
-        this.rows = this.converter(this.data);
+                let extendedNavigationExtras: ExtendedNavigationExtras = {
+                    queryParams: {
+                        "user": null
+                    },
+                };
+                this.routerExtensions.navigate(["/home"], extendedNavigationExtras)
+                // this.loggedIn = false;
+            }
+        })
 
         this.imagePlayer = 'res://icon_video_play';
         this.imagePlayerFocussed = 'res://icon_video_play_hover';
@@ -128,9 +146,106 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         return rows;
     }
 
-    ngOnInit(): void {
+    pageLoaded(args: EventData) {
+        this.page = args.object as Page;
+        this.getFavouriteSongs(Values.readString(Values.X_ROLE_KEY, ""));
+        // this.loggedIn = true;
+        // const items = new ObservableArray();
 
+        // for (let loop = 0; loop < 200; loop++) {
+        //     items.push({ value: "test " + loop.toString() });
+        // }
+
+        // this.getCategoryFolders("jjjjj");
+
+        console.log("Page Loaded called")
     }
+
+
+    pageUnloaded() {
+        // alert("dying")
+        this.songs = new ObservableArray();
+    }
+
+    ngOnInit(): void {
+        console.log("initFav")
+        if (this.rows == undefined || this.rows == null) {
+            this.data = [];
+            this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+            this.data.push(new Item("Ivysaur", "soon."));
+            this.data.push(new Item("Venusaur", "people."));
+        }
+        this.rows = this.converter(this.data)
+    }
+
+    ngAfterViewInit(): void {
+        if (this.rows == undefined || this.rows == null) {
+            this.data = [];
+            this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+            this.data.push(new Item("Ivysaur", "soon."));
+            this.data.push(new Item("Venusaur", "people."));
+        }
+        this.rows = this.converter(this.data)
+    }
+
+
+
+    getFavouriteSongs(xRoleKey: string) {
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            "x-tenant-code": "music",
+            "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
+        });
+
+        this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?isFavourite=true", { headers: headers }).subscribe((res: any) => {
+
+            if (res.isSuccess) {
+
+                if (res.items != undefined && res.items != null) {
+                    for (var i = 0; i < res.items.length; i++) {
+                        if (res.items[i].mimeType == "audio/mp3")
+                            this.songs.push(new Song(<Song>res.items[i]))
+                    }
+                }
+                // this.items.push(new Folder(res.items));
+
+                // this.items.push(new Item("Bulbasaur", "Bulbasaur"));
+                // this.items.push(new Item("Ivysaur", "soon."));
+                // this.items.push(new Item("Venusaur", "people."));
+                this.viewModel = new Observable();
+                this.viewModel.set("items", this.songs);
+
+                this.page.bindingContext = this.viewModel;
+
+
+
+                // let result: Folder[];
+                // result = <Folder[]>res.items;
+                // return result;
+                // this.categoryFolders = result;
+                // console.log("api:", this.categoryFolders)
+
+                // for (var i = 0; i < this.categoryFolders.length; i++) {
+                //     this.data.push(new Item("Squirtle", "Squirtle"));
+                // }
+
+                // console.log("data", this.data)
+                // this.categoryFolders = result;
+                // this.userService.setUser(result, xRoleKey);
+                // this.routerExtensions.navigate(["/home"]);
+            }
+            else {
+                alert(res.error)
+                return null;
+            }
+        },
+            error => {
+                alert(error)
+                return null;
+            })
+    }
+
+
 
     getUser(xRoleKey: string) {
 
@@ -165,8 +280,23 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         sideDrawer.showDrawer();
     }
 
-    cardClicked(item: Item, index: number) {
-        this.routerExtensions.navigate(["/detail"]);
+    cardClicked(song: Song) {
+        // alert(item.heading+item.content+index);
+
+        let extendedNavigationExtras: ExtendedNavigationExtras = {
+            queryParams: {
+                "id": song.id,
+                "name": song.name,
+                "thumbnail": song.thumbnail,
+                "url": song.url,
+                "isFavourite":song.isFavourite,
+                "views":song.views
+            },
+        };
+        this.routerExtensions.navigate(["/detail"], extendedNavigationExtras)
+
+
+        // this.routerExtensions.navigate(["/detail"]);
     }
 
     ngOnDestroy(): void {

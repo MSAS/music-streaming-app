@@ -167,3 +167,30 @@
     /* animation-timing-function: linear; */
     /* animation-iteration-count: infinite; */
 }
+
+.rewind-button {
+    /* border-radius: 100%; */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+    background-image: url("res://rewind");
+    background-repeat: no-repeat;
+    background-position: center;
+    /* padding: 8; */
+    /* animation-name: playtopause; */
+    /* animation-duration: 3s; */
+    /* animation-timing-function: linear; */
+    /* animation-iteration-count: infinite; */
+}
+
+.forward-button {
+    /* border-radius: 100%; */
+    background-repeat: no-repeat;
+    background-position: center;
+    /* padding: 8; */
+    background-image: url("res://forward");
+    /* background-size: cover; */
+    /* animation-name: playtopause; */
+    /* animation-duration: 3s; */
+    /* animation-timing-function: linear; */
+    /* animation-iteration-count: infinite; */
+}

@@ -1,9 +1,11 @@
+import { Pic } from "./pic";
+
 export class Profile {
 
     firstName: string;
     lastName: string;
     gender: string;
-    pic: string;
+    pic: Pic;
 
     constructor(obj?: any) {
         if (!obj) {

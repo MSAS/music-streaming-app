@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { Page, EventData } from "tns-core-modules/ui/page/page";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { RouterExtensions, ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
 import { Values } from "~/app/values/values";
 import { ActivatedRoute } from "@angular/router";
+import { UserService } from "~/app/services/user.service";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { User } from "~/app/models/user";
 
 
 @Component({
@@ -18,14 +21,36 @@ export class ChangePasswordComponent implements OnInit {
     background_color;
     textField: TextField
     user;
+    currentPasswordText = '';
+    newPasswordText = '';
+    confirmNewPasswordText = '';
 
-    constructor(private page: Page, private routerExtensions: RouterExtensions,private activatedRoute:ActivatedRoute) {
+    constructor(private page: Page, private routerExtensions: RouterExtensions, private activatedRoute: ActivatedRoute, private userService: UserService, private http: HttpClient) {
+      
+        this.userService.actionBarState(false)
+        // this.userService.actionBarText('DJ Rick Geez')
+        this.userService.homeSelector(false);
+
         // this.page.actionBarHidden = true;
         this.background_color = 'white';
         this.border_color = 'orange';
         this.activatedRoute.queryParams.subscribe(params => {
             this.user = params["user"];
         })
+
+        this.userService.userChanges.subscribe(user => {
+            if (user == null || user == undefined) {
+
+                let extendedNavigationExtras: ExtendedNavigationExtras = {
+                    queryParams: {
+                        "user": null
+                    },
+                };
+                this.routerExtensions.navigate(["/home"], extendedNavigationExtras)
+                // this.loggedIn = false;
+            }
+        })
+
     }
 
     ngOnInit(): void {
@@ -42,6 +67,22 @@ export class ChangePasswordComponent implements OnInit {
         this.border_color = 'red';
     }
 
+
+    public currentPasswordTextField(args) {
+        var textField = <TextField>args.object;
+        this.currentPasswordText = textField.text;
+    }
+
+    public newPasswordTextField(args) {
+        var textField = <TextField>args.object;
+        this.newPasswordText = textField.text;
+    }
+
+    public confirmNewPasswordTextField(args) {
+        var textField = <TextField>args.object;
+        this.confirmNewPasswordText = textField.text;
+    }
+
     nativegateBack(): void {
         this.routerExtensions.back();
     }
@@ -49,6 +90,73 @@ export class ChangePasswordComponent implements OnInit {
     onLogout() {
         Values.writeString(Values.X_ROLE_KEY, "");
         this.routerExtensions.navigate(["/home"]);
+    }
+
+
+    onSubmitClick() {
+        if (this.currentPasswordText == "") {
+            alert("Current Password can not be empty");
+            return;
+        }
+        if (this.newPasswordText == "") {
+            alert("New Passsword can not be empty");
+            return;
+        }
+
+        if (this.newPasswordText != this.confirmNewPasswordText) {
+            alert("New Passwords do not match")
+            return;
+        }
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            "x-tenant-code": "music",
+            "x-role-key": Values.readString(Values.X_ROLE_KEY, "")
+        });
+        this.user = new User();
+
+        this.user.password = this.currentPasswordText;
+        this.user.newPassword = this.newPasswordText;
+
+        this.http.post("http://ems-api-dev.m-sas.com/api/users/resetPassword", this.user, { headers: headers }).subscribe((res: any) => {
+
+            if (res.isSuccess) {
+                let result: any
+                result = res.data
+                // this.res = result;
+                // for (var i = 0; i < result.roles.length; i++) {
+                //     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
+                //         Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
+                //         let extendedNavigationExtras: ExtendedNavigationExtras = {
+                //             queryParams: {
+                //                 "user": result
+                //             }
+                //         };
+                //         this.userService.setUser(result, result.roles[i].key);
+                //         this.userService.homeSelector(true);
+                //         this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
+                //     }
+                //     else {
+                //         alert("Authentication Problem (Could not get role key)");
+                //     }
+                // }
+
+                let extendedNavigationExtras: ExtendedNavigationExtras = {
+                    queryParams: {
+                        "user": result
+                    }
+                };
+                this.userService.setUser(result, Values.readString(Values.X_ROLE_KEY, ""));
+                this.userService.homeSelector(true);
+                this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
+            }
+            else {
+                alert(res.error)
+            }
+        },
+            error => {
+                alert(error)
+            })
     }
 
     // onBlur(args:EventData){

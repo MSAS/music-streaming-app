@@ -15,8 +15,8 @@ export class User {
     code: string;
     profile: Profile
     address: Address;
-
-
+    newPassword: string;
+    facebookId:string;
 
 
 

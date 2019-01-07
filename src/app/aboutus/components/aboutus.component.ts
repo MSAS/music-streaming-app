@@ -27,7 +27,9 @@ export class AboutUsComponent implements OnInit, OnDestroy {
 
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
-
+      
+        this.userService.actionBarState(true)
+        this.userService.actionBarText('About Us')
     }
 
     ngOnInit(): void {

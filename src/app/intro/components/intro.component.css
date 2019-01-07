@@ -106,10 +106,11 @@
 .fab-button-done{
   color:black;
   font-size: 20;
-  margin-left: 50%;
   width:20%;
-  z-index: 0;
-  font-family: "FontAwesome";
+  font-family: icomoon;
+  margin-right: 5%;
+  z-index: 0; 
+  background-color: transparent;
   /* background-color: transparent; */
 }
 

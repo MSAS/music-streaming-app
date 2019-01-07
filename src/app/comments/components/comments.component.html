@@ -1,0 +1,44 @@
+<Page (loaded)="pageLoaded($event)" (unloaded)="pageUnloaded()">
+    <AbsoluteLayout width="100%" height="100%" androidStatusBarBackground="transparent">
+        <GridLayout width="100%" height="100%" rows="auto,auto">
+            <GridLayout row="0" columns="*,auto,*" backgroundColor="black" width="100%" [height]="barHeight">
+                <StackLayout style="box-sizing:border-box;" paddingLeft="6%" paddingRight="1%" width="11.5%" height="60%"
+                    backgroundColor="transparent" col="0" verticalAlignment="middle" horizontalAlignment="left">
+                    <!-- <Button class="navigate-back-button" (tap)="nativegateBack()"></Button> -->
+                </StackLayout>
+
+                <StackLayout margin="10" col="1" verticalAlignment="middle" backgroundColor="transparent"
+                    horizontalAlignment="center">
+                    <Label text="Comments" color="white"></Label>
+                </StackLayout>
+                <StackLayout margin="10" col="1" verticalAlignment="middle" horizontalAlignment="center">
+                </StackLayout>
+            </GridLayout>
+
+
+
+            <GridLayout #container rows="auto,auto" row="1" [height]="layoutHeight" width="100%">
+                <ListView [items]="comments" row="0" width="100%" [height]="listHeight" separatorColor="gray">
+                    <ng-template let-item="item">
+                        <GridLayout rows="auto, auto" columns="auto, auto, auto">
+                            <Image margin="10" col="0" row="0" width="45" height="45" src="res://img_avatar"></Image>
+                            <StackLayout row="0" col="1" verticalAlignment="center">
+                                <Label class="site-template-title" [text]="item.text"></Label>
+                                <Label class="site-template-description" [text]="item.text"></Label>
+                            </StackLayout>
+                            <!-- <StackLayout margin="0,16,0,42" row="1" colSpan="2" backgroundColor="lightGray" height="1"></StackLayout> -->
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+
+                <StackLayout row="1" orientation="horizontal" verticalAlignment="bottom" marginTop="1%" width="100%"
+                    backgroundColor="black" [height]="bottomBarHeight">
+                    <TextField marginLeft="5%" width="80%" height="100%" hint="Add a comment" color="white"
+                        style.placeholderColor="white" fontSize="15" autocorrect="false" (returnPress)="onReturn($event)"
+                        (blur)="onBlur()" (focus)="onFocus($event)" (textChange)="commentTextField($event)"></TextField>
+                    <Button class="send-button" width="10%" height="55%" (tap)="onSendButton()"></Button>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
+    </AbsoluteLayout>
+</Page>

@@ -6,6 +6,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
+import { GridViewModule } from "nativescript-grid-view/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -31,7 +32,23 @@ import { UserService } from "./services/user.service";
 import { FavouritesComponent } from "./favourites/components/favourites.component";
 import { RecentMixesComponent } from "./recentmixes/components/recentmixes.component";
 import { AboutUsComponent } from "./aboutus/components/aboutus.component";
+import { ModalComponent } from "./modal/modal.component";
+import { NativeScriptFacebookModule } from "nativescript-facebook/angular";
+import * as application from 'application';
+import { init, LoginBehavior } from "nativescript-facebook";
+// import { AuthService } from "./services/auth.service";
 
+import { AuthService } from "./services/auth.service";
+import { CategoriesComponent } from "./categories/components/categories.component";
+import { CategoryFilesComponent } from "./category-files/components/category-files.component";
+import { CommentsComponent } from "./comments/components/comments.component";
+
+// 
+// let nsFacebook = require('nativescript-facebook');
+
+// application.on(application.launchEvent, function (args) {
+//     init("349645965835098",  LoginBehavior.LoginBehaviorWeb);
+// });
 
 @NgModule({
     bootstrap: [
@@ -46,6 +63,11 @@ import { AboutUsComponent } from "./aboutus/components/aboutus.component";
         DetailComponent,
         MyAccountComponent,
         AccountInfoComponent,
+        CategoriesComponent,
+        CategoryFilesComponent,
+        FavouritesComponent,
+        RecentMixesComponent,
+        AboutUsComponent,
         ChangePasswordComponent,
         CircularProgressBarComponent],
     imports: [
@@ -58,7 +80,9 @@ import { AboutUsComponent } from "./aboutus/components/aboutus.component";
         NativeScriptHttpClientModule,
         MatDialogModule,
         NativeScriptUISideDrawerModule,
-        NativeScriptUIGaugeModule
+        NativeScriptUIGaugeModule,
+        GridViewModule,
+        NativeScriptFacebookModule
         // IntroModule,
         // HomeModule,
         // RegisterModule,
@@ -75,12 +99,16 @@ import { AboutUsComponent } from "./aboutus/components/aboutus.component";
         MyAccountComponent,
         AccountInfoComponent,
         ChangePasswordComponent,
+        CategoriesComponent,
+        CategoryFilesComponent,
         FavouritesComponent,
         RecentMixesComponent,
         AboutUsComponent,
-        CircularProgressBarComponent
+        CommentsComponent,
+        CircularProgressBarComponent,
+        ModalComponent
     ],
-    providers: [UserService],
+    providers: [UserService, AuthService],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

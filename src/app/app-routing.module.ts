@@ -15,6 +15,9 @@ import { Values } from "./values/values";
 import { FavouritesComponent } from "./favourites/components/favourites.component";
 import { RecentMixesComponent } from "./recentmixes/components/recentmixes.component";
 import { AboutUsComponent } from "./aboutus/components/aboutus.component";
+import { CategoriesComponent } from "./categories/components/categories.component";
+import { CategoryFilesComponent } from "./category-files/components/category-files.component";
+import { CommentsComponent } from "./comments/components/comments.component";
 
 var entry: string
 
@@ -23,7 +26,7 @@ if (!Values.doesExist(Values.isNotNewUser)) {
     entry = "/intro";
 }
 else {
-    entry = "/home"
+    entry = "/app"
 }
 const routes: Routes = [
     { path: "", redirectTo: entry, pathMatch: "full" },
@@ -39,8 +42,13 @@ const routes: Routes = [
     { path: "accountInfo", component: AccountInfoComponent },
     { path: "changePassword", component: ChangePasswordComponent },
     { path: "favourites", component: FavouritesComponent },
-    { path: "recentmixes", component: RecentMixesComponent },
-    { path: "aboutus", component: AboutUsComponent },
+    { path: "recentMixes", component: RecentMixesComponent },
+    { path: "aboutUs", component: AboutUsComponent },
+    { path: "app", component: AppComponent },
+    { path: "categories", component: CategoriesComponent },
+    { path: "categoryFiles", component: CategoryFilesComponent },
+    { path: "comments", component: CommentsComponent },
+
 
 
     // { path: "player", loadChildren: "~app/player/player.module#PlayerModule" }

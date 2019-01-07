@@ -7,6 +7,13 @@ import { StackLayout } from "ui/layouts/stack-layout/stack-layout";
 import { TNSPlayer } from 'nativescript-audio-ssi';
 import { isIOS, isAndroid } from "tns-core-modules/platform";
 import { Label } from "tns-core-modules/ui/label/label";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
+import { UserService } from "~/app/services/user.service";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
+import { Comments } from "~/app/models/comments";
+import { Observable } from "tns-core-modules/data/observable/observable";
 
 @Component({
     selector: "Player",
@@ -56,25 +63,88 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.currentSec = this.getSeconds(duration / 1000);
     // this.currentMin = this.getMinutes(duration / 1000);
     // this.currentHour = this.getHours(duration / 1000);
-
-    constructor() {
+    songName
+    songId
+    songThumbnail
+    songUrl
+    songIsFavourite;
+    constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
         this.player = new TNSPlayer();
         this.passedTime = "00"
         this.remainingTime = "00"
+
+
+
+        this.userService.homeSelector(false);
+
+
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.songName = params.name;
+            this.songId = params.id;
+            this.songThumbnail = params.thumbnail;
+            this.songUrl = params.url;
+            this.songIsFavourite = params.isFavourite;
+            // console.log("folder: ",this.folder)
+            // console.log("name: ", params.folder)
+            // this.id = <string>params["id"],
+            //     this.folder = <string>params["name"]
+            if (this.songName != null && this.songName != undefined && this.songName != "") {
+                this.userService.actionBarState(true);
+                this.userService.actionBarText(this.songName)
+                // this.loggedIn = true;
+                // this.data = this.rows;
+            }
+            if (this.songId != null && this.songId != undefined && this.songId != "") {
+                // this.data = this.rows;
+                this.getFileById(this.songId);
+
+            }
+
+
+
+
+            this.userService.userChanges.subscribe(user => {
+                if (user == null || user == undefined) {
+
+                    let extendedNavigationExtras: ExtendedNavigationExtras = {
+                        queryParams: {
+                            "user": null
+                        },
+                    };
+                    this.routerExtensions.navigate(["/home"], extendedNavigationExtras)
+                    // this.loggedIn = false;
+                }
+            })
+            // else {
+            //     if (Values.readString(Values.X_ROLE_KEY, "") != "") {
+            //         this.getUser(Values.readString(Values.X_ROLE_KEY, ""));
+            //     }
+            //     else {
+            //         this.loggedIn = false;
+            //     }
+            // }
+
+
+        })
+
+
+
         // this.buttonStylePlay = "{background-image:url('res://ic_refresh'); background-position: center; background-repeat: no-repeat; background-size: cover;}"
         // this.buttonStylePause = "{background-image:url('res://frame31'); background-position: center; background-repeat: no-repeat; background-size: cover;}"
 
         // this.buttonStyle = this.buttonStylePlay;
         const playerOptions = {
-            audioFile: "https://cdn10.upload.solutions/7ff371083a2420071f700de75072d046/ctyov/Thug Life-(Mr-Jatt.com).mp3",
+            audioFile: this.songUrl,
             loop: false,
-            autoplay: false,
+            autoplay: true,
         };
 
         this.player
-            .initFromUrl(playerOptions)
+            .playFromUrl(playerOptions)
             .then((res) => {
                 console.log(res);
+                var button = this.buttonRef.nativeElement as Button;
+                button.backgroundImage = 'res://pause'
             })
             .catch((err) => {
                 console.log("something went wrong...", err);
@@ -116,6 +186,52 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
     }
 
+
+
+
+
+    getFileById(xRoleKey: string) {
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            "x-tenant-code": "music",
+            "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
+        });
+
+
+        this.http.get("http://docs-api-dev.m-sas.com/api/files/" + this.songId, { headers: headers }).subscribe((res: any) => {
+
+            if (res.isSuccess) {
+                // alert(res)
+                let result: any
+                result = res.data
+                this.songUrl = result.url;
+                // this.res = result;
+                // for (var i = 0; i < result.length; i++) {
+                //     this.comments.push(new Comments(result[i].comments[0]))
+                // }
+
+                // this.viewModel = new Observable();
+                // this.viewModel.set("items", this.comments);
+
+                // this.page.bindingContext = this.viewModel;
+                // return result;
+            }
+            else {
+                alert(res.error)
+                return null;
+            }
+        },
+            error => {
+                alert(error)
+                return null;
+            })
+    }
+
+
+
+
+
+
     ngAfterViewInit(): void {
 
         var button = this.buttonRef.nativeElement as Button;
@@ -156,6 +272,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
                 // iOS: duration is in seconds
                 // Android: duration is in milliseconds
                 let current = this.player.currentTime
+                this.duration = current;
                 let remaining;
                 if (isIOS) {
                     duration *= 1000
@@ -287,7 +404,13 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
+    forward() {
+        this.player.seekTo(this.duration + 10000);
+    }
 
+    rewind() {
+        this.player.seekTo(this.duration - 10000);
+    }
 
 
 

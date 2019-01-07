@@ -1,4 +1,5 @@
 <!-- <Page class="page" height="100%" width="100%" (tap)="onButtonTap()"> -->
+
 <StackLayout class="page" height="100%" width="100%">
 
     <!-- 
@@ -12,7 +13,8 @@
     <GridLayout height="100%" width="100%" backgroundColor="black" opacity=".7" rows="auto, auto" columns="auto">
 
 
-        <StackLayout verticalAlignment="middle" horizontalAlignment="center" width="250" height="250" row="0" col="0" opacity="1" (tap)="play()">
+        <StackLayout verticalAlignment="middle" marginTop="30%" horizontalAlignment="center" width="250"
+            height="250" row="0" col="0" opacity="1" (tap)="play()">
             <GridLayout width="100%" height="100%" rows="auto,*" columns="*" (tap)="play()">
                 <StackLayout #stack margin="10" class="stack" height="200" width="200" row="0" col="0"></StackLayout>
                 <circularProgressBar size="250" [progress]="progress"></circularProgressBar>
@@ -21,18 +23,28 @@
                     <Button #button class="button" (tap)="playPause()"></Button>
                 </StackLayout>
                 <GridLayout columns="*,*" width="250" height="20" verticalAlignment="bottom" marginBottom="5">
-                    <StackLayout col="0" marginLeft="25">
+                    <StackLayout col="0" marginLeft="25" orientation="vertical">
                         <Label #labelRem [text]="remainingTime" color="white"></Label>
                     </StackLayout>
 
-                    <StackLayout col="1" horizontalAlignment="right" marginRight="25">
+                    <StackLayout col="1" orientation="vertical" horizontalAlignment="right" marginRight="25">
                         <Label #labelPas [text]="passedTime" color="white"></Label>
                     </StackLayout>
 
                 </GridLayout>
+
+   
+
+
             </GridLayout>
 
         </StackLayout>
+
+        <GridLayout row="1" columns="*,*" width="100%" height="15%" orientation="horizontal">
+                <Button class="rewind-button" (tap)="rewind()" marginLeft="20%" horizontalAlignment="left" col="0"></Button>
+                <Button class="forward-button" (tap)="forward()" marginRight="20%" horizontalAlignment="right" col="1"></Button>
+
+            </GridLayout>
 
 
 
@@ -56,8 +68,6 @@
     </GridLayout>
 
 </StackLayout>
-
-
 
 
 

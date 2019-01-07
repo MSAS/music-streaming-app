@@ -1,63 +1,85 @@
-<GridLayout height="100%" width="100%">
-    <StackLayout height="6%" width="100%" class="action-bar-label">
-        <StackLayout verticalAlignment="middle" horizontalAlignment="left">
-            <Button class="navigation_button" width="8%"></Button>
+<Page (loaded)="pageLoaded($event)" (unloaded)="pageUnloaded()">
+    <GridLayout height="100%" width="100%">
+        <StackLayout height="6%" width="100%" class="action-bar-label">
+            <StackLayout verticalAlignment="middle" horizontalAlignment="left">
+                <Button class="navigation_button" width="8%"></Button>
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
 
-    <!-- <StackLayout orientation="vertical" backgroundColor="red">
+        <!-- <StackLayout orientation="vertical" backgroundColor="red">
     <Button text="456" backgroundColor="green" verticalAlignment="top" horizontalAlignment="left"></Button>
     <Image class="track-thumb" src="res://category_default" width="100%" height="50%"></Image>
 </StackLayout> -->
 
-    <GridLayout height="100%" width="100%" backgroundColor="red" verticalAlignment="top" rows="auto,auto,auto,auto"
-        columns="*">
-        <StackLayout row="0" col="0" width="100%" height="35%" (tap)="onTitleClick()">
-            <GridLayout width="100%" height="100%" rows="*" columns="*">
-                <Image row="0" col="0" stretch="aspectFill" src="res://category_default"></Image>
-                <StackLayout height="100%" width="100%" backgroundColor="transparent">
-                    <Button class="videoPlayButton" width="10%" marginTop="45%" (tap)="onTitleClick()"></Button>
+        <GridLayout height="100%" width="100%" verticalAlignment="top" rows="auto,auto,auto,auto,auto" columns="*">
+            <StackLayout row="0" col="0" width="100%" height="35%" (tap)="onTitleClick()">
+                <GridLayout width="100%" height="100%" rows="*" columns="*">
+                    <Image row="0" col="0" stretch="aspectFill" src="res://category_default"></Image>
+                    <StackLayout height="100%" width="100%" backgroundColor="transparent">
+                        <Button class="videoPlayButton" width="10%" marginTop="45%" (tap)="onTitleClick()"></Button>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+
+            <StackLayout verticalAlignment="middle" horizontalAlignment="left" row="1" col="0" backgroundColor="#ffffff"
+                width="100%" height="7.5%">
+                <Label margin="10" class="text-center" textWrap="true" [text]="songName" color="black"></Label>
+            </StackLayout>
+
+            <GridLayout columns="*,*" row="2" col="0" backgroundColor="#f1f1f1" height="12.5%">
+                <StackLayout margin="10" col="0" verticalAlignment="middle" horizontalAlignment="left">
+                    <Label textWrap="true" [text]="songName"></Label>
+                </StackLayout>
+                <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="right">
+                    <Label></Label>
                 </StackLayout>
             </GridLayout>
-        </StackLayout>
-
-        <StackLayout verticalAlignment="middle" horizontalAlignment="left" row="1" col="0" backgroundColor="#ffffff"
-            width="100%" height="7.5%">
-            <Label margin="10" textWrap="true" text="Traffic Jams Mix"></Label>
-        </StackLayout>
-
-        <GridLayout columns="*,*" row="2" col="0" backgroundColor="#f1f1f1" height="12.5%">
-            <StackLayout margin="10" col="0" verticalAlignment="middle" horizontalAlignment="left">
-                <Label textWrap="true" text="Traffic Jams Mix"></Label>
-            </StackLayout>
-            <StackLayout margin="10" col="1" verticalAlignment="top" horizontalAlignment="right">
-                <Label text="Author Rick Geez"></Label>
-            </StackLayout>
-        </GridLayout>
-        <StackLayout backgroundColor="#f1f1f1" row="3" col="0" height="50%">
-            <ScrollView>
-                <ListView [items]="items" (itemTap)="onCommentItemTap($event)" height="100%" separatorColor="gray">
+            <StackLayout backgroundColor="#f1f1f1" row="3" col="0" height="40.5%">
+                <ListView [items]="comments" (itemTap)="onCommentItemTap($event)" height="100%" separatorColor="gray">
                     <ng-template let-item="item">
                         <GridLayout rows="auto, auto" columns="auto, auto, auto">
                             <Image margin="10" col="0" row="0" width="45" height="45" src="res://img_avatar"></Image>
                             <StackLayout row="0" col="1" verticalAlignment="center">
-                                <Label class="site-template-title" text="Username"></Label>
-                                <Label class="site-template-description" text="Nice Pic"></Label>
+                                <Label class="site-template-title" [text]="item.text"></Label>
+                                <Label class="site-template-description" [text]="item.text"></Label>
                             </StackLayout>
                             <!-- <StackLayout margin="0,16,0,42" row="1" colSpan="2" backgroundColor="lightGray" height="1"></StackLayout> -->
                         </GridLayout>
                     </ng-template>
                 </ListView>
-            </ScrollView>
-        </StackLayout>
+
+                <!-- <GridLayout *ngIf="!commentsExist" height="100%">
+                <Label class="text-center" verticalAlignment="middle" text="No Comments yet">
+
+                </Label>
+
+            </GridLayout> -->
+            </StackLayout>
+
+            <GridLayout columns="*,*" backgroundColor="black" row="4" col="0" height="5%" width="100%">
+
+                <GridLayout col="0" width="100%" columns="auto,auto" orientation="horizontal" horizontalAlignment="left">
+                    <Image col="0" src="res://ic_icon_view_video" verticalAlignment="middle"></Image>
+                    <Label col="1" text="{{songViews==undefined?0:songViews+' views'}}" color="white" verticalAlignment="middle"></Label>
+
+                </GridLayout>
+
+                <StackLayout col="1" width="100%" orientation="horizontal" horizontalAlignment="right">
+                    <Image [src]="favouriteIcon" (tap)="onFavouriteClick()" marginRight="5%" verticalAlignment="middle"></Image>
+                    <Image src="res://icon_share_video" (tap)="onShareClick()" marginRight="5%" verticalAlignment="middle"></Image>
+                    <Image src="res://ic_video_comment" (tap)="onCommentClick()" marginRight="5%" verticalAlignment="middle"></Image>
+                </StackLayout>
+
+            </GridLayout>
+
+        </GridLayout>
     </GridLayout>
-</GridLayout>
 
 
 
 
 
-
+</Page>
 
 <!-- <GridLayout>
     <ScrollView class="page">

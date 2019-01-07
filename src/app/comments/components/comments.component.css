@@ -1,0 +1,34 @@
+.page {
+    /* background-position: center; */
+    /* background-image: url("res://splash"); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    /* background-position: center; */
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    /* filter: blur(5px); */
+}
+
+.input-text {
+    border: none;
+    border-color: transparent;
+}
+
+TextField {
+    border-width: 0 0 2 0;
+    border-bottom-color: transparent;
+}
+
+.input-field {
+    background-color: white;
+}
+
+.send-button {
+    background-image: url("res://icon_send");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

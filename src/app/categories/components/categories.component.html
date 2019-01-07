@@ -1,0 +1,40 @@
+<Page (loaded)="pageLoaded($event)">
+
+    <StackLayout height="100%" width="100%">
+        <!-- <GridLayout class="action-bar-label" rows="*" columns="*,*,*" height="8%" width="100%">
+        <Image class="action-bar-icon" marginLeft="8" col="0" (tap)="onDrawerButtonTap()" horizontalAlignment="left" verticalAlignment="middle" src="res://ic_menu"></Image>
+        <StackLayout col="1" class="title-text" verticalAlignment="middle">
+            <Label class="h3 text-center" text='Categories'></Label>
+        </StackLayout>
+
+        <StackLayout col="2">
+
+        </StackLayout>
+    </GridLayout> -->
+
+
+        <GridView *ngIf="loggedIn" [items]="items" colWidth="35%" rowHeight="25%" width="100%" height="100%"
+            backgroundColor="white">
+            <ng-template let-item="item" let-odd="odd">
+                <GridLayout (tap)="onCardClicked(item)">
+                    <Image class="folder"  margin="15" src="res://folder_image"></Image>
+                    <Label class="text-center" [text]="item.name" verticalAlignment="bottom" >
+
+
+                    </Label>
+                </GridLayout>
+
+                <!-- <Button class="folder" margin="10" (tap)="onCardClicked(item)"></Button> -->
+            </ng-template>
+        </GridView>
+
+
+        <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
+            <StackLayout horizontalAlignment="center" verticalAlignment="middle">
+                <Label text="You need to login to continue"></Label>
+            </StackLayout>
+        </GridLayout>
+
+
+    </StackLayout>
+</Page>

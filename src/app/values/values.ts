@@ -5,7 +5,7 @@ export class Values {
     public static X_ROLE_KEY: string = "x_role_key";
     public static SELECTED_OPTION: string = "selected_option";
     public static isNotNewUser: string="is_not_new_user"
-
+    public static FACEBOOK_ACCESS_TOKEN="facebook_access_token"
 
     public static writeString(key: string, value: string): void {
         appSettings.setString(key, value);

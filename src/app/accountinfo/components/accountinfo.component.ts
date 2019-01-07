@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
 import { Page } from "tns-core-modules/ui/page/page";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { RouterExtensions, ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
 import { Values } from "~/app/values/values";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { UserService } from "~/app/services/user.service";
@@ -34,6 +34,10 @@ export class AccountInfoComponent implements OnInit {
     constructor(private page: Page, private routerExtensions: RouterExtensions, private http: HttpClient, private userService: UserService, private activatedRoute: ActivatedRoute) {
         // this.page.actionBarHidden = true;
         // this.postUser = new User();
+
+        this.userService.actionBarState(false)
+        // this.userService.actionBarText('DJ Rick Geez')
+
         this.activatedRoute.queryParams.subscribe(params => {
             this.user = params["user"];
         })
@@ -80,6 +84,20 @@ export class AccountInfoComponent implements OnInit {
         else {
 
         }
+
+
+        this.userService.userChanges.subscribe(user => {
+            if (user == null || user == undefined) {
+
+                let extendedNavigationExtras: ExtendedNavigationExtras = {
+                    queryParams: {
+                        "user": null
+                    },
+                };
+                this.routerExtensions.navigate(["/home"], extendedNavigationExtras)
+                // this.loggedIn = false;
+            }
+        })
 
     }
 

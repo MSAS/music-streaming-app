@@ -1,8 +1,9 @@
-<RadSideDrawer id="rad" [drawerTransition]="sideDrawerTransition">
+<RadSideDrawer #rad [drawerTransition]="sideDrawerTransition">
 
 	<GridLayout tkDrawerContent rows="auto, auto">
 
-		<GridLayout #gridNon *ngIf="!isLogged" height="11%" row="0" orientation="horizontal" columns="*,auto,*" backgroundColor="#181d22">
+		<GridLayout #gridNon *ngIf="!isLogged" height="11%" row="0" orientation="horizontal" columns="*,auto,*"
+		 backgroundColor="#181d22">
 			<Label col="0" class="sideHeader" (tap)="onSignIn()" text="SIGN IN"></Label>
 			<StackLayout col="1" height="40%" width="1" backgroundColor="#303942"></StackLayout>
 			<Label col="2" class="sideHeader" (tap)="onRegister()" text="REGISTER"></Label>
@@ -11,7 +12,7 @@
 		<GridLayout #gridLo *ngIf="isLogged" row="0" height="20%" class="drawer-header" rows="auto, auto" columns="auto">
 			<StackLayout marginTop="5%" row="0" col="0" height="80%" width="100%" orientation="horizontal">
 				<Button class="drawer-setting-button" (tap)="onMyAccount()"></Button>
-				<Image class="drawer-display-pic" (tap)="onDisplayPic()"></Image>
+				<Image class="drawer-display-pic" [src]="picUrl" (tap)="onDisplayPic()"></Image>
 				<Button class="drawer-logout-button" (tap)="onLogout()"></Button>
 			</StackLayout>
 
@@ -76,10 +77,10 @@
 					<GridLayout row="1" verticalAlignment="top" rows="auto" columns="auto, auto, auto" (tap)="onRecentMixesClicked()">
 						<StackLayout *ngIf="recentMixesRedLine" row="0" col="0" height="63" verticalAlignment="middle" width="4"
 						 backgroundColor="red" (tap)="onRecentMixesClicked()"></StackLayout>
-						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="45" height="45" src="res://menu_icon_recent_mixes"
+						<Image horizontalAlignment="left" margin="10" col="1" row="0" width="35" height="35" src="res://ic_menu_recent"
 						 (tap)="onRecentMixesClicked()"></Image>
 						<StackLayout row="0" col="2" verticalAlignment="center" horizontalAlignment="left">
-							<Label class="drawer-option-label" text="Recent Mixes" (tap)="onRecentMixesClicked()"></Label>
+							<Label class="drawer-option-label" marginLeft="10" text="Recent Mixes" (tap)="onRecentMixesClicked()"></Label>
 						</StackLayout>
 					</GridLayout>
 				</GridLayout>
@@ -105,6 +106,17 @@
 
 
 	<StackLayout tkMainContent height="100%" width="100%">
+		<GridLayout *ngIf="showActionBar" class="action-bar-label" rows="*" columns="*,*,*" height="8%" width="100%">
+			<Image class="action-bar-icon" marginLeft="8" col="0" (tap)="onDrawerButtonTap()" horizontalAlignment="left"
+			 verticalAlignment="middle" src="res://ic_menu"></Image>
+			<StackLayout col="1" class="title-text" verticalAlignment="middle">
+				<Label class="h3 text-center" [text]='actionBarText'></Label>
+			</StackLayout>
+
+			<StackLayout col="2">
+
+			</StackLayout>
+		</GridLayout>
 		<router-outlet></router-outlet>
 	</StackLayout>
 

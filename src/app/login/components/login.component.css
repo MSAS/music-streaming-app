@@ -10,7 +10,7 @@ TextField {
 
 .page { 
      background-position: center;
-     background-image: url("res://splash");
+     background-image: url("res://splash_blur");
      background-repeat: no-repeat;
      background-size: cover;
      background-position: center;
@@ -188,3 +188,132 @@ TextField {
   .forgot-password-policy{
     color:white;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .home-panel{
+    vertical-align: center; 
+    font-size: 20;
+    margin: 15;
+}
+
+.description-label{
+    margin-bottom: 15;
+}
+
+.entry {
+    padding: 5 30;
+}
+
+.border-primary,
+.border-warning,
+.border-danger,
+.border-info,
+.border-dark,
+.border-success {
+    border-width: 1.5;
+}
+
+.border-primary {
+    border-color: royalblue;
+}
+
+.border-info {
+    border-color: skyblue;
+}
+
+.border-warning {
+    border-color: orange;
+}
+
+.border-danger {
+    border-color: red;
+}
+
+.border-dark {
+    border-color: black;
+}
+
+.border-success {
+    border-color: greenyellow;
+}
+
+.bg-primary,
+.bg-info,
+.bg-success,
+.bg-danger {
+    color: #fff;
+}
+
+.bg-primary {
+    background-color: royalblue;
+}
+
+.bg-info {
+    background-color: skyblue;
+}
+
+.bg-warning {
+    background-color: orange;
+    color: #222222;
+}
+
+.bg-success {
+    background-color: greenyellow;
+}
+
+.bg-danger {
+    background-color: red;
+}
+
+.bg-white {
+    background-color: #ffffff;
+    color: #777777;
+}
+
+.text-white {
+    color: #FFFFFF;
+}
+
+.text-primary {
+    color: royalblue;
+}
+
+.text-info {
+    color: skyblue;
+}
+
+.text-dark {
+    color: black;
+}
+
+.text-warning {
+    color: orange;
+}
+
+.text-success {
+    color: greenyellow;
+}
+
+.text-danger {
+    color: red;
+}
+

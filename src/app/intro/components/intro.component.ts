@@ -32,11 +32,7 @@ exports.pageLoaded = args => {
 //   }
 // };
 
-exports.myChangeEvent = function(args) {
-  var changeEventText = 'Page changed to index: ' + args.index; 
-  alert("sdcsbhcb");
-  console.log(changeEventText);
-};
+
 
 // exports.myScrollingEvent = args => {
 //   console.log('Scrolling: ' + args.state.offset);
@@ -50,7 +46,7 @@ exports.myChangeEvent = function(args) {
 })
 export class IntroComponent implements OnInit, AfterViewInit {
 
-  done:boolean = false;
+  done: boolean = false;
   constructor(private page: Page, private routerExtensions: RouterExtensions) {
     // this.page.actionBarHidden = true;
   }
@@ -71,6 +67,15 @@ export class IntroComponent implements OnInit, AfterViewInit {
     //     });
     //   }, 5000);
     // }
+  }
+
+  myChangeEvent(args) {
+    var changeEventText = 'Page changed to index: ' + args.index;
+    if (args.index == 3) {
+      this.done = true
+    }
+    // alert("sdcsbhcb");
+    console.log(changeEventText);
   }
 
   onFabTap(): void {

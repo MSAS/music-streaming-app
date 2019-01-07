@@ -9,7 +9,7 @@ TextField {
 }
 .page { 
     background-position: center;
-    background-image: url("res://splash");
+    background-image: url("res://splash_blur");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

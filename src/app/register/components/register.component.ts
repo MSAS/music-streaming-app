@@ -7,6 +7,7 @@ import { User } from "~/app/models/user";
 import { Values } from "~/app/values/values";
 import { ExtendedNavigationExtras } from "nativescript-angular/router/router-extensions";
 import { UserService } from "~/app/services/user.service";
+import { ModalComponent } from "~/app/modal/modal.component";
 
 @Component({
     moduleId: module.id,
@@ -16,6 +17,7 @@ import { UserService } from "~/app/services/user.service";
 })
 export class RegisterComponent implements OnInit {
     @Output() model: EventEmitter<User> = new EventEmitter();
+    @ViewChild('otpDialog') otpModal: ModalComponent;
 
     transitions = ["explode", "fade", "flip", "flipLeft", "slide", "slideRight", "slideTop", "slideBottom"];
     btnEmployeeStyle = 'btn-employee';
@@ -45,14 +47,13 @@ export class RegisterComponent implements OnInit {
     underlineEmail: string;
     underlinePassword: string;
     underlineConfirmPassword: string;
-
+    otpText: string = '';
 
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
-    result: string;
     isBusy: boolean = false;
-
+    result;
 
     constructor(private page: Page, private routerExtensions: RouterExtensions, private http: HttpClient, private userService: UserService) {
         // this.page.actionBarHidden = true;
@@ -60,6 +61,8 @@ export class RegisterComponent implements OnInit {
         this.user = new User();
         this.res = new User();
         this.loggedIn = false;
+        this.userService.actionBarState(false)
+        this.userService.homeSelector(false);
 
         this.userNameIcon = "res://icon_username"
         this.emailIcon = "res://icon_email"
@@ -140,6 +143,70 @@ export class RegisterComponent implements OnInit {
         this.routerExtensions.back();
     }
 
+    openOtpDialog() {
+        this.otpModal.show();
+    }
+
+    closeOtpDialog() {
+        this.otpModal.hide();
+    }
+
+    public otpTextField(args) {
+        var textField = <TextField>args.object;
+        this.otpText = textField.text;
+    }
+
+    onOtpSubmit() {
+        if (this.otpText == "") {
+            alert("OTP can not be empty")
+            return;
+        }
+
+        let headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            "x-tenant-code": "music"
+        });
+        this.result.otp = this.otpText;
+
+        // this.user = <User>response.data;
+        // this.user.otp = "112233";
+        this.http.post("http://ems-api-dev.m-sas.com/api/users/confirm", this.result, { headers: headers }).subscribe((response: any) => {
+
+            if (response.isSuccess) {
+                let result: any
+                result = response.data
+                this.closeOtpDialog();
+                // this.user = response.data;
+                for (var i = 0; i < result.roles.length; i++) {
+                    if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
+                        Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
+                        let extendedNavigationExtras: ExtendedNavigationExtras = {
+                            queryParams: {
+                                "user": result
+                            }
+                        };
+                        this.loggedIn = true;
+                        // this.model.emit(this.user);
+                        this.userService.setUser(result, result.roles[i].key);
+                        // this.userService.homeSelector(true);
+                        this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
+                    }
+                    else {
+                        alert("Authentication Problem (Could not get role key)");
+                    }
+                }
+            }
+            else {
+                alert(response.error)
+            }
+        },
+            error => {
+                console.log(error)
+                alert(error);
+            })
+    }
+
+
     // onLoginClick() {
     //     var phoneCheck = /^[0-9]{10,10}$/;
     //     if (phoneCheck.test(this.textfieldData)) {
@@ -185,42 +252,9 @@ export class RegisterComponent implements OnInit {
 
                 let result: any
                 result = response.data
-                result.otp = "112233";
+                this.result = result;
+                this.openOtpDialog();
 
-                // this.user = <User>response.data;
-                // this.user.otp = "112233";
-                this.http.post("http://ems-api-dev.m-sas.com/api/users/confirm", result, { headers: headers }).subscribe((response: any) => {
-
-                    if (response.isSuccess) {
-                        let result: any
-                        result = response.data
-                        // this.user = response.data;
-                        for (var i = 0; i < result.roles.length; i++) {
-                            if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
-                                Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
-                                let extendedNavigationExtras: ExtendedNavigationExtras = {
-                                    queryParams: {
-                                        "user": result
-                                    }
-                                };
-                                this.loggedIn = true;
-                                // this.model.emit(this.user);
-                                this.userService.setUser(result, result.roles[i].key);
-                                this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
-                            }
-                            else {
-                                alert("Authentication Problem (Could not get role key)");
-                            }
-                        }
-                    }
-                    else {
-                        alert(response.error)
-                    }
-                },
-                    error => {
-                        console.log(error)
-                        alert(error);
-                    })
             }
             else {
                 alert(response.error);

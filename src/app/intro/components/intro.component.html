@@ -1,7 +1,8 @@
 <!-- <Page xmlns="http://schemas.nativescript.org/tns.xsd" androidStatusBarBackground="black" loaded="pageLoaded" xmlns:ns="nativescript-carousel"> -->
+
     <GridLayout height="100%" width="100%" class="background" left="0" top="0">
         <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false" android:indicatorAlignment="bottom" showIndicator="true"
-            height="100%" width="100%" pageChanged="myChangeEvent" indicatorColor="#44e9f5" indicatorColorUnselected="gray">
+            height="100%" width="100%" (pageChanged)="myChangeEvent($event)" indicatorColor="#44e9f5" indicatorColorUnselected="gray">
             <CarouselItem>
                 <FlexboxLayout class="splash1_background" backgroundImage="res://splash1" flexDirection="column">
                     <StackLayout class="content-container">
@@ -29,16 +30,15 @@
         </Carousel>
   
         <AbsoluteLayout class="fab-button-container">
-            <StackLayout height="100%" width="100%" orientation="horizontal" backgroundColor="transparent">
-                    <Button class="fab-button-skip" text="SKIP" (tap)="onFabTap()"></Button>
-                    <Button *ngIf="done" class="fab-button-done" text="DONE" (tap)="onFabTap()"></Button>
-                    <Button *ngIf="!done" class="fab-button-done" (tap)="onFabTap()"></Button>
+            <GridLayout columns="*,*" height="100%" width="100%" orientation="horizontal" backgroundColor="transparent">
+                    <Button *ngIf="!done" col="0"  class="fab-button-skip" horizontalAlignment="left" text="SKIP" (tap)="onFabTap()"></Button>
+                    <Button *ngIf="done" col="1" class="fab-button-done" horizontalAlignment="right" text="DONE" (tap)="onFabTap()"></Button>
+                    <!-- <Button class="fab-button-done" (tap)="onFabTap()"></Button> -->
     
-        </StackLayout>
+        </GridLayout>
         </AbsoluteLayout>
     </GridLayout>
 <!-- </Page> -->
-
 
 
 
