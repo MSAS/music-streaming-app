@@ -9,7 +9,7 @@
         </StackLayout>
     </StackLayout> -->
 
-
+    <PullToRefresh (refresh)="favouritesTab($event)"> 
     <GridView *ngIf="loggedIn" [items]="songs" colWidth="35%" rowHeight="40%" width="100%" height="100%" marginRight="7.5"
         backgroundColor="#dcdcdc">
         <ng-template let-item="item" let-odd="odd">
@@ -45,6 +45,7 @@
 
         </ng-template>
     </GridView>
+    </PullToRefresh>
 
 
     <GridLayout width="100%" height="100%" *ngIf="!loggedIn">

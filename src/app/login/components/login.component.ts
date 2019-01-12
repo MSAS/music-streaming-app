@@ -10,7 +10,7 @@ import { ExtendedNavigationExtras } from "nativescript-angular/router/router-ext
 import { UserService } from "~/app/services/user.service";
 import { ModalComponent } from "~/app/modal/modal.component";
 import * as Toast from 'nativescript-toast';
-import * as Facebook from "nativescript-facebook";
+// import * as Facebook from "nativescript-facebook";
 import { TnsOAuthClient, ITnsOAuthTokenResult } from "nativescript-oauth2";
 
 import { Page } from "tns-core-modules/ui/page/page";
@@ -20,6 +20,7 @@ import { AuthService } from "~/app/services/auth.service";
 import { Pic } from "~/app/models/pic";
 import { Profile } from "~/app/models/profile";
 import { request, getFile, getImage, getJSON, getString } from "tns-core-modules/http";
+
 
 
 // function configureOAuthProviderFacebook(): TnsOaProvider {
@@ -404,19 +405,22 @@ export class LoginComponent {
         this.user.code = this.userNameText;
         this.user.password = this.passwordText;
 
+        this.isBusy = true;
+
         this.http.post("http://ems-api-dev.m-sas.com/api/users/signIn", this.user, { headers: headers }).subscribe((res: any) => {
 
             if (res.isSuccess) {
                 let result: any
                 result = res.data
                 this.res = result;
+                this.isBusy = false;
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
                         if (result.roles[i].isDefaultRole) {
                             Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
                             let extendedNavigationExtras: ExtendedNavigationExtras = {
                                 queryParams: {
-                                    "user": result
+                                    "user": result  
                                 }
                             };
                             this.userService.setUser(result, result.roles[i].key);
@@ -430,25 +434,29 @@ export class LoginComponent {
                 }
             }
             else {
+                this.isBusy = false;
+
                 alert(res.error)
             }
         },
             error => {
+                this.isBusy = false;
+
                 alert(error)
             })
     }
 
 
 
-    login() {
-        Facebook.login((error, fbData) => {
-            if (error) {
-                alert("Error during login: " + error.message);
-            } else {
-                console.log(fbData.token);
-            }
-        });
-    }
+    // login() {
+    //     Facebook.login((error, fbData) => {
+    //         if (error) {
+    //             alert("Error during login: " + error.message);
+    //         } else {
+    //             console.log(fbData.token);
+    //         }
+    //     });
+    // }
 
 
 
@@ -530,6 +538,7 @@ export class LoginComponent {
         });
 
         this.res.data.password = this.newPasswordText;
+        this.isBusy=true;
 
         this.http.post("http://ems-api-dev.m-sas.com/api/users/setPassword/" + this.res.data.id, this.res.data, { headers: headers }).subscribe((res: any) => {
             // console.log(res);
@@ -537,6 +546,7 @@ export class LoginComponent {
             if (res.isSuccess) {
                 result = res.data;
                 this.res = res;
+                this.isBusy=false;
                 this.passwordModal.hide();
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
@@ -556,11 +566,13 @@ export class LoginComponent {
                 }
             }
             else {
+                this.isBusy=false;
                 // alert(res.error);
             }
 
         },
             error => {
+                this.isBusy=false;
                 alert(error);
             })
 

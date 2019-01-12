@@ -1,0 +1,48 @@
+ .parentlayout
+ {
+     height: 100%;
+    background-color: #FFFFFF;
+    
+    background-size: cover;
+ }
+ 
+ .searchactivity{
+     /* background-color: aqua; */
+     /* background-image: url("res://splash_blur"); */
+     background-color:transparent ;
+     margin-left: 5;
+    margin-right:10;
+    margin-top:20;
+     /* height: 200; */
+ } 
+ .back-buttonlayout
+ {
+    background-color:transparent;
+    margin-right:10;
+     height: 40;
+ }
+ .label{
+      color: white;
+
+ }
+ /* .searchlabel
+ {
+    color: white;
+     } */
+
+ .navigate-back-button
+ {  
+     height:20;
+     width:70;
+
+ }
+
+
+ .action-bar-icon{
+    height: 35;
+    width: 35;
+}
+
+.action-bar-label {
+    background-color: black;
+}

@@ -56,9 +56,10 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
     songs = new ObservableArray();
     viewModel;
 
-    user;
-
-    imagePlayer: string;
+    args;
+     refstatus: boolean;
+    
+     imagePlayer: string;
     imagePlayerFocussed: string;
 
     rows: RowItem[];
@@ -217,6 +218,22 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
         this.rows = this.converter(this.data)
     }
 
+    categoryfilesTab(args)
+    {   
+         var pullRefresh = args.object;
+         if (this.folderId != null && this.folderId != undefined && this.folderId != "") {
+            // this.data = this.rows;
+            this.getCategoryFilesByFolder(this.folderId);
+            if (this.refstatus == true)
+            {
+               
+               pullRefresh.refreshing = false;
+           }
+        }       
+     
+        
+    }
+
     getCategoryFilesByFolder(folderId: string, folderName?: string): any {
 
         let headers = new HttpHeaders({
@@ -227,7 +244,10 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
 
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?folder-id=" + folderId, { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) {
+            if (res.isSuccess) 
+            {
+                
+                this.refstatus = true
 
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
@@ -264,11 +284,13 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
             }
             else {
                 alert(res.error)
+                this.refstatus == true
                 return null;
             }
         },
             error => {
                 alert(error)
+                this.refstatus == true
                 return null;
             })
     }

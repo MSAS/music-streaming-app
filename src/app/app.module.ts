@@ -33,17 +33,25 @@ import { FavouritesComponent } from "./favourites/components/favourites.componen
 import { RecentMixesComponent } from "./recentmixes/components/recentmixes.component";
 import { AboutUsComponent } from "./aboutus/components/aboutus.component";
 import { ModalComponent } from "./modal/modal.component";
-import { NativeScriptFacebookModule } from "nativescript-facebook/angular";
-import * as application from 'application';
-import { init, LoginBehavior } from "nativescript-facebook";
+// import { NativeScriptFacebookModule } from "nativescript-facebook/angular";
+// import * as application from 'application';
+// import { init, LoginBehavior } from "nativescript-facebook";
 // import { AuthService } from "./services/auth.service";
-
+ 
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+ 
 import { AuthService } from "./services/auth.service";
 import { CategoriesComponent } from "./categories/components/categories.component";
 import { CategoryFilesComponent } from "./category-files/components/category-files.component";
 import { CommentsComponent } from "./comments/components/comments.component";
+import { SearchComponent } from "./search/search.component";
+ 
+import { NativeScriptUIAutoCompleteTextViewModule } from "nativescript-ui-autocomplete/angular";
 
-// 
+import { registerElement } from 'nativescript-angular/element-registry';
+// import { Ripple } from 'nativescript-material-ripple';
+// registerElement('MDRipple', () => Ripple);
+ // 
 // let nsFacebook = require('nativescript-facebook');
 
 // application.on(application.launchEvent, function (args) {
@@ -68,6 +76,7 @@ import { CommentsComponent } from "./comments/components/comments.component";
         FavouritesComponent,
         RecentMixesComponent,
         AboutUsComponent,
+        SearchComponent,
         ChangePasswordComponent,
         CircularProgressBarComponent],
     imports: [
@@ -79,10 +88,15 @@ import { CommentsComponent } from "./comments/components/comments.component";
         NativeScriptFormsModule,
         NativeScriptHttpClientModule,
         MatDialogModule,
-        NativeScriptUISideDrawerModule,
-        NativeScriptUIGaugeModule,
+        
+        NativeScriptUIAutoCompleteTextViewModule,
+       
+       NativeScriptUISideDrawerModule,  
+        
         GridViewModule,
-        NativeScriptFacebookModule
+        // NativeScriptFacebookModule,
+     
+       
         // IntroModule,
         // HomeModule,
         // RegisterModule,
@@ -106,7 +120,8 @@ import { CommentsComponent } from "./comments/components/comments.component";
         AboutUsComponent,
         CommentsComponent,
         CircularProgressBarComponent,
-        ModalComponent
+        ModalComponent,
+        SearchComponent
     ],
     providers: [UserService, AuthService],
     schemas: [

@@ -19,12 +19,16 @@ import { AuthService } from "./services/auth.service";
 import { ITnsOAuthTokenResult } from "nativescript-oauth2";
 import { Page } from "tns-core-modules/ui/page/page";
 import { isIOS } from 'platform';
-import { topmost } from 'ui/frame'
-// import { HttpEvent, HttpResponse } ;
+import { topmost } from 'ui/frame';
 
+// import { HttpEvent, HttpResponse } ;
+ 
 // registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 registerElement('Carousel', () => Carousel);
 registerElement('CarouselItem', () => CarouselItem);
+registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
+registerElement("Ripple", () => require("nativescript-ripple").Ripple);
+
 
 // var state: boolean = false;
 
@@ -118,7 +122,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
         // alert("initA");
         application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: any) => {
             args.cancel = true;
-            // this.routerExtensions.back();
+            this.routerExtensions.back();
             // let extendedNavigationExtras: ExtendedNavigationExtras = {
             //     queryParams: {
             //         "user": this.user
@@ -333,6 +337,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
 
     onDrawerButtonTap(){
         this._rad.showDrawer();
+    }
+
+    onSearchButtonTap(){
+        this.routerExtensions.navigate(["/search"]);
     }
 
     onSignIn() {

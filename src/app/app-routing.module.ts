@@ -18,6 +18,7 @@ import { AboutUsComponent } from "./aboutus/components/aboutus.component";
 import { CategoriesComponent } from "./categories/components/categories.component";
 import { CategoryFilesComponent } from "./category-files/components/category-files.component";
 import { CommentsComponent } from "./comments/components/comments.component";
+import { SearchComponent } from "./search/search.component";
 
 var entry: string
 
@@ -48,7 +49,7 @@ const routes: Routes = [
     { path: "categories", component: CategoriesComponent },
     { path: "categoryFiles", component: CategoryFilesComponent },
     { path: "comments", component: CommentsComponent },
-
+    { path: "search", component: SearchComponent }
 
 
     // { path: "player", loadChildren: "~app/player/player.module#PlayerModule" }

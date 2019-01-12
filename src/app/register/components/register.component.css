@@ -113,19 +113,19 @@ TextField {
  }
  
  .login-button{
-   /* margin-top:15; */
-   /* border-radius: 20; */
-   background-color: transparent;
-   color: white;
-   z-index: 0;
-   /* margin-bottom:15; */
- }
+  /* margin-top:15; */
+  border-radius: 20;
+  background-color:  #D40000;
+  color: white;
+  width: 100%;
+ 
+  z-index: 0;
+  /* margin-bottom:15; */
+}
 
- .login-button-container{
-   /* margin-top:15; */
-   border-radius: 20;
-   background-color: red;
-   width: 75%;
+.login-button:active{
+  color:white;
+  background-color: #4f4f4f;
  }
  
  .profile-button{

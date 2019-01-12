@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
     viewModel;
     user;
+    pullRefresh;
 
     imagePlayer: string;
     imagePlayerFocussed: string;
@@ -72,6 +73,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
     public tabSelectedIndexResult: string;
 
     loggedIn: boolean;
+
+    refstatus: boolean;
 
     public constant = new Constants();
 
@@ -246,6 +249,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
             }
         }
     }
+    refreshMostViewedTab(args)
+    {
+        var pullRefresh = args.object;
+        this.getMostViewdSongs(Values.readString(Values.X_ROLE_KEY, ""));
+        if (this.refstatus == true) {
+            
+            pullRefresh.refreshing = false;
+        }
+
+
+    }
+
+
+    refreshLatestTab(args) {
+        var pullRefresh = args.object;
+        // setTimeout(function () {
+
+        // }, 5000);
+
+        this.getAllSongs(Values.readString(Values.X_ROLE_KEY, ""));
+        if (this.refstatus == true) {
+            
+            pullRefresh.refreshing = false;
+        }
+    }
 
     getAllSongs(xRoleKey: string) {
         let headers = new HttpHeaders({
@@ -254,15 +282,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
             "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
         });
 
+
+
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files", { headers: headers }).subscribe((res: any) => {
 
             if (res.isSuccess) {
 
+                this.refstatus = true;
+
+                this.songs = new ObservableArray();
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
                         if (res.items[i].mimeType == "audio/mp3")
                             this.songs.push(new Song(<Song>res.items[i]))
                     }
+
                 }
                 // this.items.push(new Folder(res.items));
 
@@ -274,7 +308,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
                 this.page.bindingContext = this.viewModel;
 
-
+                // this.pullRefresh.refreshing = false;
 
                 let result: Folder[];
                 result = <Folder[]>res.items;
@@ -293,11 +327,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
             }
             else {
                 alert(res.error)
+                this.refstatus = true;
                 return null;
             }
         },
             error => {
                 alert(error)
+                this.refstatus = true;
                 return null;
             })
     }
@@ -314,7 +350,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?isMostViewed=true", { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) {
+            if (res.isSuccess) 
+            {
+                this.refstatus = true;
 
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
@@ -351,11 +389,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
             }
             else {
                 alert(res.error)
+                this.refstatus = true;
                 return null;
             }
         },
             error => {
                 alert(error)
+                this.refstatus = true;
                 return null;
             })
     }
@@ -411,8 +451,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
                 "name": song.name,
                 "thumbnail": song.thumbnail,
                 "url": song.url,
-                "isFavourite":song.isFavourite,
-                "views":song.views
+                "isFavourite": song.isFavourite,
+                "views": song.views
             },
         };
         this.routerExtensions.navigate(["/detail"], extendedNavigationExtras)

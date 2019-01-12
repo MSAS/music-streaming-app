@@ -167,6 +167,7 @@ export class RegisterComponent implements OnInit {
             "x-tenant-code": "music"
         });
         this.result.otp = this.otpText;
+        this.isBusy = true;
 
         // this.user = <User>response.data;
         // this.user.otp = "112233";
@@ -175,7 +176,9 @@ export class RegisterComponent implements OnInit {
             if (response.isSuccess) {
                 let result: any
                 result = response.data
+
                 this.closeOtpDialog();
+                this.isBusy = false;
                 // this.user = response.data;
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
@@ -197,10 +200,12 @@ export class RegisterComponent implements OnInit {
                 }
             }
             else {
+                this.isBusy = false;
                 alert(response.error)
             }
         },
             error => {
+                this.isBusy = false;
                 console.log(error)
                 alert(error);
             })
@@ -225,6 +230,7 @@ export class RegisterComponent implements OnInit {
         this.user.email = this.emailText;
         this.user.password = this.passwordText;
 
+
         if (this.user.code.length < 4) {
             alert("User name must contain at least 4 characters");
             return;
@@ -244,12 +250,14 @@ export class RegisterComponent implements OnInit {
             "Content-Type": "application/json",
             "x-tenant-code": "music"
         });
+        this.isBusy = true;
 
         this.http.post("http://ems-api-dev.m-sas.com/api/users/signUp", this.user, { headers: headers }).subscribe((response: any) => {
             // this.res = <User>response.data;
             // this.user = this.res;
             if (response.isSuccess) {
 
+                this.isBusy = false;
                 let result: any
                 result = response.data
                 this.result = result;
@@ -257,10 +265,12 @@ export class RegisterComponent implements OnInit {
 
             }
             else {
+                this.isBusy = false;
                 alert(response.error);
             }
 
         }, error => {
+            this.isBusy = false;
             alert(error);
         });
     }

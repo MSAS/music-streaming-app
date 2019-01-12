@@ -14,8 +14,11 @@
                 </StackLayout>
 
                 <StackLayout row="3" class="login-button-container" marginBottom="15" (tap)="onOtpSubmit()">
-                    <Button text="Submit" class="login-button" ng-click="showme=true" (tap)="onOtpSubmit()"></Button>
+                    <Button text="Submit" class="login-button"  ng-click="showme=true" (tap)="onOtpSubmit()"></Button>
                 </StackLayout>
+                <AbsoluteLayout row="2" class="activity-indicator-container">
+                        <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+                    </AbsoluteLayout>
             </GridLayout>
         </StackLayout>
 
@@ -45,7 +48,7 @@
                         <StackLayout height="25" width="12.5%">
                             <Image class="iconTextField" [src]="userNameIcon"></Image>
                         </StackLayout>
-                        <TextField hint="Username" style.placeholderColor="#646464" autocorrect="false" (textChange)="userNameTextField($event)"
+                        <TextField hint="Username" color="white"style.placeholderColor="#646464" autocorrect="false" (textChange)="userNameTextField($event)"
                             (blur)="onBlurUserName($event)" (focus)="onFocusUserName($event)" (returnPress)="onReturn($event)"></TextField>
                     </StackLayout>
 
@@ -58,7 +61,7 @@
                         <StackLayout height="25" width="12.5%">
                             <Image class="iconTextField" [src]="emailIcon"></Image>
                         </StackLayout>
-                        <TextField hint="Email" style.placeholderColor="#646464" autocorrect="false" (textChange)="emailTextField($event)"
+                        <TextField hint="Email" color="white" style.placeholderColor="#646464" autocorrect="false" (textChange)="emailTextField($event)"
                             (blur)="onBlurEmail($event)" (focus)="onFocusEmail($event)" (returnPress)="onReturn($event)"></TextField>
                     </StackLayout>
 
@@ -75,6 +78,10 @@
                             (blur)="onBlurPassword($event)" (focus)="onFocusPassword($event)" (returnPress)="onReturn($event)"
                             secure="true"></TextField>
                     </StackLayout>
+
+                    <AbsoluteLayout row="4" class="activity-indicator-container">
+                        <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+                    </AbsoluteLayout>
 
                     <StackLayout width="80%" row="5" [backgroundColor]="underlinePassword" verticalAlignment="middle"
                         height="2px">
@@ -118,11 +125,9 @@
                 </StackLayout>
 
                 <StackLayout row="4" marginTop="2%" class="login-button-container" (tap)="onSubmit()">
-                    <Button class="font-weight-bold" text="SUBMIT" textTransform="none" class="login-button" (tap)="onSubmit()"></Button>
+                    <Button class="font-weight-bold login-button" text="SUBMIT" textTransform="none" class="login-button" (tap)="onSubmit()"></Button>
                 </StackLayout>
-                <AbsoluteLayout row="4" class="activity-indicator-container">
-                    <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
-                </AbsoluteLayout>
+             
 
                 <!-- <StackLayout row="5" orientation="horizontal" backgroundColor="black" (tap)="go(1);" marginTop="44%"
                 opacity=".5" width="100%" height="10%">

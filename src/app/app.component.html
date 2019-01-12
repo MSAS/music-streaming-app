@@ -112,10 +112,9 @@
 			<StackLayout col="1" class="title-text" verticalAlignment="middle">
 				<Label class="h3 text-center" [text]='actionBarText'></Label>
 			</StackLayout>
+			<Image col="2" class="action-bar-icon" marginRight="8" (tap)="onSearchButtonTap()" horizontalAlignment="right"
+			verticalAlignment="middle" src="res://ic_search_white_24dp"></Image>
 
-			<StackLayout col="2">
-
-			</StackLayout>
 		</GridLayout>
 		<router-outlet></router-outlet>
 	</StackLayout>

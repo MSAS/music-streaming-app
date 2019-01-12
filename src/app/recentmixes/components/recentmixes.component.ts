@@ -47,9 +47,11 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
 
     data = [];
     user;
+    args;
     rows: RowItem[];
     loggedIn: boolean = false;
 
+    refstatus: boolean;
     songs = new ObservableArray();
     viewModel;
 
@@ -167,6 +169,16 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
         this.songs = new ObservableArray();
     }
 
+    recentMixesTab(args) {
+        var pullRefresh = args.object;
+        this.getRecentSongs(Values.readString(Values.X_ROLE_KEY, ""))
+        
+        if (this.refstatus == true) {
+
+            pullRefresh.refreshing = false;
+
+        }
+    }
 
     getRecentSongs(xRoleKey: string) {
         let headers = new HttpHeaders({
@@ -178,7 +190,7 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?isRecent=true", { headers: headers }).subscribe((res: any) => {
 
             if (res.isSuccess) {
-
+                this.refstatus =true;
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
                         if (res.items[i].mimeType == "audio/mp3")
@@ -212,11 +224,13 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
             }
             else {
                 alert(res.error)
+                this.refstatus =true;
                 return null;
             }
         },
             error => {
                 alert(error)
+                this.refstatus = true;
                 return null;
             })
     }
@@ -268,7 +282,7 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
                 "thumbnail": song.thumbnail,
                 "url": song.url,
                 "isFavourite": song.isFavourite,
-                "views":song.views
+                "views": song.views
             },
         };
         this.routerExtensions.navigate(["/detail"], extendedNavigationExtras)

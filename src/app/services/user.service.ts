@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Values } from '../values/values';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { logout as fbLogout } from "nativescript-facebook";
+// import { logout as fbLogout } from "nativescript-facebook";
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { AuthService } from './auth.service';
 
@@ -70,9 +70,9 @@ export class UserService {
         this._userSubject.next(null);
         this.authService.tnsOauthLogout();
 
-        fbLogout(() => {
-            console.log("logged out");
-        });
+        // fbLogout(() => {
+        //     console.log("logged out");
+        // });
     }
 
 
