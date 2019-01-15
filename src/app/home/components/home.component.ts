@@ -52,6 +52,7 @@ registerElement("CardView", () => CardView);
 
 export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     page: Page
+    isBusy:boolean=true;
 
     path: string;
     name: string = "Login";
@@ -63,7 +64,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
     viewModel;
     user;
-    pullRefresh;
+    pullRefreshLatest;
+    pullRefreshMostViewed;
 
     imagePlayer: string;
     imagePlayerFocussed: string;
@@ -74,7 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
     loggedIn: boolean;
 
-    refstatus: boolean;
+    refstatus: boolean = false;
 
     public constant = new Constants();
 
@@ -96,7 +98,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
         this.userService.homeSelector(true)
         this.userService.actionBarState(true)
-        this.userService.actionBarText('DJ Rick Geez')
+        this.userService.actionBarText('DJ RICK GEEZ')
 
         this.activatedRoute.queryParams.subscribe(params => {
             this.user = params["user"]
@@ -249,30 +251,33 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
             }
         }
     }
-    refreshMostViewedTab(args)
-    {
-        var pullRefresh = args.object;
+    refreshMostViewedTab(args) {
+        this.pullRefreshMostViewed = args.object;
+
+        this.pullRefreshMostViewed.refreshing = true;
         this.getMostViewdSongs(Values.readString(Values.X_ROLE_KEY, ""));
-        if (this.refstatus == true) {
-            
-            pullRefresh.refreshing = false;
-        }
+        // if (this.refstatus == true) {
+
+        //     pullRefresh.refreshing = false;
+        // }
 
 
     }
 
 
     refreshLatestTab(args) {
-        var pullRefresh = args.object;
+        this.pullRefreshLatest = args.object;
         // setTimeout(function () {
 
         // }, 5000);
+        this.pullRefreshLatest.refreshing = true;
 
         this.getAllSongs(Values.readString(Values.X_ROLE_KEY, ""));
-        if (this.refstatus == true) {
-            
-            pullRefresh.refreshing = false;
-        }
+        // if (this.refstatus == true)
+        //  {
+
+        //     pullRefresh.refreshing = false;
+        // }
     }
 
     getAllSongs(xRoleKey: string) {
@@ -286,9 +291,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files", { headers: headers }).subscribe((res: any) => {
 
+
+
+
             if (res.isSuccess) {
 
-                this.refstatus = true;
+                // this.refstatus = false;
+                this.isBusy=false;
 
                 this.songs = new ObservableArray();
                 if (res.items != undefined && res.items != null) {
@@ -323,17 +332,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
                 // console.log("data", this.data)
                 // this.categoryFolders = result;
                 // this.userService.setUser(result, xRoleKey);
-                // this.routerExtensions.navigate(["/home"]);
+
+                // this.refstatus = false;    // this.routerExtensions.navigate(["/home"]);
+
+                this.pullRefreshLatest.refreshing = false;
             }
+
+
             else {
                 alert(res.error)
-                this.refstatus = true;
+                this.pullRefreshLatest.refreshing = false;
                 return null;
             }
         },
             error => {
                 alert(error)
-                this.refstatus = true;
+                this.pullRefreshLatest.refreshing = false;
                 return null;
             })
     }
@@ -350,9 +364,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
 
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?isMostViewed=true", { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) 
-            {
-                this.refstatus = true;
+            if (res.isSuccess) {
 
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
@@ -386,16 +398,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
                 // this.categoryFolders = result;
                 // this.userService.setUser(result, xRoleKey);
                 // this.routerExtensions.navigate(["/home"]);
+                this.pullRefreshMostViewed.refreshing = false;
+
             }
             else {
                 alert(res.error)
-                this.refstatus = true;
+                this.pullRefreshMostViewed.refreshing = false;
                 return null;
             }
         },
             error => {
                 alert(error)
-                this.refstatus = true;
+                this.pullRefreshMostViewed.refreshing = false;
                 return null;
             })
     }

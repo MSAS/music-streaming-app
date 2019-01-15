@@ -20,7 +20,7 @@ import { AuthService } from "~/app/services/auth.service";
 import { Pic } from "~/app/models/pic";
 import { Profile } from "~/app/models/profile";
 import { request, getFile, getImage, getJSON, getString } from "tns-core-modules/http";
-
+import { ActivityIndicator } from "tns-core-modules/ui/activity-indicator";
 
 
 // function configureOAuthProviderFacebook(): TnsOaProvider {
@@ -47,6 +47,7 @@ import { request, getFile, getImage, getJSON, getString } from "tns-core-modules
 export class LoginComponent {
     @ViewChild('otpDialog') otpModal: ModalComponent;
     @ViewChild('passwordDialog') passwordModal: ModalComponent;
+    @ViewChild('activityIndicator') indicator: ActivityIndicator;
 
     // @Output() model: EventEmitter<User> = new EventEmitter();
 
@@ -86,6 +87,8 @@ export class LoginComponent {
     underlinePassword: string;
     underlineEmail: string;
     FACEBOOK_GRAPH_API_URL: "https://graph.facebook.com/v2.9"
+
+    activityIndicator;
 
     @ViewChild("password") password: ElementRef;
     @ViewChild("confirmPassword") confirmPassword: ElementRef;
@@ -145,7 +148,17 @@ export class LoginComponent {
 
 
 
+    onPageLoaded(args) {
+        // const page = args.object as Page;
+        // page.get('activityIndicator')
+        // console.log("Indi:", page.getViewById('activityIndicator')/
+        // )
 
+
+        // this.activityIndicator = this.indicator.nativeElement as ActivityIndicator;
+        // alert(args.getString)
+        // console.log("Page:", args)
+    }
 
 
 
@@ -389,13 +402,23 @@ export class LoginComponent {
 
 
     onLoginClick() {
+        this.indicator.busy = true;
+        console.log("Ibdsshbvhbsh", this.indicator)
         if (this.userNameText == "") {
             alert("Username can not be empty");
+            // this.isBusy = false;
+            this.indicator.busy = false;
+
             return;
         }
         if (this.passwordText == "") {
             alert("Passsword can not be empty");
+            // this.isBusy = false;
+            this.indicator.busy = false;
+            return
         }
+
+
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
@@ -405,7 +428,7 @@ export class LoginComponent {
         this.user.code = this.userNameText;
         this.user.password = this.passwordText;
 
-        this.isBusy = true;
+
 
         this.http.post("http://ems-api-dev.m-sas.com/api/users/signIn", this.user, { headers: headers }).subscribe((res: any) => {
 
@@ -413,14 +436,18 @@ export class LoginComponent {
                 let result: any
                 result = res.data
                 this.res = result;
-                this.isBusy = false;
+
+
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
                         if (result.roles[i].isDefaultRole) {
+                            // this.isBusy = false;
+                            this.indicator.busy = false;
+
                             Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
                             let extendedNavigationExtras: ExtendedNavigationExtras = {
                                 queryParams: {
-                                    "user": result  
+                                    "user": result
                                 }
                             };
                             this.userService.setUser(result, result.roles[i].key);
@@ -429,20 +456,29 @@ export class LoginComponent {
                         }
                     }
                     else {
+                        // this.isBusy = false;
+                        this.indicator.busy = false;
+
                         alert("Authentication Problem (Could not get role key)");
                     }
                 }
             }
             else {
-                this.isBusy = false;
+
 
                 alert(res.error)
+                this.indicator.busy = false;
+
+                // this.isBusy = false;
             }
         },
             error => {
-                this.isBusy = false;
+                // this.isBusy = false;
+                this.indicator.busy = false;
 
-                alert(error)
+                alert(error);
+
+
             })
     }
 
@@ -538,7 +574,7 @@ export class LoginComponent {
         });
 
         this.res.data.password = this.newPasswordText;
-        this.isBusy=true;
+        this.isBusy = true;
 
         this.http.post("http://ems-api-dev.m-sas.com/api/users/setPassword/" + this.res.data.id, this.res.data, { headers: headers }).subscribe((res: any) => {
             // console.log(res);
@@ -546,7 +582,7 @@ export class LoginComponent {
             if (res.isSuccess) {
                 result = res.data;
                 this.res = res;
-                this.isBusy=false;
+                this.isBusy = false;
                 this.passwordModal.hide();
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
@@ -566,13 +602,13 @@ export class LoginComponent {
                 }
             }
             else {
-                this.isBusy=false;
+                this.isBusy = false;
                 // alert(res.error);
             }
 
         },
             error => {
-                this.isBusy=false;
+                this.isBusy = false;
                 alert(error);
             })
 

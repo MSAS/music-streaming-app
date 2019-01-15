@@ -1,23 +1,72 @@
+ /* .searchText
+ {
+   width:60%;
+   placeholder-color:#CC3333;
+   
+ } */
+ .searchStack
+ {
+     margin-top: 5px;
+    height:8%;
+    width:100%;
+    background-color:#F1F1F1;
+    }
+ .searchButton
+ {
+    background-image: url("res://ic_search_white_24dp");
+    background-color: #CC3333;  
+    background-repeat: no-repeat; 
+    background-position: 80% 50%;
+    text-align: left;
+    text-orientation: upright;
+    border-radius:70%; 
+    width:28%;
+    height: 75%;
+}
+
+.searchButton:active{
+    color:white;
+    background-color: #4f4f4f;
+   }
+
  .parentlayout
  {
-     height: 100%;
+     height: 20%;
     background-color: #FFFFFF;
-    
-    background-size: cover;
+    width:90%;
+ }
+
+ .input-field{
+     width:100%;
  }
  
  .searchactivity{
      /* background-color: aqua; */
      /* background-image: url("res://splash_blur"); */
-     background-color:transparent ;
-     margin-left: 5;
+     margin-left: 10;
     margin-right:10;
     margin-top:20;
      /* height: 200; */
  } 
+ .action-bar-icon{
+    height: 35;
+    width: 35;
+}
+
+.action-bar-label {
+    background-color: black;
+}
+
+.action-bar{
+    width:100%;
+    height: 100%;
+    align-items: center;
+    background: transparent;
+}
+
  .back-buttonlayout
  {
-    background-color:transparent;
+    background-color:red;
     margin-right:10;
      height: 40;
  }
@@ -25,10 +74,11 @@
       color: white;
 
  }
- /* .searchlabel
+ .searchlabel
  {
+     width:100%;
     color: white;
-     } */
+     }
 
  .navigate-back-button
  {  

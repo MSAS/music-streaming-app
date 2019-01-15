@@ -30,6 +30,7 @@ export class AccountInfoComponent implements OnInit {
     line1 = '';
     line2;
     postUser = new User();
+    isBusy:boolean=false;
 
     constructor(private page: Page, private routerExtensions: RouterExtensions, private http: HttpClient, private userService: UserService, private activatedRoute: ActivatedRoute) {
         // this.page.actionBarHidden = true;
@@ -202,6 +203,7 @@ export class AccountInfoComponent implements OnInit {
             "x-tenant-code": "music",
             "x-role-key": Values.readString(Values.X_ROLE_KEY, "")
         });
+        
 
         var profile = new Profile();
         profile.firstName = this.firstName;
@@ -222,15 +224,17 @@ export class AccountInfoComponent implements OnInit {
         // this.postUser.
         // this.postUser.
         // this.postUser.
+        this.isBusy=true;
 
         this.http.put("http://ems-api-dev.m-sas.com/api/users/my", this.postUser, { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) {
+            if (res.isSuccess) 
+            {
                 let result: any
                 result = res.data
                 this.userService.setUser(result, Values.readString(Values.X_ROLE_KEY, ""));
                 this.routerExtensions.navigate(["/home"]);
-
+                this.isBusy=false;
                 // this.res = result;
                 // for (var i = 0; i < result.roles.length; i++) {
                 //     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
@@ -251,11 +255,13 @@ export class AccountInfoComponent implements OnInit {
             }
             else {
                 alert(res.error)
+                this.isBusy=false;
                 return null;
             }
         },
             error => {
                 alert(error)
+                this.isBusy=false;
                 return null;
             })
     }

@@ -19,15 +19,25 @@ const countries = ["Albania", "Andorra", "Australia", "Belgium", "Bulgaria", "Cy
 })
 
 export class SearchComponent implements OnInit {
+
+    border_color;
+    background_color;
+
+
+
     autocompleteCountries: ObservableArray<TokenModel>;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
         this.autocompleteCountries = new ObservableArray<TokenModel>();
+
+        this.background_color = 'white';
+        this.border_color = 'orange';
+        
         countries.forEach((country) => {
             this.autocompleteCountries.push(new TokenModel(country, undefined));
         });
 
-        this.userService.actionBarState(true)
+        this.userService.actionBarState(false);
         this.userService.actionBarText("Search")
         // this.userService.actionBarText('About Us')
 

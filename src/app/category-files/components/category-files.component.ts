@@ -55,11 +55,13 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
     source: Observable;
     songs = new ObservableArray();
     viewModel;
+    isBusy: boolean = true;
 
     args;
-     refstatus: boolean;
-    
-     imagePlayer: string;
+    refstatus: boolean;
+
+
+    imagePlayer: string;
     imagePlayerFocussed: string;
 
     rows: RowItem[];
@@ -78,9 +80,11 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
         this.userService.homeSelector(false)
 
         this.userService.actionBarState(true)
-        this.data.push(new Item("Squirtle", "Squirtle"));
-        this.data.push(new Item("Wartortle", "Wartortle"));
-        this.data.push(new Item("Blastoise", "Blastoise"));
+        // this.data.push(new Item("Squirtle", "Squirtle"));
+        // this.data.push(new Item("Wartortle", "Wartortle"));
+        // this.data.push(new Item("Blastoise", "Blastoise"));
+
+        this.isBusy = true;
 
         this.activatedRoute.queryParams.subscribe(params => {
             this.folderName = params.name;
@@ -152,40 +156,15 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
 
     }
 
-    converter(items: Item[]): RowItem[] {
-        // var items:Item[];
-        var length: number = Math.trunc(items.length / 2);
-        var odd = false;
-        var item1: Item;
-        var item2: Item;
-        // var counter = 0;
-        if (items.length % 2 == 0) {
-            odd = false;
-        }
-        else {
-            odd = true;
-            length = length + 1;
-        }
-        var rows = [];
-        for (var i = 0; i < items.length; i++) {
-
-            if (i % 2 == 0 && items[i] != undefined) {
-                item1 = items[i];
-                if (i == items.length - 1) {
-                    rows.push(new RowItem(item1, undefined, true))
-                }
-            }
-            else if (i % 2 != 0 && items[i] != undefined) {
-                item2 = items[i];
-                rows.push(new RowItem(item1, item2, false));
-                // counter++;
-            }
-        }
-        return rows;
-    }
-
     pageLoaded(args: EventData) {
         this.page = args.object as Page;
+
+        if (this.folderId != null && this.folderId != undefined && this.folderId != "") {
+            // this.data = this.rows;
+            this.getCategoryFilesByFolder(this.folderId);
+
+        }
+        // this.isBusy=false;
         // const items = new ObservableArray();
 
         // for (let loop = 0; loop < 200; loop++) {
@@ -193,45 +172,53 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
         // }
 
         // this.getCategoryFolders("jjjjj");
+        // this.isBusy = false;
+        this.isBusy = false;
 
         console.log("Page Loaded called")
     }
 
     ngOnInit(): void {
         console.log("initFav")
-        if (this.rows == undefined || this.rows == null) {
-            this.data = [];
-            this.data.push(new Item("Bulbasaur", "Bulbasaur"));
-            this.data.push(new Item("Ivysaur", "soon."));
-            this.data.push(new Item("Venusaur", "people."));
-        }
-        this.rows = this.converter(this.data)
+
+        // if (this.rows == undefined || this.rows == null) {
+        //     this.data = [];
+        //     this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        //     this.data.push(new Item("Ivysaur", "soon."));
+        //     this.data.push(new Item("Venusaur", "people."));
+        // }
+        // this.rows = this.converter(this.data)
+        // this.isBusy = false;
     }
 
     ngAfterViewInit(): void {
-        if (this.rows == undefined || this.rows == null) {
-            this.data = [];
-            this.data.push(new Item("Bulbasaur", "Bulbasaur"));
-            this.data.push(new Item("Ivysaur", "soon."));
-            this.data.push(new Item("Venusaur", "people."));
-        }
-        this.rows = this.converter(this.data)
+        // if (this.rows == undefined || this.rows == null) {
+        //     this.data = [];
+        //     this.data.push(new Item("Bulbasaur", "Bulbasaur"));
+        //     this.data.push(new Item("Ivysaur", "soon."));
+        //     this.data.push(new Item("Venusaur", "people."));
+        // }
+        // this.isBusy=false;
+
+        // this.isBusy=fa;
+
+        // this.rows = this.converter(this.data)
     }
 
-    categoryfilesTab(args)
-    {   
-         var pullRefresh = args.object;
-         if (this.folderId != null && this.folderId != undefined && this.folderId != "") {
+    categoryfilesTab(args) {
+        var pullRefresh = args.object;
+        if (this.folderId != null && this.folderId != undefined && this.folderId != "") {
             // this.data = this.rows;
             this.getCategoryFilesByFolder(this.folderId);
-            if (this.refstatus == true)
-            {
-               
-               pullRefresh.refreshing = false;
-           }
-        }       
-     
-        
+            if (this.refstatus == true) {
+
+                pullRefresh.refreshing = false;
+
+            }
+
+        }
+
+
     }
 
     getCategoryFilesByFolder(folderId: string, folderName?: string): any {
@@ -242,12 +229,15 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
             "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
         });
 
+        // this.isBusy=true;
+
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?folder-id=" + folderId, { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) 
-            {
-                
-                this.refstatus = true
+            if (res.isSuccess) {
+
+
+                this.refstatus = true;
+                this.isBusy = false;
 
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
@@ -262,6 +252,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
                 // this.items.push(new Item("Venusaur", "people."));
                 this.viewModel = new Observable();
                 this.viewModel.set("items", this.songs);
+                // this.viewModel.set("busy", false);
 
                 this.page.bindingContext = this.viewModel;
 
@@ -281,16 +272,22 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
                 // this.categoryFolders = result;
                 // this.userService.setUser(result, xRoleKey);
                 // this.routerExtensions.navigate(["/home"]);
+                this.isBusy = false;
+
             }
             else {
                 alert(res.error)
-                this.refstatus == true
+                this.refstatus == true;
+                this.isBusy = false;
+
                 return null;
             }
         },
             error => {
                 alert(error)
-                this.refstatus == true
+                this.refstatus == true;
+                this.isBusy = false;
+
                 return null;
             })
     }
@@ -328,16 +325,16 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
         sideDrawer.showDrawer();
     }
 
-    onCardClicked(song:Song) {
+    onCardClicked(song: Song) {
 
         let extendedNavigationExtras: ExtendedNavigationExtras = {
             queryParams: {
                 "id": song.id,
-                "name":song.name,
-                "thumbnail":song.thumbnail,
-                "url":song.url,
-                "isFavourite":song.isFavourite,
-                "views":song.views
+                "name": song.name,
+                "thumbnail": song.thumbnail,
+                "url": song.url,
+                "isFavourite": song.isFavourite,
+                "views": song.views
             },
         };
         this.routerExtensions.navigate(["/detail"], extendedNavigationExtras)

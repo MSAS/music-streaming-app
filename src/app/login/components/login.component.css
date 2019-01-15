@@ -68,6 +68,12 @@ TextField {
   .forgot-password-label{
     font-size: 15;
     color: white;
+    background-color: transparent;
+    z-index: 0;
+  }
+  .forgot-password-label:active{
+    font-size: 15;
+    color: #cc3333;
   }
   
   .grid-container{
@@ -156,6 +162,44 @@ TextField {
     z-index: 0;
     /* margin-bottom:15; */
   }
+  .fb{
+   
+    font-size: 16;    
+    background-color:transparent;
+    color: #FFFFFF;
+    z-index: 0;
+    width: fit-content;
+    vertical-align: middle;
+    horizontal-align:center;
+  }
+  .fb:active{
+
+    font-size: 16;
+    color: #cc3333;
+    z-index: 0;
+    vertical-align: middle;
+    horizontal-align:center;
+  }
+
+
+  .newToDJ{
+     font-size: 16;
+     color:#FFFFFF;
+     background-color: transparent;
+     z-index: 0;
+     width: fit-content;
+     vertical-align: middle;
+     horizontal-align:center;
+  }
+
+  .newToDJ:active{ 
+    font-size: 16;
+    color: #cc3333;
+    z-index: 0;
+    vertical-align: middle;
+    horizontal-align:center;    
+  }
+
 
   .login-button:active{
     color:white;

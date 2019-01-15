@@ -55,7 +55,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit, OnDestroy {
     size: number;
     items = new ObservableArray();
     source: Observable;
-
+    isBusy: boolean = false;
     user;
 
     imagePlayer: string;
@@ -219,6 +219,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     getCategoryFolders(xRoleKey: string): any {
+        this.isBusy = true;
 
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
@@ -229,7 +230,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.http.get("http://docs-api-dev.m-sas.com/api/folders?isParent=true", { headers: headers }).subscribe((res: any) => {
 
             if (res.isSuccess) {
-
+                this.isBusy = false;
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
                         this.items.push(new Folder(<Folder>res.items[i]))
@@ -286,8 +287,8 @@ export class CategoriesComponent implements OnInit, AfterViewInit, OnDestroy {
         let extendedNavigationExtras: ExtendedNavigationExtras = {
             queryParams: {
                 "id": folder.id,
-                "name":folder.name,
-                "thumbnail":folder.thumbnail,
+                "name": folder.name,
+                "thumbnail": folder.thumbnail,
             },
         };
         this.routerExtensions.navigate(["/categoryFiles"], extendedNavigationExtras)

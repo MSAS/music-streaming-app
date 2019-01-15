@@ -1,35 +1,77 @@
-<!-- <StackLayout marginLeft="6%" width="5.5%" height="50%" col="0" verticalAlignment="top"
-		horizontalAlignment="left">
-		<Button class="navigate-back-button" (tap)="nativegateBack()"></Button>
-	   </StackLayout> -->
-<Button row="0" class="navigate-back-button" verticalAlignment="top" (tap)="nativegateBack()" marginTop="1%" marginLeft="6%"
- width="5.5%" height="5%"></Button>
- 
-<StackLayout row="1" class="register-logo" marginTop="3%" horizontalAlignment="center" width="20%" height="20%">
-	<Image src="res://img_logo_splash"></Image>
-</StackLayout>
-<StackLayout class="parentlayout">
-	<StackLayout class="searchactivity" orientation="horizontal">
-		<StackLayout class="back-buttonlayout">
-			<Button class="navigate-back-button" col="0" (tap)="nativegateBack()"></Button>
+<StackLayout height="100%" backgroundColor="yellow" width="100%">
+	<StackLayout backgroundColor="red" height="8%" width="100%">
+		<GridLayout backgroundColor="black" class="action-bar-label" rows="*" columns="*,*,*" height="100%" width="100%">
+			<Image class="action-bar-icon" marginLeft="8" col="0" (tap)="nativegateBack()" horizontalAlignment="left"
+			 verticalAlignment="middle" src="res://ic_back"></Image>
+			<StackLayout col="1" class="title-text" verticalAlignment="middle">
+				<Label class="h3 text-center" text="SEARCH"></Label>
+			</StackLayout>
+		</GridLayout>
+		<router-outlet></router-outlet>
+	</StackLayout>
 
-		</StackLayout>
-		<StackLayout class="input-field">
-			<Label text="Select a country" class="label"></Label>
-			<RadAutoCompleteTextView [items]="autocompleteCountries" (didAutoCompleteEvent)=loading($event) suggestMode="Suggest" displayMode="Tokens">
-				<SuggestionView tkAutoCompleteSuggestionView>
-					<ng-template tkSuggestionItemTemplate let-item="item">
-						<GridLayout columns="auto, *">
 
-							<!-- <Image height="40" col="1" [src]="getImageName(item.text)"></Image> -->
-							<Label col="2" [text]="item.text" class="searchlabel"></Label>
-						</GridLayout>
-					</ng-template>
-				</SuggestionView>
-			</RadAutoCompleteTextView>
-			<StackLayout class="hr-light"></StackLayout>
-		</StackLayout>
+	<StackLayout class="searchStack" orientation="horizontal">
+
+		<TextField width="65%" height="80%" margin="2%" (focus)="onFocus($event)" (blur)="onBlur($event)" style.borderColor="#CC3333"
+		 style.borderWidth="0.7%" style.backgroundColor="white" style.placeholderColor="#646464" (textChange)="confirmNewPasswordTextField($event)"
+		 autocorrect="false" (returnPress)="onReturn($event)"></TextField>
+		<!-- <TextField   class ="searchText" width="60%" style.placeholderColor="#CC3333" ></TextField> -->
+		<Button text="Search" class="searchButton" color="#FFFFFF"> </Button>
 
 	</StackLayout>
 
+	<GridLayout backgroundColor="#CC3333">
+		<GridView [items]="songs" colWidth="35%" rowHeight="40%" width="100%" height="100%" marginRight="7.5" backgroundColor="#dcdcdc">
+			<ng-template let-item="item" let-odd="odd">
+
+				<StackLayout orientation="vertical" backgroundColor="white" marginLeft="7.5" marginTop="7.5">
+					<GridLayout width="100%" height="60%" rows="auto" columns="auto" backgroundColor="#dcdcdc">
+						<Image src="res://category_default" stretch="fill" width="100%" height="100%" (tap)="cardClicked(item)"></Image>
+
+						<AbsoluteLayout width="100%" height="100%" backgroundColor="transparent">
+							<Button class="videoPlayButton" left="75%" top="50%" (tap)="cardClicked(item)"></Button>
+						</AbsoluteLayout>
+						<!-- <Button class="videoPlayButton" horizontalAlignment="center" verticalAlignment="middle"
+		(tap)="cardClicked(item,0)"></Button> -->
+
+					</GridLayout>
+
+					<Label class="h3" marginTop="5" marginLeft="5%" [text]="item.name" color="black"></Label>
+					<StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+					<StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+
+					<GridLayout class="pull-left" width="90%" rows="auto" columns="auto,auto,*" marginLeft="5%" marginTop="5"
+					 orientation="horizontal">
+						<Image row="0" col="0" src="res://icon_view" height="25%"></Image>
+						<StackLayout row="0" col="1" marginLeft="2%" verticalAlignment="center">
+							<Label class="text-center body" text="{{item.views==undefined?0:item.views+' views'}}"></Label>
+						</StackLayout>
+						<StackLayout row="0" col="2" class="pull-right" width="auto" horizontalAlignment="right" marginLeft="15%"
+						 verticalAlignment="center">
+							<Label class="text-right body" [text]="item.name"></Label>
+						</StackLayout>
+					</GridLayout>
+				</StackLayout>
+
+			</ng-template>
+		</GridView>
+	</GridLayout>
 </StackLayout>
+<!-- <StackLayout class="parentlayout">
+		<StackLayout class="searchactivity" orientation="horizontal">
+			<StackLayout class="input-field">
+				<Label text="Select a country" class="label"></Label>
+				<RadAutoCompleteTextView [items]="autocompleteCountries" (didAutoCompleteEvent)=loading($event) suggestMode="Suggest"
+				 displayMode="Tokens">
+					<SuggestionView tkAutoCompleteSuggestionView>
+						<ng-template tkSuggestionItemTemplate let-item="item">
+							<GridLayout>
+								<Label [text]="item.text" class="searchlabel"></Label>
+							</GridLayout>
+						</ng-template>
+					</SuggestionView>
+				</RadAutoCompleteTextView>
+			</StackLayout>
+		</StackLayout>
+	</StackLayout> -->

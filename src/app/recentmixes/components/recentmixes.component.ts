@@ -54,6 +54,7 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
     refstatus: boolean;
     songs = new ObservableArray();
     viewModel;
+    isBusy: boolean = false;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient) {
         this.data = [];
@@ -186,11 +187,16 @@ export class RecentMixesComponent implements OnInit, OnChanges, OnDestroy {
             "x-tenant-code": "music",
             "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
         });
+        this.isBusy= true;
 
         this.http.get("http://docs-api-dev.m-sas.com/api/123/123/files?isRecent=true", { headers: headers }).subscribe((res: any) => {
 
-            if (res.isSuccess) {
+            if (res.isSuccess) 
+            {
                 this.refstatus =true;
+                this.isBusy= true;
+
+                
                 if (res.items != undefined && res.items != null) {
                     for (var i = 0; i < res.items.length; i++) {
                         if (res.items[i].mimeType == "audio/mp3")

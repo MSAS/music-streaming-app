@@ -4,9 +4,9 @@
 
 		<GridLayout #gridNon *ngIf="!isLogged" height="11%" row="0" orientation="horizontal" columns="*,auto,*"
 		 backgroundColor="#181d22">
-			<Label col="0" class="sideHeader" (tap)="onSignIn()" text="SIGN IN"></Label>
+		<button col="0" class="sideHeader" (tap)="onSignIn()" text="SIGN IN"></button>
 			<StackLayout col="1" height="40%" width="1" backgroundColor="#303942"></StackLayout>
-			<Label col="2" class="sideHeader" (tap)="onRegister()" text="REGISTER"></Label>
+			<button col="2" class="sideHeader" (tap)="onRegister()" text="REGISTER"></button>
 		</GridLayout>
 
 		<GridLayout #gridLo *ngIf="isLogged" row="0" height="20%" class="drawer-header" rows="auto, auto" columns="auto">
@@ -107,22 +107,23 @@
 
 	<StackLayout tkMainContent height="100%" width="100%">
 		<GridLayout *ngIf="showActionBar" class="action-bar-label" rows="*" columns="*,*,*" height="8%" width="100%">
-			<Image class="action-bar-icon" marginLeft="8" col="0" (tap)="onDrawerButtonTap()" horizontalAlignment="left"
-			 verticalAlignment="middle" src="res://ic_menu"></Image>
+			<Button class="action-bar-icon" marginLeft="8" col="0" (tap)="onDrawerButtonTap()" horizontalAlignment="left"
+			 verticalAlignment="middle"></Button>
 			<StackLayout col="1" class="title-text" verticalAlignment="middle">
 				<Label class="h3 text-center" [text]='actionBarText'></Label>
 			</StackLayout>
-			<Image col="2" class="action-bar-icon" marginRight="8" (tap)="onSearchButtonTap()" horizontalAlignment="right"
-			verticalAlignment="middle" src="res://ic_search_white_24dp"></Image>
+			<Button col="2" class="action-bar-icon-search" marginRight="8" (tap)="onSearchButtonTap()" horizontalAlignment="right"
+			 verticalAlignment="middle"></Button>
 
 		</GridLayout>
 		<router-outlet></router-outlet>
 	</StackLayout>
 
+	
 	<!-- <page-router-outlet tkMainContent class="page"></page-router-outlet> -->
 </RadSideDrawer>
 
 <!-- 
 <StackLayout height="100%" width="100%" backgroundColor="blue">
 	<router-outlet></router-outlet>
-</StackLayout> -->
+</StackLayout> --> 

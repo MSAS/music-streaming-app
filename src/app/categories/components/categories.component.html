@@ -11,23 +11,28 @@
 
         </StackLayout>
     </GridLayout> -->
+        <GridLayout rows="auto">
+            <GridLayout row="0" width="100%" height="100%">
+                <GridView *ngIf="loggedIn" [items]="items" colWidth="35%" rowHeight="25%" width="100%" height="100%"
+                    backgroundColor="white">
+                    <ng-template let-item="item" let-odd="odd">
+                        <GridLayout (tap)="onCardClicked(item)">
+                            <Image class="folder" margin="15" src="res://folder_image"></Image>
+                            <Label class="text-center" [text]="item.name" verticalAlignment="bottom">
 
 
-        <GridView *ngIf="loggedIn" [items]="items" colWidth="35%" rowHeight="25%" width="100%" height="100%"
-            backgroundColor="white">
-            <ng-template let-item="item" let-odd="odd">
-                <GridLayout (tap)="onCardClicked(item)">
-                    <Image class="folder"  margin="15" src="res://folder_image"></Image>
-                    <Label class="text-center" [text]="item.name" verticalAlignment="bottom" >
+                            </Label>
+                        </GridLayout>
 
-
-                    </Label>
-                </GridLayout>
-
-                <!-- <Button class="folder" margin="10" (tap)="onCardClicked(item)"></Button> -->
-            </ng-template>
-        </GridView>
-
+                        <!-- <Button class="folder" margin="10" (tap)="onCardClicked(item)"></Button> -->
+                    </ng-template>
+                </GridView>
+            </GridLayout>
+            <GridLayout row="0" width="100%" height="100%">
+                <ActivityIndicator #activityIndicator row="5" [busy]="isBusy" horizontalAlignment="center"
+                    verticalAlignment="middle" class="activity-indicator"></ActivityIndicator>
+            </GridLayout>
+        </GridLayout>
 
         <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
             <StackLayout horizontalAlignment="center" verticalAlignment="middle">

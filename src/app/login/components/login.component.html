@@ -46,7 +46,7 @@
 
 
 <!-- <GridLayout class="page"> -->
-<Page>
+<Page (loaded)="onPageLoaded($event)">
     <GridLayout class="page">
         <!-- <StackLayout class="home-panel m-y-auto">
         <Button class="btn" (tap)="openModal()" text="Open Modal"></Button>
@@ -152,27 +152,26 @@
 
                     </StackLayout>
 
-
                     <AbsoluteLayout row="2" class="activity-indicator-container">
                         <ActivityIndicator #activityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
                     </AbsoluteLayout>
 
-                    <StackLayout marginTop="2%" row="3" backgroundColor="transparent" verticalAlignment="top"
+                    <StackLayout  row="3" backgroundColor="transparent" verticalAlignment="top"
                         horizontalAlignment="center">
-                        <Label class="font-italic forgot-password-label" marginLeft="6%" (tap)="nativateToForgotPassword()"
-                            text="Forgot Password"></Label>
+                        <Button class="font-italic forgot-password-label"   (tap)="nativateToForgotPassword()"
+                            text="Forgot Password"></Button>
                     </StackLayout>
 
                     <GridLayout row="4" columns="*, *" orientation="horizontal" backgroundColor="black" (tap)="onTapLogin()"
                         marginTop="20%" opacity=".5" width="100%" height="10%">
-                        <Label class="text-left font-weight-bold" col="0" marginLeft="6%" [class]="labelClass" text="Signin with Facebook"
-                            (tap)="onTapLogin()"></Label>
+                        <Button class="text-left font-normal fb" col="0" marginLeft="6%"  textTransform="none"   text="Signin with Facebook"
+                            (tap)="onTapLogin()"></Button>
                         <Button class="pull-right" col="1" class="redirect-button" width="30" height="30" (tap)="onTapLogin()"></Button>
                     </GridLayout>
                     <GridLayout row="5" columns="*, *" orientation="horizontal" marginTop="5" (tap)="navigateToRegister()"
                         backgroundColor="black" opacity=".5" width="100%" height="10%" verticalAlignment="bottom">
-                        <Label class="text-left font-weight-bold" col="0" marginLeft="6%" [class]="labelClass" text="New to Rick Geez? Sign up now"
-                            (tap)="navigateToRegister()"></Label>
+                        <Button class="text-left font-normal newToDJ" col="0" marginLeft="6%"  textTransform="none"  text="New to Rick Geez? Sign up now"
+                            (tap)="navigateToRegister()"></Button>
                         <Button class="pull-right" class="redirect-button" col="1" width="30" height="30" (tap)="navigateToRegister()"></Button>
                     </GridLayout>
 

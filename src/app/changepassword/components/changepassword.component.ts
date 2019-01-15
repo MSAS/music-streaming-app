@@ -25,6 +25,8 @@ export class ChangePasswordComponent implements OnInit {
     newPasswordText = '';
     confirmNewPasswordText = '';
 
+    isBusy: boolean =false;
+
     constructor(private page: Page, private routerExtensions: RouterExtensions, private activatedRoute: ActivatedRoute, private userService: UserService, private http: HttpClient) {
       
         this.userService.actionBarState(false)
@@ -108,11 +110,15 @@ export class ChangePasswordComponent implements OnInit {
             return;
         }
 
+        this.isBusy =true;
+
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
             "x-tenant-code": "music",
             "x-role-key": Values.readString(Values.X_ROLE_KEY, "")
         });
+
+      
         this.user = new User();
 
         this.user.password = this.currentPasswordText;
@@ -123,6 +129,8 @@ export class ChangePasswordComponent implements OnInit {
             if (res.isSuccess) {
                 let result: any
                 result = res.data
+
+                this.isBusy =false;
                 // this.res = result;
                 // for (var i = 0; i < result.roles.length; i++) {
                 //     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
@@ -152,10 +160,12 @@ export class ChangePasswordComponent implements OnInit {
             }
             else {
                 alert(res.error)
+                this.isBusy =false;
             }
         },
             error => {
                 alert(error)
+                this.isBusy =false;
             })
     }
 

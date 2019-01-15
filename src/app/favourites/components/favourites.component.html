@@ -1,6 +1,8 @@
-<Page (loaded)="pageLoaded($event)" (unloaded)="pageUnloaded()" >
-<StackLayout height="100%" width="100%">
-    <!-- <StackLayout class="action-bar-label" height="8%" width="100%">
+<Page (loaded)="pageLoaded($event)" (unloaded)="pageUnloaded()">
+    <StackLayout height="100%" width="100%">
+        <GridLayout height="100%" width="100%" *ngIf="loggedIn">
+
+            <!-- <StackLayout class="action-bar-label" height="8%" width="100%">
         <StackLayout class="action-bar" orientation="horizontal">
             <Image class="action-bar-icon" (tap)="onDrawerButtonTap()" src="res://ic_menu"></Image>
             <StackLayout class="title-text">
@@ -9,52 +11,53 @@
         </StackLayout>
     </StackLayout> -->
 
-    <PullToRefresh (refresh)="favouritesTab($event)"> 
-    <GridView *ngIf="loggedIn" [items]="songs" colWidth="35%" rowHeight="40%" width="100%" height="100%" marginRight="7.5"
-        backgroundColor="#dcdcdc">
-        <ng-template let-item="item" let-odd="odd">
+            <PullToRefresh (refresh)="favouritesTab($event)">
+                <GridView [items]="songs" colWidth="35%" rowHeight="40%" width="100%" height="100%" marginRight="7.5"
+                    backgroundColor="#dcdcdc">
+                    <ng-template let-item="item" let-odd="odd">
 
-            <StackLayout orientation="vertical" backgroundColor="white" marginLeft="7.5" marginTop="7.5">
-                <GridLayout width="100%" height="60%" rows="auto" columns="auto" backgroundColor="#dcdcdc">
-                    <Image src="res://category_default" stretch="fill" width="100%" height="100%" (tap)="cardClicked(item)"></Image>
+                        <StackLayout orientation="vertical" backgroundColor="white" marginLeft="7.5" marginTop="7.5">
+                            <GridLayout width="100%" height="60%" rows="auto" columns="auto" backgroundColor="#dcdcdc">
+                                <Image src="res://category_default" stretch="fill" width="100%" height="100%" (tap)="cardClicked(item)"></Image>
 
-                    <AbsoluteLayout width="100%" height="100%" backgroundColor="transparent">
-                        <Button class="videoPlayButton" left="75%" top="50%" (tap)="cardClicked(item)"></Button>
-                    </AbsoluteLayout>
-                    <!-- <Button class="videoPlayButton" horizontalAlignment="center" verticalAlignment="middle"
+                                <AbsoluteLayout width="100%" height="100%" backgroundColor="transparent">
+                                    <Button class="videoPlayButton" left="75%" top="50%" (tap)="cardClicked(item)"></Button>
+                                </AbsoluteLayout>
+                                <!-- <Button class="videoPlayButton" horizontalAlignment="center" verticalAlignment="middle"
                     (tap)="cardClicked(item,0)"></Button> -->
 
-                </GridLayout>
+                            </GridLayout>
 
-                <Label class="h3" marginTop="5" marginLeft="5%" [text]="item.name" color="black"></Label>
-                <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
-                <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
+                            <Label class="h3" marginTop="5" marginLeft="5%" [text]="item.name" color="black"></Label>
+                            <StackLayout backgroundColor="#DCDCDC" marginTop="5" width="90%" height="1"></StackLayout>
+                            <StackLayout backgroundColor="#DCDCDC" marginTop="10" width="90%" height="1"></StackLayout>
 
-                <GridLayout class="pull-left" width="90%" rows="auto" columns="auto,auto,*" marginLeft="5%" marginTop="5"
-                    orientation="horizontal">
-                    <Image row="0" col="0" src="res://icon_view" height="25%"></Image>
-                    <StackLayout row="0" col="1" marginLeft="2%" verticalAlignment="center">
-                        <Label class="text-center body" text="{{item.views==undefined?0:item.views+' views'}}"></Label>
-                    </StackLayout>
-                    <StackLayout row="0" col="2" class="pull-right" width="auto" horizontalAlignment="right" marginLeft="15%"
-                        verticalAlignment="center">
-                        <Label class="text-right body" [text]="item.name"></Label>
-                    </StackLayout>
-                </GridLayout>
+                            <GridLayout class="pull-left" width="90%" rows="auto" columns="auto,auto,*" marginLeft="5%"
+                                marginTop="5" orientation="horizontal">
+                                <Image row="0" col="0" src="res://icon_view" height="25%"></Image>
+                                <StackLayout row="0" col="1" marginLeft="2%" verticalAlignment="center">
+                                    <Label class="text-center body" text="{{item.views==undefined?0:item.views+' views'}}"></Label>
+                                </StackLayout>
+                                <StackLayout row="0" col="2" class="pull-right" width="auto" horizontalAlignment="right"
+                                    marginLeft="15%" verticalAlignment="center">
+                                    <Label class="text-right body" [text]="item.name"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                        </StackLayout>
+
+                    </ng-template>
+                </GridView>
+            </PullToRefresh>
+        </GridLayout>
+
+
+        <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
+            <StackLayout horizontalAlignment="center" verticalAlignment="middle">
+                <Label text="You need to login to continue"></Label>
             </StackLayout>
-
-        </ng-template>
-    </GridView>
-    </PullToRefresh>
+        </GridLayout>
 
 
-    <GridLayout width="100%" height="100%" *ngIf="!loggedIn">
-        <StackLayout horizontalAlignment="center" verticalAlignment="middle">
-            <Label text="You need to login to continue"></Label>
-        </StackLayout>
-    </GridLayout>
-
-
-</StackLayout>
+    </StackLayout>
 
 </Page>

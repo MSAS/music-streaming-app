@@ -149,7 +149,7 @@ export class DetailComponent implements OnInit {
     setFavouriteSong(xRoleKey: string, songId: string, state: boolean) {
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
-            "x-tenant-code": "music",
+            "x-tenant-code": "music", 
             "x-role-key": "b1d9c479-f107-3ac3-e829-dada454e2d5f"
         });
 
@@ -280,15 +280,18 @@ export class DetailComponent implements OnInit {
 
 
     onFavouriteClick() {
-        if (this.songIsFavourite) {
-            this.setFavouriteSong("nbnvnvnv", this.songId, false)
-            // this.favouriteIcon = "res://favourite_white"
-        }
-        else {
-            this.setFavouriteSong("nbnvnvnv", this.songId, true)
-            // this.favouriteIcon = "res://favourite_red"
+        this.setFavouriteSong("nbnvnvnv", this.songId, true)
 
-        }
+
+        // if (this.songIsFavourite) {
+        //     this.setFavouriteSong("nbnvnvnv", this.songId, false)
+        //     // this.favouriteIcon = "res://favourite_white"
+        // }
+        // else {
+        //     this.setFavouriteSong("nbnvnvnv", this.songId, true)
+        //     // this.favouriteIcon = "res://favourite_red"
+
+        // }
     }
 
     onCommentClick() {

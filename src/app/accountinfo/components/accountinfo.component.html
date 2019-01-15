@@ -36,6 +36,8 @@
                     autocorrect="false" (returnPress)="onReturn($event)" (textChange)="phoneTextField($event)"></TextField>
                 <StackLayout row="7" verticalAlignment="middle" height="2px" width="90%" backgroundColor="#f1f1f1">
                 </StackLayout>
+                <ActivityIndicator #activityIndicator   row="6" [busy]="isBusy" horizontalAlignment="center"
+                verticalAlignment="middle" class="activity-indicator"></ActivityIndicator>
 
                 <TextField row="8" [text]="address" marginLeft="5%" hint="Address Line (*)" style.placeholderColor="#646464"
                     autocorrect="false" (returnPress)="onReturn($event)" (textChange)="addressTextField($event)"></TextField>

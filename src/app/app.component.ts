@@ -22,7 +22,7 @@ import { isIOS } from 'platform';
 import { topmost } from 'ui/frame';
 
 // import { HttpEvent, HttpResponse } ;
- 
+
 // registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 registerElement('Carousel', () => Carousel);
 registerElement('CarouselItem', () => CarouselItem);
@@ -76,7 +76,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
     aboutUsRedLine: boolean = false;
 
     log: boolean;
-
     user;
     isLogged: boolean = false;
 
@@ -335,11 +334,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
             })
     }
 
-    onDrawerButtonTap(){
+    onDrawerButtonTap() {
         this._rad.showDrawer();
     }
 
-    onSearchButtonTap(){
+    onSearchButtonTap() {
         this.routerExtensions.navigate(["/search"]);
     }
 
@@ -396,9 +395,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
 
 
     onHomeClicked() {
+
         // const sideDrawer = <RadSideDrawer>app.getRootView();
         // sideDrawer.closeDrawer();
         this._rad.closeDrawer();
+
 
         this.homeRedLine = true;
         this.categoriesRedLine = false;
@@ -433,6 +434,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
             },
             clearHistory: true
         };
+
         this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
 
     }

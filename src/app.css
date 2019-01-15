@@ -78,11 +78,24 @@ button {
 }
 
 .sideHeader{
+    background-color: transparent;
     font-size: 18;
     color: white;
     vertical-align: middle;
+    z-index: 0;
     horizontal-align:center;
 }
+
+.sideHeader:active{
+    background-color: transparent;
+    font-size: 18;
+    color: #cc3333;
+    z-index: 0;
+
+    vertical-align: middle;
+    horizontal-align:center;
+}
+ 
  
 .drawer-option-label{
     color:white;
@@ -138,7 +151,37 @@ button {
 
 
 
-  .action-bar-icon{
+  .action-bar-icon-search{
+    background-image: url('res://search');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 35;
+    width: 35;
+}
+
+.action-bar-icon-search:active{
+    background-image: url('res://search_focus');
+    height: 35;
+    width: 35;
+}
+
+
+
+.action-bar-icon{
+    background-image: url('res://ic_menu');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 35;
+    width: 35;
+}
+
+.action-bar-icon:active{
+    background-image: url('res://ic_menu_focus');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 35;
     width: 35;
 }
