@@ -19,7 +19,7 @@ export class MyAccountComponent implements OnInit {
     constructor(private routerExtensions: RouterExtensions, private activatedRoute: ActivatedRoute,private userService:UserService) {
 
         this.userService.actionBarState(true)
-        this.userService.actionBarText('My Account')
+        this.userService.actionBarText('MY ACCOUNT')
        
         this.activatedRoute.queryParams.subscribe(params => {
             this.user = params["user"];

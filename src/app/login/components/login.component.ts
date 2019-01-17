@@ -183,6 +183,7 @@ export class LoginComponent {
                     getJSON("https://graph.facebook.com/v2.9" + "/" + this.userId + "/picture?type=large&redirect=false&access_token=" + result.accessToken).then((res: any) => {
                         this.picUrl = res.data.url;
                         var name = this.userNameText.split(" ");
+
                         var lastName = '';
                         var firstName = '';
                         if (name != undefined && name != null) {
@@ -402,24 +403,19 @@ export class LoginComponent {
 
 
     onLoginClick() {
-        this.indicator.busy = true;
-        console.log("Ibdsshbvhbsh", this.indicator)
-        if (this.userNameText == "") {
-            alert("Username can not be empty");
-            // this.isBusy = false;
-            this.indicator.busy = false;
+      
 
+        if (this.userNameText == "") {
+         
+
+            alert("Username can not be empty");
             return;
         }
         if (this.passwordText == "") {
+         
             alert("Passsword can not be empty");
-            // this.isBusy = false;
-            this.indicator.busy = false;
-            return
+            return;
         }
-
-
-
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
             "x-tenant-code": "music"
@@ -429,20 +425,22 @@ export class LoginComponent {
         this.user.password = this.passwordText;
 
 
-
+        // this.isBusy=true;
         this.http.post("http://ems-api-dev.m-sas.com/api/users/signIn", this.user, { headers: headers }).subscribe((res: any) => {
 
             if (res.isSuccess) {
+
                 let result: any
                 result = res.data
                 this.res = result;
-
+                
+                // this.isBusy=false;
 
                 for (var i = 0; i < result.roles.length; i++) {
                     if (result.roles[i] != undefined && result.roles[i].key != undefined && result.roles[i].key != "") {
                         if (result.roles[i].isDefaultRole) {
                             // this.isBusy = false;
-                            this.indicator.busy = false;
+                            // this.indicator.busy = false;
 
                             Values.writeString(Values.X_ROLE_KEY, result.roles[i].key);
                             let extendedNavigationExtras: ExtendedNavigationExtras = {
@@ -450,14 +448,17 @@ export class LoginComponent {
                                     "user": result
                                 }
                             };
+
                             this.userService.setUser(result, result.roles[i].key);
                             // this.userService.homeSelector(true);
                             this.routerExtensions.navigate(["/home"], extendedNavigationExtras);
+
                         }
+
                     }
                     else {
-                        // this.isBusy = false;
-                        this.indicator.busy = false;
+
+                        // this.indicator.busy = false;
 
                         alert("Authentication Problem (Could not get role key)");
                     }
@@ -465,16 +466,16 @@ export class LoginComponent {
             }
             else {
 
-
                 alert(res.error)
-                this.indicator.busy = false;
+                // alert(res.error)
+                // this.indicator.busy = false;
 
-                // this.isBusy = false;
+
             }
         },
             error => {
-                // this.isBusy = false;
-                this.indicator.busy = false;
+                
+                // this.indicator.busy = false;
 
                 alert(error);
 

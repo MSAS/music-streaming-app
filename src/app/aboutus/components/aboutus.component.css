@@ -1,0 +1,19 @@
+ 
+.action-bar-menu-icon{
+    background-image: url('res://ic_menu');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 35;
+    width: 35;
+    background-color:transparent;
+}
+
+.action-bar-menu-icon:active{
+    background-image: url('res://ic_menu_focus');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 35;
+    width: 35;
+}

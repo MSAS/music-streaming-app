@@ -87,6 +87,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
     // defaultPic: string = "res://inspius_logo";
     source;
 
+    searchState = true;
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private userService: UserService, private http: HttpClient, private authService: AuthService, private page: Page) {
         // this.source = Observable.(observer => {
@@ -115,6 +116,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
             if (text != undefined) {
                 this.actionBarText = text;
             }
+        })
+
+        this.userService.actionBarSearchChanges.subscribe((state: boolean) => {
+            this.searchState = state;
         })
 
 

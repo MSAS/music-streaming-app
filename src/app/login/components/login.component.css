@@ -22,6 +22,16 @@
 
 
 
+.navigate-back-button:active{
+  horizontal-align:left;
+  background-image: url("res://ic_back_focus");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  
+  background-position: center;
+}
+
 
 
 
@@ -211,7 +221,7 @@ TextField {
     border-radius: 20;
     background-color: yellow;
     /* background-color: #cc3333; */
-    width: 75%;
+    width: 78%;
   }
   
   .profile-button{
@@ -234,6 +244,8 @@ TextField {
   .bold {
     color: #000000; 
   }
+  
+
   
   .activity-indicator-container{
     horizontal-align: center; 

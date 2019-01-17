@@ -112,7 +112,7 @@
 			<StackLayout col="1" class="title-text" verticalAlignment="middle">
 				<Label class="h3 text-center" [text]='actionBarText'></Label>
 			</StackLayout>
-			<Button col="2" class="action-bar-icon-search" marginRight="8" (tap)="onSearchButtonTap()" horizontalAlignment="right"
+			<Button col="2" *ngIf="searchState" class="action-bar-icon-search" marginRight="8" (tap)="onSearchButtonTap()" horizontalAlignment="right"
 			 verticalAlignment="middle"></Button>
 
 		</GridLayout>

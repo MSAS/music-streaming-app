@@ -14,6 +14,7 @@ export class UserService {
     private _homeUpdationSubject = new Subject<any>();
     private _actionBarState = new Subject<boolean>();
     private _actionBarText = new Subject<string>();
+    private _actionBarSearch = new Subject<boolean>();
 
     _radRef: RadSideDrawer;
 
@@ -22,6 +23,7 @@ export class UserService {
     homeUpdation = this._homeUpdationSubject.asObservable();
     actionBarChanges = this._actionBarState.asObservable();
     actionBarTextChanges = this._actionBarText.asObservable();
+    actionBarSearchChanges = this._actionBarSearch.asObservable();
 
 
     currentUser;
@@ -61,6 +63,10 @@ export class UserService {
 
     actionBarText(text: string) {
         this._actionBarText.next(text);
+    }
+
+    actionBarSearch(state: boolean) {
+        this._actionBarSearch.next(state);
     }
 
     logout() {

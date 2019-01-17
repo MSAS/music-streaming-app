@@ -55,7 +55,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
     source: Observable;
     songs = new ObservableArray();
     viewModel;
-    isBusy: boolean = true;
+    isBusy: boolean = false;
 
     args;
     refstatus: boolean;
@@ -84,7 +84,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
         // this.data.push(new Item("Wartortle", "Wartortle"));
         // this.data.push(new Item("Blastoise", "Blastoise"));
 
-        this.isBusy = true;
+        // this.isBusy = true;
 
         this.activatedRoute.queryParams.subscribe(params => {
             this.folderName = params.name;
@@ -158,13 +158,13 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
 
     pageLoaded(args: EventData) {
         this.page = args.object as Page;
-
+        this.isBusy=false;
         if (this.folderId != null && this.folderId != undefined && this.folderId != "") {
             // this.data = this.rows;
             this.getCategoryFilesByFolder(this.folderId);
 
         }
-        // this.isBusy=false;
+      
         // const items = new ObservableArray();
 
         // for (let loop = 0; loop < 200; loop++) {
@@ -173,7 +173,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
 
         // this.getCategoryFolders("jjjjj");
         // this.isBusy = false;
-        this.isBusy = false;
+        // this.isBusy = false;
 
         console.log("Page Loaded called")
     }
@@ -222,7 +222,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     getCategoryFilesByFolder(folderId: string, folderName?: string): any {
-
+        this.isBusy=true;
         let headers = new HttpHeaders({
             "Content-Type": "application/json",
             "x-tenant-code": "music",
@@ -272,8 +272,7 @@ export class CategoryFilesComponent implements OnInit, AfterViewInit, OnDestroy 
                 // this.categoryFolders = result;
                 // this.userService.setUser(result, xRoleKey);
                 // this.routerExtensions.navigate(["/home"]);
-                this.isBusy = false;
-
+                 
             }
             else {
                 alert(res.error)

@@ -48,10 +48,31 @@
     margin-top:20;
      /* height: 200; */
  } 
- .action-bar-icon{
+ /* .action-bar-icon{
     height: 35;
     width: 35;
+} */
+.action-bar-back-icon{
+    background-image: url("res://ic_back");
+    background-color: transparent;
+    /* height: 30;
+    width: 30; */
+    
+  
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
 }
+.action-bar-back-icon:active{
+    background-image: url("res://ic_back_focus");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    /* padding:5;
+    height: 30;
+    width: 30 ; */
+   
+} 
+
 
 .action-bar-label {
     background-color: black;
