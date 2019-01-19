@@ -2,13 +2,14 @@
 
 It uses following API's of Open Age
 
-[Directory](http://open-age-docs.m-sas.com/blog/2018/05/03/employee-directory/)
-[Drive](http://open-age-docs.m-sas.com/blog/2018/07/27/docs/)
+- [Directory](http://open-age-docs.m-sas.com/blog/2018/05/03/employee-directory/)
+- [Drive](http://open-age-docs.m-sas.com/blog/2018/07/27/docs/)
 
 ## Screenshots
-![Sign Up](docs/screenshots/signup.jpeg?raw=true "Sign Up")
-![Home](docs/screenshots/home.jpeg?raw=true "Home")
-![Drawer](docs/screenshots/drawer.jpeg?raw=true "Drawer")
+
+<div style="float:left;margin-left:5px;"><img width="30%" src="docs/screenshots/signup.jpeg"></div>
+<div style="float:left;margin-left:5px;"><img width="30%" src="docs/screenshots/home.jpeg"></div>
+<div style="float:left;margin-left:5px;"><img width="30%" src="docs/screenshots/drawer.jpeg"></div>
 
 
 ## Walkthrough
