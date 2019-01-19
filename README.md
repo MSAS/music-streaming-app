@@ -1,22 +1,15 @@
-# NativeScript with Angular Blank Template
-App templates help you jump start your native cross-platform apps with built-in UI elements and best practices. Save time writing boilerplate code over and over again when you create new apps.
+# Music streaming app build on NativeScript and Open Age
 
-## Quick Start
-Execute the following command to create an app from this template:
+It uses following API's of Open Age
 
-```
-tns create my-blank-ng --template tns-template-blank-ng
-```
+[Directory](http://open-age-docs.m-sas.com/blog/2018/05/03/employee-directory/)
+[Drive](http://open-age-docs.m-sas.com/blog/2018/07/27/docs/)
 
-> Note: This command will create a new NativeScript app that uses the latest version of this template published to [npm] (https://www.npmjs.com/package/tns-template-blank-ng).
+## Screenshots
+![Sign Up](docs/screenshots/signup.jpeg?raw=true "Sign Up")
+![Home](docs/screenshots/home.jpeg?raw=true "Home")
+![Drawer](docs/screenshots/drawer.jpeg?raw=true "Drawer")
 
-If you want to create a new app that uses the source of the template from the `master` branch, you can execute the following:
-
-```
-tns create my-blank-ng --template https://github.com/NativeScript/template-blank-ng
-```
-
-**NB:** Please, have in mind that the master branch may refer to dependencies that are not on NPM yet!
 
 ## Walkthrough
 
